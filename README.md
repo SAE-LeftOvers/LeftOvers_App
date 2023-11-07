@@ -7,20 +7,20 @@
 **Nom de l’application** : LeftOvers :pizza:
 </br>
 
-**Thème de l’application** : Trouver des recettes faisable avec les ingredients à disposition.
+**Thème de l’application** : Trouver des recettes faisables avec les ingredients à disposition.
 </br>
 
 **Récapitulation de notre application** : 👇
 
 </br>
 
-:information_source: Une application mobile  (Ios/Android), dans lequel les utilisateurs pourront choisir des aliments et l'application leur fournira une liste de recette adaptée.
+:information_source: Une application mobile (Ios/Android), dans lequel les utilisateurs pourront choisir des aliments et l'application leur fournira une liste de recette adaptée.
 
-# Répartition du Gitlab
+# Répartition du Repository Git
 
-La racine de notre gitlab est composée de deux dossiers essentiels au projet:
+La racine de notre repo est composée de deux dossiers essentiels au projet:
 
-[**LeftOvers**](LeftOvers) : **Toute la partie codage de l'application web**
+[**LeftOvers**](LeftOvers) : **Toute la partie codage de l'application mobile**
 
 [**Images**](Images) : **Images de l'application**
 
