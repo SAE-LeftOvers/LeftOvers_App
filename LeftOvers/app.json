@@ -3,9 +3,32 @@
     "name": "LeftOvers",
     "slug": "LeftOvers",
     "version": "1.0.0",
-    "assetBundlePatterns": [
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#57BDCC"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundle Patterns": [
       "**/*"
-    ]
-  },
-  "name": "LeftOvers"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foreground Image": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/images/icon.png"
+    }
+  }
 }
