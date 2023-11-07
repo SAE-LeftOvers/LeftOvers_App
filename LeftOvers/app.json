@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "LeftOvers",
+    "slug": "LeftOvers",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "LeftOvers"
+}
