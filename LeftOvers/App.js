@@ -1,15 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
-import CustomButton from './components/CustomButton';
-import FoodElementText from './components/FoodElementText';
+import RecipeElementImage from './components/RecipeElementImage';
 
 export default function App() {
 
   return (
     <View style={styles.container}>
-      <FoodElementText title="Apple" image="plus" />
-      <FoodElementText title="Pineaple" image="moins" />
+      <RecipeElementImage title="Rice whith curry chicken" number="7" description="A delicious rice with a sweet chicken with curry sauce."></RecipeElementImage>
     </View>
   );
 }
