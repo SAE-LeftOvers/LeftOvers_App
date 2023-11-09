@@ -4,7 +4,15 @@ import Separator from '../components/Separator';
 import plus from '../assets/images/plus.png'; 
 import moins from '../assets/images/minus.png'; 
 
-export default function FoodElementText(props) {
+
+
+interface foodElementImageProps {
+  source : string
+  title  : string
+}
+
+
+export default function FoodElementText(props : any) {
   return (
     <Pressable style={styles.button}>
       <View style={styles.container}>
@@ -27,7 +35,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 5,
     elevation: 3,
-    backgroundColor: '#ACA279',
+    backgroundColor: '#E3DEC9',
   },
   text: {
     fontSize: 15,
