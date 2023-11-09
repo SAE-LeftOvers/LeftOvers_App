@@ -1,15 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
-import CustomButton from './components/CustomButton';
-import FoodElementText from './components/FoodElementText';
+import { StyleSheet, View } from 'react-native';
+import RecipeElementImage from './components/RecipeElementImage';
+
+const generateImageList = () => {
+  const imageList = [];
+  const meat =  '../assets/images/meat.png'; 
+  for (let i = 0; i < 5; i++) {
+     imageList.push(meat);
+  }
+  return imageList;
+};
 
 export default function App() {
+  const imageList = [];
 
   return (
     <View style={styles.container}>
-      <FoodElementText title="Apple" image="plus" />
-      <FoodElementText title="Pineaple" image="moins" />
+      <RecipeElementImage title="Rice whith curry chicken" number="7" description="A delicious rice with a sweet chicken with curry sauce. Perfect recipes for winter, delicious and healthy"  imageList={imageList}></RecipeElementImage>
     </View>
   );
 }
