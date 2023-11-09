@@ -19,10 +19,7 @@ export default function RecipeElementImage(props : any) {
       <View style={styles.view}>
         <Text style={styles.text}>{props.number}</Text>
         <Text style={styles.title}>{props.title}</Text>
-        <Image source={brochette} style={{width: 100, height: 100}}/>
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={styles.smallText}>{props.description}</Text>
-        </View>
+        <Image source={props.image ? props.image : brochette} style={{ width: 100, height: 100 }}/>
         {props.imageList.length > 0 ? (
           <View style={styles.horizontalAlignement}>
             <Image source={Union_left} style={{ width: 70, height: 4, marginRight: 6 }} />
@@ -35,6 +32,10 @@ export default function RecipeElementImage(props : any) {
           {props.imageList.length > 0 && props.imageList.map((source, index) => (
           <Image key={index} source={source} style={{ width: 40, height: 40 }} />
           ))}
+        </View>
+
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={styles.smallText}>{props.description}</Text>
         </View>
         <Image source={background} style={{width: 210, height: 20, marginTop: 300, position: 'absolute'}}></Image>
       </View>
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.25,
     color: '#756C28',
+    marginTop: 10,
   },
   smallText: {
     fontSize: 12,
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: '#71662A',
     textAlign: "center",
+    marginTop: 5,
   },
   title:{
     fontSize: 18,

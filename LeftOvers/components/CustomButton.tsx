@@ -2,6 +2,11 @@ import React from 'react';
 import {StyleSheet,Pressable, Text, View} from 'react-native';
 
 
+interface CustomButtonProps {
+  source : string
+  title  : string
+}
+
 export default function CustomButton(props) {
   return (
     <Pressable style={styles.button}>

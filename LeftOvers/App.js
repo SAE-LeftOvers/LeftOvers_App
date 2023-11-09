@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <RecipeElementImage title="Rice whith curry chicken" number="7" description="A delicious rice with a sweet chicken with curry sauce."  imageList={imageList}></RecipeElementImage>
+      <RecipeElementImage title="Rice whith curry chicken" number="7" description="A delicious rice with a sweet chicken with curry sauce. Perfect recipes for winter, delicious and healthy"  imageList={imageList}></RecipeElementImage>
     </View>
   );
 }
