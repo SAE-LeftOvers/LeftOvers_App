@@ -1,19 +1,20 @@
 import React from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
+import {StyleSheet,Pressable, Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import Union_left from '../assets/images/Union_left.png';
 import Union_right from '../assets/images/Union_right.png';
 import background from '../assets/images/Background.png'; 
 
 
-interface recipeElementImageProps {
+interface recipeElementProps {
   number : number
   title  : string
   description : string
   imageList : string[]
+  image : string
 }
 
-export default function RecipeElementImage(props : any) {
+export default function RecipeElement(props : any) {
   return (
     <Pressable style={styles.button}>
       <View style={styles.view}>
@@ -35,8 +36,12 @@ export default function RecipeElementImage(props : any) {
         </View>
 
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={styles.smallText}>{props.description}</Text>
-        </View>
+          <SafeAreaView>
+            <ScrollView>
+                  <Text style={styles.smallText}>{props.description}</Text>
+            </ScrollView>
+          </SafeAreaView>
+          </View>
         <Image source={background} style={{width: 210, height: 20, marginTop: 300, position: 'absolute'}}></Image>
       </View>
     </Pressable>
