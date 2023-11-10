@@ -19,9 +19,7 @@ export default function FoodElementText(props : any) {
         <View style={styles.view}>
             <Text style={styles.text}>{props.title}</Text>
             <Separator/>
-            
         </View>
-        <Image source={plus}  style={{width: 40, height: 40}}/>
       </View>
     </Pressable>
   );
@@ -31,7 +29,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width : 350,
+    width : 270,
     height: 60,
     borderRadius: 5,
     elevation: 3,
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     marginRight: 5 // Centre le contenu horizontalement
   },
   container: {
-    width : 340,
+    width :260,
     height: 50,
     borderRadius: 5,
     elevation: 3,
@@ -62,5 +60,3 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
-
-
