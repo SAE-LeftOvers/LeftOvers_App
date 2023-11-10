@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import RecipeElementImage from './components/RecipeElementImage';
+import RecipeElement from './components/RecipeElement';
+import RecipeElementReduce from './components/RecipeElementReduce';
 
 const generateImageList = () => {
   const imageList = [];
@@ -16,7 +17,13 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <RecipeElementImage title="Rice whith curry chicken" number="7" description="A delicious rice with a sweet chicken with curry sauce. Perfect recipes for winter, delicious and healthy"  imageList={imageList}></RecipeElementImage>
+      <RecipeElement title="Rice whith curry chicken" number="7" description="A delicious rice with a sweet chicken with curry sauce.  je teste des trucs en vrai
+      en sah on fait des test parceque parfois la vie est dur faut etre solide
+      hahahaha je comprends pas comment c'est possible 
+      Perfect recipes for winter, delicious and healthy"  imageList={imageList}></RecipeElement>
+      <View style={{width: 50, height: 50}}></View>
+      <RecipeElementReduce title="Chocolate cake" number="12" duree="4h30"></RecipeElementReduce>
+
     </View>
   );
 }
