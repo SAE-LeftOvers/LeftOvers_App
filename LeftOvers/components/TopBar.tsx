@@ -1,7 +1,5 @@
-import React, { startTransition } from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
+import React from 'react';
 import { Appbar } from 'react-native-paper';
-import backward from '../assets/images/backward_arrows.png'; 
 
 interface TopBarProps{
     source : string
@@ -20,7 +18,7 @@ interface TopBarProps{
     return (
         <Appbar.Header  style={{backgroundColor: '#F2F0E4'}} >
             <Appbar.BackAction onPress={_goBack} />
-            <Appbar.Content title="Title" />
+            <Appbar.Content title="Recipes" />
             <Appbar.Action icon="magnify" onPress={_handleSearch} />
             <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
       </Appbar.Header>
