@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image} from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Modal, Portal, PaperProvider } from 'react-native-paper';
 import TopBar from '../components/TopBar';
@@ -18,7 +18,7 @@ export default function RecipeSuggestion(props) {
   const containerStyle = {
     backgroundColor: 'white',
     height: 350,
-    width: 350,
+    width: 370,
   };
   
   const handleChildEvent = (value) => {
@@ -49,17 +49,21 @@ export default function RecipeSuggestion(props) {
             <PaperProvider>
                 <Portal>
                     <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                        <View style={styles.page}>
-                            <View>
-                                <FoodElementText title="test"></FoodElementText>
-                                <Image source={brochette} style={{ width: 10, height: 10 }}/>
-                            </View>
-                           
-                            <FoodElementText title="test"></FoodElementText>
-                            <FoodElementText title="test"></FoodElementText>
-                            <FoodElementText title="test"></FoodElementText>
-                            <FoodElementText title="test"></FoodElementText>
-                        </View>
+                        <View style={[styles.page, { justifyContent: 'space-around' }]}>
+                            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                                    <View style={[styles.horizontalAlignement, { marginBottom: 10 }]}>
+                                        <FoodElementText title="test" />
+                                        <Image source={brochette} style={{ width: 20, height: 20 }} />
+                                        <Image source={brochette} style={{ width: 20, height: 20 }} />
+                                    </View>
+
+                                    <View style={[styles.horizontalAlignement, { marginBottom: 10 }]}>
+                                        <FoodElementText title="test" />
+                                        <Image source={brochette} style={{ width: 20, height: 20 }} />
+                                        <Image source={brochette} style={{ width: 20, height: 20 }} />
+                                    </View>
+                            </ScrollView>
+                        </View>           
                     </Modal>
                 </Portal>
             </PaperProvider>
@@ -87,6 +91,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '50%', // Centre verticalement
     left: '50%', // Centre horizontalement
-    transform: [{ translateX: -150 }, { translateY: -150 }], // Ajustez en fonction de la moitié de la hauteur et de la largeur
+    transform: [{ translateX: -185 }, { translateY: -175 }], // Ajustez en fonction de la moitié de la hauteur et de la largeur
+  },
+  horizontalAlignement: {
+    display: 'flex',
+    height: 30,
+    width: 350,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 10,
   }
 });
