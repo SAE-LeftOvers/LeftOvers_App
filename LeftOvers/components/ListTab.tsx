@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View, Image, FlatList} from 'react-native';
 import ValidateButton from './ValidateButton';
+import HeaderFlatList from './HeaderFlatList';
 
 type ListProps = {
     title: string
@@ -18,12 +19,8 @@ const Item = ({title}: ItemProps) => (
 export default function ListTab(props: ListProps) {
   return (
     <View style={styles.background}>
-        <View style={styles.titleBar}>
-            <Text style={styles.title}>{props.title}</Text>
-            <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
-        </View>
         <View>
-            <FlatList data={props.content} renderItem={({item}) => <Item title={item.title}/>}/>
+            <FlatList data={props.content} renderItem={({item}) => <Item title={item.title}/>} ListHeaderComponent={<HeaderFlatList title={props.title}/>}/>
         </View>
     </View>
   );
@@ -36,6 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     backgroundColor: '#E3DEC9',
+    marginBottom: 20,
   },
   titleBar: {
     flexDirection: "row",
