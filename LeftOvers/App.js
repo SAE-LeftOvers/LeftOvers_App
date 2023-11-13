@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import SelectedIngredient from './components/SelectedIngredient';
-import RecipeElementReduce from './components/RecipeElementReduce';
-import RecipeElement from './components/RecipeElement';
+import TopBar from './components/TopBar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import RecipeSuggestion from './screens/RecipeSuggestion';
 
 const generateList = () => {
   const list = [];
@@ -18,9 +18,7 @@ export default function App() {
   const list = generateList();
 
   return (
-    <View style={styles.container}>
-      <SelectedIngredient ListImage={imageList} listeIngredient={list}></SelectedIngredient>
-    </View>
+    <RecipeSuggestion list={list}></RecipeSuggestion>  
   );
 }
 

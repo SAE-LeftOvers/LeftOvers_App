@@ -37,12 +37,11 @@ export default function SelectedIngredient(props : any) {
         <View id="Top" style={styles.horizontalAlignement}>
             <Text style={styles.text}>Selected ingredients</Text>
             <Pressable>
-                <Image source={parameter} style={{ width: 20, height: 20 }} />
+                <Image source={parameter} style={{ width: 15, height: 15 }} />
             </Pressable>
         </View>
 
         <View id="IngredientList" style={styles.horizontalAlignement}>
-
             <Pressable onPress={decreaseCounter} id="GoLeft" style={{}}>
                 <Image source={bracketLeft} style={{ width: 40, height: 40 }} />
             </Pressable>
@@ -60,8 +59,8 @@ export default function SelectedIngredient(props : any) {
 const styles = StyleSheet.create({
       view: {
         width : 350,
-        height: 120,
-        borderRadius: 10,
+        height: 110,
+        borderRadius: 15,
         elevation: 3,
         borderWidth: 2,
         borderColor: 'black',
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
       },
       horizontalAlignement: {
         display: "flex",
-        height : 40,
+        height : 30,
         width: 350,
         flexDirection : 'row',
         justifyContent : 'space-around',
