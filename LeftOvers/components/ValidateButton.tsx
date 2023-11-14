@@ -25,8 +25,10 @@ export default function ValidateButton(props: ValidateButtonProps) {
             padding: 5,
             paddingRight: 10,}}>
             <Image source={require('../assets/images/'+props.image)} style={{
-                height: 30,
-                width: 30,
+                height: 20,
+                width: 20,
+                marginLeft: 5,
+                marginRight: 10,
                 resizeMode: "center",
                 tintColor: props.colour,}}>
             </Image>

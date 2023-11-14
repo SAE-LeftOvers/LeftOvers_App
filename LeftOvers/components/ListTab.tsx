@@ -8,11 +8,11 @@ type ListProps = {
     content : list<string>
 }
 
-type ItemProps = {title: string}
+type ItemProps = {value: string}
 
-const Item = ({title}: ItemProps) => (
+const Item = ({value}: ItemProps) => (
     <View style={styles.itemList}>
-        <Text style={styles.itemText}>{title}</Text>
+        <Text style={styles.itemText}>{value}</Text>
     </View>
 )
 
@@ -20,7 +20,7 @@ export default function ListTab(props: ListProps) {
   return (
     <View style={styles.background}>
         <View>
-            <FlatList data={props.content} renderItem={({item}) => <Item title={item.title}/>} ListHeaderComponent={<HeaderFlatList title={props.title}/>}/>
+            <FlatList data={props.content} renderItem={({item}) => <Item value={item.value}/>} ListHeaderComponent={<HeaderFlatList title={props.title}/>}/>
         </View>
     </View>
   );

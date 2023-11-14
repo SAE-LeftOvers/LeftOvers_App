@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import ValidateButton from './ValidateButton';
 import ListTab from './ListTab';
+import DietsTab from './DietsTab';
+import AllergiesTab from './AllergiesTab';
 
 type ProfileProps = {
   name: string
@@ -22,6 +24,10 @@ export default function ProfileModification(props: ProfileProps) {
             <Text style={styles.filters}>Filters</Text>
             <Text style={styles.nbSelected}>3 selected</Text>
         </View>
+        <DietsTab title="Diets" content={props.diets}></DietsTab>
+        <View style={{marginTop: 10}}/>
+        <AllergiesTab title="Allergies" content={props.allergies}></AllergiesTab>
+        <View style={{marginTop: 10}}/>
         <ListTab title="Diets" content={props.diets}></ListTab>
         <ListTab title="Allergies" content={props.allergies}></ListTab>
         <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
@@ -48,8 +54,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   avatar: {
-    height: 45,
-    width: 45,
+    padding: 20,
     resizeMode: 'contain',
     borderWidth: 2,
     borderColor: "#ACA279",
