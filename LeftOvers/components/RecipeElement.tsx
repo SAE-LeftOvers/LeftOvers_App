@@ -4,8 +4,6 @@ import brochette from '../assets/images/brochette.png';
 import Union_left from '../assets/images/Union_left.png';
 import Union_right from '../assets/images/Union_right.png';
 import background from '../assets/images/Background.png'; 
-import normalize from './Normalize';
-
 
 interface recipeElementProps {
   number : number

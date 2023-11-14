@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import TopBar from './components/TopBar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import RecipeSuggestion from './screens/RecipeSuggestion';
+import RecipeDetails from './screens/RecipeDetails';
+import IngredientSelection from './screens/IngredientSelection';
 
 const generateList = () => {
   const list = [];
@@ -23,7 +25,9 @@ export default function App() {
   const list = generateList();
 
   return (
-    <RecipeSuggestion list={list}></RecipeSuggestion>  
+    /*<RecipeDetails number="34" title="Flambé banane" duree="04H00"></RecipeDetails>*/
+    /*<RecipeSuggestion list={list}></RecipeSuggestion>*/  
+    <IngredientSelection list={list}></IngredientSelection>
   );
 }
 
