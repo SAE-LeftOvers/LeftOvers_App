@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderWidth: 2,
     borderColor: "#ACA279",
-    width: 250,
+    width: 330,
   },
   arrow: {
     height: 20,

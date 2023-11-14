@@ -31,6 +31,7 @@ export default function ProfileModification(props: ProfileProps) {
 
 const styles = StyleSheet.create({
   background: {
+    width: 370,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -43,7 +44,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 0.7,
-    width: 250,
+    width: 330,
+    marginBottom: 10,
   },
   avatar: {
     height: 45,
@@ -62,8 +64,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: 'dashed',
     borderColor: '#ACA279',
-    alignItems: 'center', // Centre le contenu verticalement
-    justifyContent: 'left', // Centre le contenu horizontalement
+    alignItems: 'center',
+    justifyContent: 'left',
     flex: 0.8,
     marginLeft: 20,
     padding: 5,
@@ -81,16 +83,16 @@ const styles = StyleSheet.create({
 
   filterBar: {
       flexDirection: "row",
-      width: 230,
+      width: 300,
       paddingTop: 10,
-      paddingBottom: 0,
+      paddingBottom: 5,
       alignItems: "flex-end",
       justifyContent: "center",
       flex: 0.2,
   },
   filters: {
       flex: 0.5,
-      fontSize: 15,
+      fontSize: 20,
       color: '#ACA279',
       flex: 1,
       padding: 5,
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
       paddingBottom: 0,
   },
   nbSelected: {
-      fontSize: 10,
+      fontSize: 11,
       flex: 1,
       color: "#3F3C42",
       textAlign: "right",

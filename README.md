@@ -24,7 +24,7 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
 
 [**Images**](Images) : **Images de l'application**
 
-👉 [**Solution de l'application**](LeftOvers/App.js)
+👉 [**Solution de l'application**](LeftOvers/App.tsx)
 
 # Fonctionnement
 

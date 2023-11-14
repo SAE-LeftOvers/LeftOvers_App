@@ -14,12 +14,12 @@ export default function ValidateButton(props: ValidateButtonProps) {
     <Pressable style={{
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 20,
-        backgroundColor: props.backColour,}}>
+        borderRadius: 20,}}>
         <View style={{
             borderRadius: 30,
             borderWidth: 2,
             borderColor: props.colour,
+            backgroundColor: props.backColour,
             alignItems: 'center',
             flexDirection: "row",
             padding: 5,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#ACA279',
-    alignItems: 'center', // Centre le contenu verticalement
+    alignItems: 'center',
     flex: 1,
     flexDirection: "row",
     paddingLeft: 25,

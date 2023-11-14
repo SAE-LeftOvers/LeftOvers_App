@@ -67,13 +67,14 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       alignItems: "flex-start",
       justifyContent: "stretch",
-      width: 250,
+      width: 330,
   },
   itemText: {
-      fontSize: 10,
+      fontSize: 13,
       textAlign: "left",
       flex: 1,
       padding: 5,
+      paddingLeft: 10,
       color: "#3F3C42",
   },
 });
