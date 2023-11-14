@@ -16,19 +16,24 @@ interface recipeElementProps {
 }
 
 export default function RecipeElement(props : any) {
+
+  const totalContentCount = props.imageList.length + 11;
+  const dynamicHeight = totalContentCount * 40;
+  const scrollViewHeight = 100;
+
+
+
   return (
-    <Pressable style={styles.button}>
-      <View style={styles.view}>
+    <Pressable style={[styles.button, { height: dynamicHeight }]}>
+      <View style={[styles.view, { height: dynamicHeight - 10}]}>
         <Text style={styles.text}>{props.number}</Text>
         <Text style={styles.title}>{props.title}</Text>
         <Image source={props.image ? props.image : brochette} style={{ width: 100, height: 100 }}/>
-        {props.imageList.length > 0 ? (
           <View style={styles.horizontalAlignement}>
             <Image source={Union_left} style={{ width: 70, height: 4, marginRight: 6 }} />
-            <Text style={styles.smallText}>Ingredients</Text>
+            <Text style={styles.text}>Ingredients</Text>
             <Image source={Union_right} style={{ width: 70, height: 4, marginLeft: 6 }} />
           </View>
-        ) : null}
         
         <View style={styles.horizontalAlignement}>
           {props.imageList.length > 0 && props.imageList.map((source, index) => (
@@ -36,14 +41,30 @@ export default function RecipeElement(props : any) {
           ))}
         </View>
 
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        
+        {props.imageList.length <= 0 ? (
+          <View style={styles.horizontalAlignement}>
+                  {props.textList.length > 0 && props.textList.map((source, index) => (
+                    <Text key={index} style={styles.smallText}>{source}</Text>
+                  ))}
+          </View>
+          ) : null}
+
+
+        <View style={styles.scrollViewContainer}>
           <SafeAreaView>
-            <ScrollView>
-                  <Text style={styles.smallText}>{props.description}</Text>
+            <View style={styles.horizontalAlignement}>
+              <Image source={Union_left} style={{ width: 70, height: 4, marginRight: 6 }} />
+              <Text style={styles.text}>Description</Text>
+              <Image source={Union_right} style={{ width: 70, height: 4, marginLeft: 6 }} />
+            </View>
+            <ScrollView style={{ marginTop: 5, height: scrollViewHeight }}>
+              <Text style={styles.smallText}>{props.description}</Text>
             </ScrollView>
           </SafeAreaView>
-          </View>
-        <Image source={background} style={{width: 210, height: 20, marginTop: 300, position: 'absolute'}}></Image>
+        </View>
+
+        <Image source={background} style={{width: 210, height: 20, marginTop: dynamicHeight - 50, position: 'absolute'}}></Image>
       </View>
     </Pressable>
   ); 
@@ -54,8 +75,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width : 250,
-    height: 350,
+    width : 300,
     borderRadius: 40,
     elevation: 3,
     backgroundColor: '#E3DEC9',
@@ -75,7 +95,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: '#71662A',
     textAlign: "center",
-    marginTop: 5,
+    margin : 5
   },
   title:{
     fontSize: 18,
@@ -85,8 +105,7 @@ const styles = StyleSheet.create({
     color: '#524B1A',
   },
   view: {
-    width : 240,
-    height: 340,
+    width : 290,
     borderRadius: 40,
     elevation: 3,
     borderWidth: 2,
@@ -99,6 +118,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection : 'row',
     alignItems: 'center', 
-    marginTop: 10,
-  }
+    justifyContent: 'space-between',
+    marginTop : 5,
+    flexWrap: 'wrap',
+  },
+  scrollViewContainer: {
+    flex: 1, // Assurez-vous que le reste du contenu occupe l'espace restant
+  },
 });

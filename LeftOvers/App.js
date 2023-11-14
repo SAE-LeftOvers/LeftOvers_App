@@ -1,30 +1,29 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import RecipeElement from './components/RecipeElement';
-import RecipeElementReduce from './components/RecipeElementReduce';
+import TopBar from './components/TopBar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import RecipeSuggestion from './screens/RecipeSuggestion';
 
-const generateImageList = () => {
-  const imageList = [];
-  const meat =  '../assets/images/meat.png'; 
-  for (let i = 0; i < 5; i++) {
-     imageList.push(meat);
-  }
-  return imageList;
+const generateList = () => {
+  const list = [];
+  list.push('Apple');
+  list.push('Pineapple');
+  list.push('Tomato');
+  list.push('Meat')
+  list.push('d)àrok');
+  list.push('dddd');
+  list.push('fff');
+  list.push('fffgg')
+  list.push('Apple');
+  return list;
 };
 
 export default function App() {
   const imageList = [];
+  const list = generateList();
 
   return (
-    <View style={styles.container}>
-      <RecipeElement title="Rice whith curry chicken" number="7" description="A delicious rice with a sweet chicken with curry sauce.  je teste des trucs en vrai
-      en sah on fait des test parceque parfois la vie est dur faut etre solide
-      hahahaha je comprends pas comment c'est possible 
-      Perfect recipes for winter, delicious and healthy"  imageList={imageList}></RecipeElement>
-      <View style={{width: 50, height: 50}}></View>
-      <RecipeElementReduce title="Chocolate cake" number="12" duree="4h30"></RecipeElementReduce>
-
-    </View>
+    <RecipeSuggestion list={list}></RecipeSuggestion>  
   );
 }
 
