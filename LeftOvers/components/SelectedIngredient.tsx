@@ -31,7 +31,6 @@ export default function SelectedIngredient(props: SelectedIngredientProps) {
   };
 
   const handlePress = () => {
-    // Supposons que vous voulez envoyer la valeur 'Hello' au parent
     props.onEvent('Hello');
   };
 

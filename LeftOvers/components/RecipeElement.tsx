@@ -22,6 +22,7 @@ export default function RecipeElement(props : any) {
   const scrollViewHeight = 100;
 
 
+
   return (
     <Pressable style={[styles.button, { height: dynamicHeight }]}>
       <View style={[styles.view, { height: dynamicHeight - 10}]}>

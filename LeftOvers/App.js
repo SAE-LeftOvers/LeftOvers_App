@@ -10,6 +10,11 @@ const generateList = () => {
   list.push('Pineapple');
   list.push('Tomato');
   list.push('Meat')
+  list.push('d)àrok');
+  list.push('dddd');
+  list.push('fff');
+  list.push('fffgg')
+  list.push('Apple');
   return list;
 };
 
