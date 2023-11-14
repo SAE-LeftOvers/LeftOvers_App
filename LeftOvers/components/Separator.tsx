@@ -7,7 +7,7 @@ export default function Separator (){
   
   const styles = StyleSheet.create({
     separator: {
-      width: 250, // Largeur de la ligne
+      width: 200, // Largeur de la ligne
       backgroundColor: 'black', // Couleur de la ligne
       borderWidth : 1,
       marginLeft : 10,
