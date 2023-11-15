@@ -8,11 +8,10 @@ type ProfileProps = {
   avatar: string
   diets: list<string>
   allergies: list<string>
-  onDeleteProfile: () => void
 }
 
-export default function ProfileDetails(props: ProfileProps) {
-  const [display, setDisplay] = useState("none")
+export default function ProfileDelete(props: ProfileProps) {
+  const [display, setDisplay] = useState("flex")
   const changeListVisibility = () => {
     if (display == "none"){
         setDisplay("flex")
@@ -27,15 +26,10 @@ export default function ProfileDetails(props: ProfileProps) {
         <View style={styles.pseudoBar}>
             <Image source={require("../assets/images/"+props.avatar)} style={styles.avatar}></Image>
             <Text style={styles.text}>{props.name}</Text>
-            <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
-            <Pressable onPress={props.onDeleteProfile}>
-                <Image source={require("../assets/images/delete.png")} style={styles.delete}></Image>
-            </Pressable>
         </View>
         <Pressable onPress={changeListVisibility} style={{height: 20, marginTop: 20,}}>
             <View style={styles.filterBar}>
                 <Text style={styles.filters}>Filters</Text>
-                <Text style={styles.nbSelected}>3 selected</Text>
                 <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
             </View>
         </Pressable>
@@ -83,21 +77,6 @@ const styles = StyleSheet.create({
     flex: 0.8,
     marginLeft: 20,
     padding: 5,
-  },
-  modify: {
-      height: 20,
-      width: 20,
-      tintColor: "#ACA279",
-      resizeMode: 'contain',
-      flex: 0.05,
-      marginLeft: 15,
-  },
-  delete: {
-        height: 20,
-        width: 20,
-        tintColor: "#ACA279",
-        resizeMode: 'contain',
-        flex: 0.05,
   },
 
 
