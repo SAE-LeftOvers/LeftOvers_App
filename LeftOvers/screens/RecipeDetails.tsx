@@ -8,7 +8,7 @@ import RecipeElementReduce from '../components/RecipeElementReduce';
 export default function RecipeDetails(props) {
     return (
         <SafeAreaProvider>
-          <TopBar title="Recipe Detail" />
+          <TopBar title="Recipe Detail"/>
           <View style={styles.page}>
             <RecipeElementReduce 
                 title={props.title} 

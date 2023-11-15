@@ -2,14 +2,12 @@ import React from 'react';
 import { Appbar } from 'react-native-paper';
 
 interface TopBarProps{
-    source : string
-    firstImage  : string
-    lastImage : string
+    title : string
     isVisible : boolean
   }
   
   
-  export default function TopBar(props : any) {
+  export default function TopBar(props) {
 
     const _goBack = () => console.log('Went back');
 

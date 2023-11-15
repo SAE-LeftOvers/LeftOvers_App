@@ -8,7 +8,7 @@ import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
 
 
-export default function IngredientSelection(props) {
+export default function IngredientSelection() {
 
   const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -16,7 +16,7 @@ export default function IngredientSelection(props) {
 
   return (
     <SafeAreaProvider>
-          <TopBar title="Ingredient selection"/>
+          <TopBar title="Ingredient selection" />
           <View style={styles.page}>
 
             <View style={styles.element}>
