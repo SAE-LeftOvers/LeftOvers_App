@@ -5,6 +5,7 @@ import ValidateButton from './components/ValidateButton';
 import { LinearGradient } from 'expo-linear-gradient';
 import RecipeSuggestion from './screens/RecipeSuggestion';
 import RecipeDetails from './screens/RecipeDetails';
+import IngredientSelection from './screens/IngredientSelection';
 
 export default function App() {
   const all = [{value: "Mussels"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
@@ -36,14 +37,15 @@ export default function App() {
 const ingredients = generateList();
   
   return (
-    /*<RecipeSuggestion list={ingredients} diets={die} allergy={all}></RecipeSuggestion> */
-    <RecipeDetails ingredient={ingredient} 
+    <IngredientSelection listIngredient={ingredients}></IngredientSelection>
+    /*<RecipeSuggestion list={ingredients} diets={die} allergy={all}></RecipeSuggestion>*/
+    /*<RecipeDetails ingredient={ingredient} 
     ustensils={ustensils} 
     steps={steps} 
     title="Chocolat Cake" 
     number="63"
     duree="30 minutes"
-    ></RecipeDetails>
+    ></RecipeDetails>*/
   );
 }
 

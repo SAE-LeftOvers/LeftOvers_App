@@ -12,6 +12,8 @@ import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 import CustomButton from '../components/CustomButton';
 import DietsTab from '../components/DietsTab';
+import plus from '../assets/images/plus.png';
+import moins from '../assets/images/minus.png';
 
 
 export default function RecipeSuggestion(props) {
@@ -44,7 +46,6 @@ export default function RecipeSuggestion(props) {
   const handleChildEventGoIngredients = (value) => {
       setVisibleFilters(false);
       setVisibleIngredients(true);
-      console.log("jai change pour iingredient");
   }
 
   const decreaseCounter = () => {
@@ -64,8 +65,14 @@ export default function RecipeSuggestion(props) {
   const imageElements = limitedList.map((source, index) => (
       <View style={[styles.horizontalAlignement, { marginBottom: 10 }]}>
         <FoodElementText key={index} title={source} />
-        <Image source={brochette} style={{ width: 20, height: 20 }} />
-        <Image source={brochette} style={{ width: 20, height: 20 }} />
+        <Pressable>
+          <Image source={plus} style={{ width: 20, height: 20 }} />
+        </Pressable>
+        
+        <Pressable>
+          <Image source={moins} style={{ width: 20, height: 20 }} />
+        </Pressable>
+        
       </View>
   ));
 
@@ -132,11 +139,7 @@ export default function RecipeSuggestion(props) {
                                   <CustomButton title="Save"></CustomButton>
                               </View>
                           </View>
-
-
                         )}
-
-
                     </Modal>
                 </Portal>
             </PaperProvider>
