@@ -11,6 +11,7 @@ import ParameterTopBar from '../components/ParameterTopBar';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 import CustomButton from '../components/CustomButton';
+import DietsTab from '../components/DietsTab';
 
 
 export default function RecipeSuggestion(props) {
@@ -114,9 +115,20 @@ export default function RecipeSuggestion(props) {
                         )} 
 
                         {visibleFilters &&(
-                           <View style={[styles.page, { justifyContent: 'space-between'}]}>
-                              <Text>HEHEHEHEHEHEHE</Text>
-                              <View>
+                           <View style={[styles.page, { justifyContent: 'space-between', alignContent: 'center'}]}>
+
+                            <View style={{backgroundColor: '#F2F0E4', zIndex: 2}}>
+                              <View style={[styles.horizontalAlignement, {justifyContent: "flex-start", marginLeft: 20}]}>
+                                  <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
+                              </View>
+                              <View style={{alignContent: 'center', justifyContent: 'space-between', margin: 10}}>
+                                <DietsTab title="Diets" content={props.diets}></DietsTab>
+                                <View style={{height: 5}}></View>
+                                <DietsTab title="Allergy" content={props.allergy}></DietsTab>
+                              </View>
+                              
+                            </View>
+                              <View style={{zIndex: 1, position: 'absolute', marginTop: 300}} >
                                   <CustomButton title="Save"></CustomButton>
                               </View>
                           </View>

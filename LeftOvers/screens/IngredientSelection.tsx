@@ -109,7 +109,7 @@ export default function IngredientSelection() {
                   <View style={{ height: 30 }}></View>
 
                   <View style={styles.horizontalAlignement}>
-                    <FoodElementText title="test" />
+                    <FoodElementText title="test" />       
                     <Image source={brochette} style={{ width: 20, height: 20 }} />
                   </View>
                   <View style={{ height: 30 }}></View>
