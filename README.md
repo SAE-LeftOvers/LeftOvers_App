@@ -24,7 +24,7 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
 
 [**Images**](Images) : **Images de l'application**
 
-👉 [**Solution de l'application**](LeftOvers/App.js)
+👉 [**Solution de l'application**](LeftOvers/App.tsx)
 
 # Fonctionnement
 
@@ -51,7 +51,6 @@ Technologies utilisées :
 &nbsp; ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 &nbsp; ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 &nbsp; ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-&nbsp; ![Android Studio](https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)
 
 </div>
 
