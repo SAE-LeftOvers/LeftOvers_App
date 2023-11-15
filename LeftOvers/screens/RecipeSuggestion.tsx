@@ -120,11 +120,7 @@ export default function RecipeSuggestion(props) {
                                   <CustomButton title="Save"></CustomButton>
                               </View>
                           </View>
-
-
                         )}
-
-
                     </Modal>
                 </Portal>
             </PaperProvider>
