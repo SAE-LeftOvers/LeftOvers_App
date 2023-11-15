@@ -2,13 +2,12 @@ import React from 'react';
 import { Appbar } from 'react-native-paper';
 
 interface TopBarProps{
-    source : string
-    firstImage  : string
-    lastImage : string
+    title : string
+    isVisible : boolean
   }
   
   
-  export default function TopBar(props : any) {
+  export default function TopBar(props) {
 
     const _goBack = () => console.log('Went back');
 
@@ -18,9 +17,15 @@ interface TopBarProps{
     return (
         <Appbar.Header  style={{backgroundColor: '#F2F0E4'}} >
             <Appbar.BackAction onPress={_goBack} />
-            <Appbar.Content title="Recipes" />
-            <Appbar.Action icon="magnify" onPress={_handleSearch} />
-            <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
+            <Appbar.Content title={props.title} />
+
+            {props.isVisible &&(
+              <><Appbar.Action icon="magnify" onPress={_handleSearch} />
+              <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
+              </>
+            )}
+
+            
       </Appbar.Header>
     );
   }

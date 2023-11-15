@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import background from '../assets/images/Background.png'; 
-import normalize from './Normalize';
 
 
 interface recipeElementReduceProps {

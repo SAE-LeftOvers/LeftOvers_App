@@ -10,6 +10,7 @@ import brochette from '../assets/images/brochette.png';
 import ParameterTopBar from '../components/ParameterTopBar';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
+import CustomButton from '../components/CustomButton';
 
 
 export default function RecipeSuggestion(props) {
@@ -26,7 +27,7 @@ export default function RecipeSuggestion(props) {
   const hideModal = () => setVisible(false);
   const containerStyle = {
     backgroundColor: 'white',
-    height: 400,
+    height: 450,
     width: 380,
   };
   
@@ -69,7 +70,7 @@ export default function RecipeSuggestion(props) {
 
   return (
     <SafeAreaProvider>
-      <TopBar />
+      <TopBar title="Recipes" isVisible="true"/>
       <View style={styles.page}>
         <SelectedIngredient 
           listeIngredient={props.list} 
@@ -105,13 +106,22 @@ export default function RecipeSuggestion(props) {
                                           <Image source={bracketRight} style={{ width: 20, height: 20 }} />
                                         </Pressable>
                                       </View>
+
+                                      <View>
+                                          <CustomButton title="Save"></CustomButton>
+                                      </View>
                         </View>
                         )} 
 
                         {visibleFilters &&(
                            <View style={[styles.page, { justifyContent: 'space-between'}]}>
                               <Text>HEHEHEHEHEHEHE</Text>
+                              <View>
+                                  <CustomButton title="Save"></CustomButton>
+                              </View>
                           </View>
+
+
                         )}
 
 
@@ -142,7 +152,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '50%', // Centre verticalement
     left: '50%', // Centre horizontalement
-    transform: [{ translateX: -185 }, { translateY: -120 }], // Ajustez en fonction de la moitié de la hauteur et de la largeur
+    transform: [{ translateX: -185 }, { translateY: -90 }], // Ajustez en fonction de la moitié de la hauteur et de la largeur
   },
   horizontalAlignement: {
     display: 'flex',
