@@ -8,6 +8,9 @@ import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
+import meat from '../assets/images/meat_icon.png';
+import vegetable from '../assets/images/vegetable_icon.png';
+import fruit from '../assets/images/fruit_icon.png';
 
 
 export default function IngredientSelection(props) {
@@ -44,16 +47,13 @@ const ChooseItem = ({value}: ItemProps) => (
             <View style={styles.element}>
               <View style={[styles.horizontalAlignement, {justifyContent: 'center'}]}>
                 <Pressable>
-                    <Image source={brochette} style={{ width: 40, height: 40 }} />
+                    <Image source={meat} style={{ width: 30, height: 30 }} />
                 </Pressable>
                 <Pressable>
-                    <Image source={brochette} style={{ width: 40, height: 40 }} />
+                    <Image source={vegetable} style={{ width: 30, height: 30 }} />
                 </Pressable>
                 <Pressable>
-                    <Image source={brochette} style={{ width: 40, height: 40 }} />
-                </Pressable>
-                <Pressable>
-                    <Image source={brochette} style={{ width: 40, height: 40 }} />
+                    <Image source={fruit} style={{ width: 30, height: 30 }} />
                 </Pressable>
               </View>
               <View>
