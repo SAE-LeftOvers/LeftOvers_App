@@ -10,6 +10,6 @@ steps:
   - name: app-build
     image: node:latest
     commands:
-      - cd ./LeftOvers
+      - cd ./LeftOvers/
       - npm install
       - npm run
