@@ -1,0 +1,15 @@
+kind: pipeline
+type: docker
+name: LeftOvers
+
+trigger:
+  event:
+    - push
+
+steps:
+  - name: app-build
+    image: node:latest
+    commands:
+      - cd ./LeftOvers
+      - npm install
+      - npm run
