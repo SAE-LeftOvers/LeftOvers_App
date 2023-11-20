@@ -21,6 +21,7 @@ export default function ValidateButton(props: ValidateButtonProps) {
             borderColor: props.colour,
             backgroundColor: props.backColour,
             alignItems: 'center',
+            justifyContent: "center",
             flexDirection: "row",
             padding: 5,
             paddingRight: 10,}}>

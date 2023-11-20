@@ -10,6 +10,7 @@ type Profile = {
 
 export default function ProfileElement(props : Profile) {
   const [waiting, setWaiting] = useState("none")
+  const [separator, setSeparator] = useState("none")
   const changeStatus = () => {
       if (props.disableSelection){
           setWaiting("none")
@@ -20,7 +21,13 @@ export default function ProfileElement(props : Profile) {
       else{
           setWaiting("flex")
       }
-      console.log(waiting, props.name)
+      if (props.isActive == "flex" && waiting == "none"){
+          setSeparator("flex")
+      }
+      else{
+          setSeparator("none")
+      }
+      console.log(waiting, separator, props.name)
   };
   return (
       <Pressable onPress={changeStatus} style={styles.button}>
@@ -33,7 +40,7 @@ export default function ProfileElement(props : Profile) {
                   <View style={[styles.active, {display: props.isActive}]}>
                       <Text style={styles.textActive}>Activated</Text>
                   </View>
-                  <View style={{flex: 0.3, display: waiting}}/>
+                  <View style={{flex: 0.3, display: separator}}/>
                   <View style={[styles.waiting, {display: waiting}]}>
                       <Text style={styles.textWaiting}>Waiting...</Text>
                   </View>

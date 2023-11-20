@@ -87,7 +87,7 @@ export default function HomePage(props) {
                      <View style={{marginTop: 10}}/>
                      <View style={styles.ingredientSelection}>
                          <Text style={{fontSize: 15, color: "#3F3C42"}}>Selected Ingredient</Text>
-                         <View style={{flexDirection: "row", padding: 10}}>
+                         <View style={{flexDirection: "row", padding: 10, justifyContent: "center", alignItems: "center"}}>
                              <Pressable onPress={decreaseCounter}>
                                  <Image source={bracketLeft} style={{ width: 40, height: 40 }} />
                              </Pressable>
@@ -97,9 +97,9 @@ export default function HomePage(props) {
                              </Pressable>
                          </View>
                      </View>
-                     <View style={{marginTop: 20}}/>
+                     <View style={{marginTop: 15}}/>
                      <ValidateButton title="Change Selected Ingredients" image="cook.png" colour="#59BDCD" backColour="#E3DEC9"/>
-                     <View style={{marginTop: 5}}/>
+                     <View style={{marginTop: 10}}/>
                      <ValidateButton title="Search Recipes" image="search.png" colour="#59BDCD" backColour="#E3DEC9"/>
                 </View>
             </LinearGradient>
@@ -145,18 +145,17 @@ const styles = StyleSheet.create({
   },
   nbSelected: {
         fontSize: 11,
-        //flex: 0.2,
         color: "#3F3C42",
         textAlign: "right",
   },
 
   profilesSelection: {
-        //maxWidth: 370,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
         backgroundColor: '#F2F0E4',
+        paddingTop: 5,
         marginHorizontal: 10,
   },
   welcome: {

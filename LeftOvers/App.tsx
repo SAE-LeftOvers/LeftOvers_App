@@ -9,11 +9,11 @@ import FiltersSelection from './screens/FiltersSelection';
 
 export default function App(props) {
   return(
-    <HomePage/>
+    //<HomePage/>
     //<ModifyProfile/>
     //<Profiles/>
     //<RecipeSuggestion/>
     //<CreateProfile/>
-    //<FiltersSelection/>
+    <FiltersSelection/>
   );
 }

@@ -14,7 +14,7 @@ export default function ModifyProfile(props) {
         <TopBar title="Modify Profile" isVisible="true"/>
         <View style={styles.container}>
             <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
-                <View style={{marginTop: 10}}/>
+                <View style={{marginTop: 20}}/>
                 <ProfileModification name="Johnny Silverhand" avatar="plus_small.png" diets={die} allergies={all}></ProfileModification>
                 <View style={{marginTop: 10}}/>
                 <ValidateButton title="Update Profile" image="update.png" colour="#ACA279" backColour="#F2F0E4"></ValidateButton>
