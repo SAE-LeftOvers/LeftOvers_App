@@ -4,24 +4,15 @@ import ValidateButton from './ValidateButton';
 import HeaderFlatList from './HeaderFlatList';
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
 
-type DietsProps = {
+type ListProps = {
     title: string
     content : list<string>
 }
 
-export default function DietsTab(props: DietsProps) {
+export default function ListWithoutSelect(props: ListProps) {
   const [selected, setSelected] = React.useState([]);
-  const data = [
-        {key:'1', value:'Dairy free'},
-        {key:'2', value:'Gluten free'},
-        {key:'3', value:'Porkless'},
-        {key:'4', value:'Vegan'},
-        {key:'5', value:'Vegetatian'},
-        {key:'6', value:'Pescatarian'},
-  ]
   return (
     <MultipleSelectList
-        setSelected={(val) => setSelected(val)}
         data={props.content}
         save="value"
         search={false}
@@ -31,6 +22,8 @@ export default function DietsTab(props: DietsProps) {
         dropdownStyles={styles.itemList}
         dropdownItemStyles={styles.itemCell}
         dropdownTextStyles={styles.itemText}
+        checkBoxStyles={styles.box}
+        notFoundText="None"
         placeholder={props.title}
         label={props.title}/>
   );
@@ -94,4 +87,9 @@ const styles = StyleSheet.create({
       paddingLeft: 10,
       color: "#3F3C42",
   },
+
+  box: {
+      borderWidth: 0,
+      flex: 0,
+  }
 });
