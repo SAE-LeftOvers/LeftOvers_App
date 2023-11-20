@@ -22,7 +22,7 @@ export default function FiltersSelection(props) {
   const allProfiles = [{value: "Skimmed Milk"}, {value: "Nuts"}]
   const dieProfiles = [{value: "Porkless"}, {value: "Pescatarian"}]
 
-  const dieAdd = []
+  const dieAdd = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Vegan"}, {value: "Vegetarian"}]
   const allAdd = []
 
   return (
@@ -130,8 +130,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 20,
         backgroundColor: '#F2F0E4',
-        padding: 10,
-        //paddingBottom: 0,
         marginHorizontal: 10,
   },
 });
