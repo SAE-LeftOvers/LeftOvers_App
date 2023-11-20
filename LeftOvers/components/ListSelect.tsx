@@ -23,6 +23,8 @@ export default function ListSelect(props: ListProps) {
         dropdownStyles={styles.itemList}
         dropdownItemStyles={styles.itemCell}
         dropdownTextStyles={styles.itemText}
+        badgeStyles={styles.badges}
+        badgeTextStyles={styles.badgesText}
         placeholder={props.title}
         label={props.title}/>
   );
@@ -85,5 +87,13 @@ const styles = StyleSheet.create({
       padding: 5,
       paddingLeft: 10,
       color: "#3F3C42",
+  },
+
+  badges: {
+      backgroundColor: "#59BDCD"
+  },
+  badgesText: {
+      fontSize: 15,
+      color: "#F2F0E4",
   },
 });

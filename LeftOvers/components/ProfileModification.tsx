@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 import {StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import ValidateButton from './ValidateButton';
 import ListSelect from './ListSelect';
@@ -12,11 +12,13 @@ type ProfileProps = {
 }
 
 export default function ProfileModification(props: ProfileProps) {
+  const [name, onChangeName] = useState(props.name);
+
   return (
     <View style={styles.background}>
         <View style={styles.pseudoBar}>
             <Image source={require("../assets/images/"+props.avatar)} style={styles.avatar}></Image>
-            <TextInput style={styles.textInput} value={props.name}></TextInput>
+            <TextInput style={styles.textInput} value={name} onChangeText={onChangeName} placeholder="Name"></TextInput>
             <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
         </View>
         <View style={styles.filterBar}>
