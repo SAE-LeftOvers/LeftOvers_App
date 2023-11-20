@@ -33,11 +33,11 @@ export default function FiltersSelection(props) {
                 <View style={{marginTop: 20}}/>
                 <View style={styles.profilesSelection}>
                     <View style={styles.filterBar}>
-                        <Text style={styles.filters}>Filters</Text>
+                        <Text style={styles.filters}>Profiles</Text>
                         <Text style={styles.nbSelected}>2 selected, 1 waiting</Text>
                     </View>
                     <View style={{marginTop: 10}}/>
-                    <ProfileSelection listProfile={profiles}/>
+                    <ProfileSelection listProfile={profiles} disableSelection={false}/>
                     <View style={{marginTop: 20}}/>
                     <ValidateButton title="Change Selected Profiles" image="update.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
                 </View>

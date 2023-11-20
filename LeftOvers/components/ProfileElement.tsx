@@ -5,12 +5,16 @@ type Profile = {
   name: string
   avatar: string
   isActive: string
+  disableSelection: boolean
 }
 
 export default function ProfileElement(props : Profile) {
   const [waiting, setWaiting] = useState("none")
   const changeStatus = () => {
-      if (waiting == "flex"){
+      if (props.disableSelection){
+          setWaiting("none")
+      }
+      else if (waiting == "flex"){
           setWaiting("none")
       }
       else{

@@ -5,14 +5,14 @@ import bracketRight from '../assets/images/angle_bracket_right.png';
 import ProfileElement from './ProfileElement'
 
 type ProfileSelectionProps = {
-  listProfile: Profile[];
+  listProfile: Profile[]
+  disableSelection: boolean
 }
 
 type Profile = {
     name: string
     avatar: string
     isActive: boolean
-    isWaiting: boolean
 }
 
 export default function ProfileSelection(props: ProfileSelectionProps) {
@@ -39,7 +39,7 @@ export default function ProfileSelection(props: ProfileSelectionProps) {
           <Pressable onPress={decreaseCounter} style={{}}>
              <Image source={bracketLeft} style={{ width: 40, height: 40 }} />
           </Pressable>
-          <ProfileElement name={props.listProfile[cpt].name} avatar={props.listProfile[cpt].avatar} isActive={props.listProfile[cpt].isActive}/>
+          <ProfileElement name={props.listProfile[cpt].name} avatar={props.listProfile[cpt].avatar} isActive={props.listProfile[cpt].isActive} disableSelection={props.disableSelection}/>
           <Pressable onPress={increaseCounter} style={{}}>
              <Image source={bracketRight} style={{ width: 40, height: 40 }} />
           </Pressable>
