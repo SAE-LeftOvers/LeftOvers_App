@@ -6,6 +6,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import RecipeSuggestion from './screens/RecipeSuggestion';
 import RecipeDetails from './screens/RecipeDetails';
 import IngredientSelection from './screens/IngredientSelection';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const all = [{value: "Mussels"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
@@ -37,15 +41,20 @@ export default function App() {
 const ingredients = generateList();
   
   return (
-    <IngredientSelection listIngredient={ingredients}></IngredientSelection>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={IngredientSelection} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    // <IngredientSelection listIngredient={ingredients}></IngredientSelection>
     /*<RecipeSuggestion list={ingredients} diets={die} allergy={all}></RecipeSuggestion>*/
-    /*<RecipeDetails ingredient={ingredient} 
-    ustensils={ustensils} 
-    steps={steps} 
-    title="Chocolat Cake" 
-    number="63"
-    duree="30 minutes"
-    ></RecipeDetails>*/
+      /*<RecipeDetails ingredient={ingredient} 
+      ustensils={ustensils} 
+      steps={steps} 
+      title="Chocolat Cake" 
+      number="63"
+      duree="30 minutes"
+      ></RecipeDetails>*/
   );
 }
 
