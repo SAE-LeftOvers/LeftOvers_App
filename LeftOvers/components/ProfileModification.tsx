@@ -1,4 +1,5 @@
-import {React, useState} from 'react';
+import React from 'react';
+import { useState } from 'react';
 import {StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import ValidateButton from './ValidateButton';
 import ListSelect from './ListSelect';

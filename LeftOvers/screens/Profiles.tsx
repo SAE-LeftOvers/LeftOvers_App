@@ -1,4 +1,5 @@
-import {React, useState} from 'react';
+import React from 'react';
+import { useState } from 'react';
 import {StyleSheet, View, Modal, Pressable, Text, Image} from 'react-native';
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
@@ -6,7 +7,7 @@ import TopBar from '../components/TopBar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-export default function Profiles(props) {
+export default function Profiles({props, navigation}) {
   const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
   const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
 
@@ -34,16 +35,15 @@ export default function Profiles(props) {
     <SafeAreaProvider>
         <View style={styles.container}>
             <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1, backgroundColor: '#3F3C42',}}>
-                <TopBar title="Profiles" isVisible="true"/>
                 <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
                     <View style={{marginTop: 10}}/>
-                    <ProfileDetails name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny} onDeleteProfile={raisePopUp}></ProfileDetails>
+                    <ProfileDetails name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
                     <View style={{marginTop: 10}}/>
-                    <ProfileDetails name="Jackie Welles" avatar="plus_small.png" diets={dieJackie} allergies={allJackie} onDeleteProfile={raisePopUp}></ProfileDetails>
+                    <ProfileDetails name="Jackie Welles" avatar="plus_small.png" diets={dieJackie} allergies={allJackie} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
                     <View style={{marginTop: 10}}/>
-                    <ProfileDetails name="Goro Takemura" avatar="plus_small.png" diets={dieGoro} allergies={allGoro} onDeleteProfile={raisePopUp}></ProfileDetails>
+                    <ProfileDetails name="Goro Takemura" avatar="plus_small.png" diets={dieGoro} allergies={allGoro} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
                     <View style={{marginTop: 10}}/>
-                    <ProfileDetails name="Viktor Vector" avatar="plus_small.png" diets={dieViktor} allergies={allViktor} onDeleteProfile={raisePopUp}></ProfileDetails>
+                    <ProfileDetails name="Viktor Vector" avatar="plus_small.png" diets={dieViktor} allergies={allViktor} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
                     <View style={{marginTop: 10}}/>
                     <View style={styles.modal}>
                         <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>

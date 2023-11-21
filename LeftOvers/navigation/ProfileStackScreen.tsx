@@ -1,50 +1,85 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, View, Image, Pressable } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Profiles from '../screens/Profiles';
-import TopBar from '../components/TopBar';
+import CreateProfile from '../screens/CreateProfile';
+import ModifyProfile from '../screens/ModifyProfile';
+
+import { HeaderTitle } from './Utils';
+
+import SearchIcon from '../assets/images/search.png';
+import AddIcon from '../assets/images/plus.png'
 
 const ProfilesStack = createNativeStackNavigator()
 
-export default function ProfilesStackScreen() {
-  return (
-    <ProfilesStack.Navigator>
-        <ProfilesStack.Screen
-          name='Profiles'
-          component={Profiles}
-          options={{
-            headerTitle: () => (
-                <TopBar title='Profiles' isVisible={true}/>
-            )
-          }}
-        />
-    </ProfilesStack.Navigator>
-  )
+export default function ProfilesStackScreen({ navigation }) {
+    const _handleSearch = () => console.log('Searching');
+    const _handleHeaderAdd = () => navigation.navigate('ProfileCreation');
+    
+    return (
+        <ProfilesStack.Navigator>
+            <ProfilesStack.Screen
+                name='Profiles'
+                component={Profiles}
+                options={{
+                    headerStyle: styles.headerBarContainer,
+                    headerTitle: () => (
+                        <HeaderTitle title='Profiles'/>
+                    ),
+                    headerRight: () => (
+                        <View style={styles.headerBarRightContainer}>
+                            <Pressable onPress={_handleSearch}>
+                                <Image 
+                                    source={SearchIcon}
+                                    style={styles.headerBarIcon}/>
+                            </Pressable>
+                            <Pressable onPress={_handleHeaderAdd}>
+                                <Image
+                                    source={AddIcon}
+                                    style={styles.headerBarIcon}/>
+                            </Pressable>
+                        </View>
+                    )
+                }}
+            />
+            <ProfilesStack.Screen
+                name='ProfileCreation'
+                component={CreateProfile}
+                options={{
+                  headerStyle: styles.headerBarContainer,
+                    headerTitle: () => (
+                        <HeaderTitle title='Profile Creation'/>
+                    )
+                }}
+            />
+            <ProfilesStack.Screen
+                name='ProfileModification'
+                component={ModifyProfile}
+                options={{
+                    headerStyle: styles.headerBarContainer,
+                    headerTitle: () => (
+                        <HeaderTitle title='Profile Modification'/>
+                    )
+                }}
+            />
+        </ProfilesStack.Navigator>
+    )
 }
 
 const styles = StyleSheet.create({
     headerBarContainer: {
-        flexDirection: 'row',
-        width: "100%",
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#F2F0E4',
-        padding: 5,
     },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: '#3F3C42',
-        textAlign: "center",
-        textAlignVertical: 'center',
-        flex: 0.8,
+    headerBarRightContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignContent: 'space-between',
+        marginHorizontal: 10,
     },
-    headerAppIcon: {
-        width: 35,
-        height: 35
-    },
-    headerAppIconContainer: {
-        
+    headerBarIcon: {
+        width: 30,
+        height: 30,
+        marginHorizontal: 10
     }
 })

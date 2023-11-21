@@ -2,6 +2,7 @@ import {React, useState} from 'react';
 import {StyleSheet, Text, TextInput, View, Image, Pressable} from 'react-native';
 import ValidateButton from './ValidateButton';
 import ListWithoutSelect from './ListWithoutSelect';
+import { useNavigation } from '@react-navigation/native';
 
 type ProfileProps = {
   name: string
@@ -9,9 +10,11 @@ type ProfileProps = {
   diets: list<string>
   allergies: list<string>
   onDeleteProfile: () => void
+  navigation
 }
 
 export default function ProfileDetails(props: ProfileProps) {
+
   const [display, setDisplay] = useState("none")
   const changeListVisibility = () => {
     if (display == "none"){
@@ -27,7 +30,9 @@ export default function ProfileDetails(props: ProfileProps) {
         <View style={styles.pseudoBar}>
             <Image source={require("../assets/images/"+props.avatar)} style={styles.avatar}></Image>
             <Text style={styles.text}>{props.name}</Text>
-            <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
+            <Pressable onPress={() => props.navigation.navigate('ProfileModification')}>
+                <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
+            </Pressable>
             <Pressable onPress={props.onDeleteProfile}>
                 <Image source={require("../assets/images/delete.png")} style={styles.delete}></Image>
             </Pressable>

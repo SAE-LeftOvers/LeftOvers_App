@@ -11,7 +11,6 @@ export default function ModifyProfile(props) {
   const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
   return (
     <SafeAreaProvider>
-        <TopBar title="Modify Profile" isVisible="true"/>
         <View style={styles.container}>
             <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
                 <View style={{marginTop: 20}}/>

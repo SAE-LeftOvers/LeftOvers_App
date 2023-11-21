@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { Image, Text, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomePage from '../screens/HomePage';
 import Profiles from '../screens/Profiles';
-import appLogo from '../assets/images/icon.png';
+import { HeaderTitle } from './Utils';
+import appLogo from '../assets/images/logo.png';
 
 const HomeStack = createNativeStackNavigator()
 
@@ -13,15 +14,6 @@ function AppIcon() {
         <Image
             source={appLogo}
             style={styles.headerAppIcon}/>
-    )
-}
-
-function TextTitle(props) {
-    return (
-      <Text 
-          style={styles.headerTitle}>
-          {props.title}
-      </Text>
     )
 }
 
@@ -39,7 +31,7 @@ export default function HomeStackScreen() {
                     ),
 
                     headerTitle: () => (
-                        <TextTitle title='LeftOvers'/>
+                        <HeaderTitle title='LeftOvers'/>
                     ),
                     headerTitleAlign: 'center',
 
@@ -54,7 +46,7 @@ export default function HomeStackScreen() {
                 options={{
                     headerStyle: styles.headerBarContainer,
                     headerTitle: () => (
-                      <TextTitle title='Profiles'/>
+                      <HeaderTitle title='Profiles'/>
                     )
                 }}
             />
@@ -66,16 +58,9 @@ const styles = StyleSheet.create({
     headerBarContainer: {
         backgroundColor: '#F2F0E4',
     },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: '#3F3C42',
-    },
     headerAppIcon: {
-        width: 35,
-        height: 35,
-        borderRadius: 20,
-        overflow:'hidden',
+        width: 45,
+        height: 45,
         marginHorizontal: 10,
     }
 })
