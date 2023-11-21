@@ -246,7 +246,6 @@ dist
 .pnp.*
 
 ### Node Patch ###
-**/package-lock.json
 # Serverless Webpack directories
 .webpack/
 

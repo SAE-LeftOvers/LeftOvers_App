@@ -1,7 +1,6 @@
 import {React, useState} from 'react';
-import {StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {StyleSheet, Text, TextInput, View, Image, Pressable} from 'react-native';
 import ValidateButton from './ValidateButton';
-import ListSelect from './ListSelect';
 import ListWithoutSelect from './ListWithoutSelect';
 
 type ProfileProps = {
@@ -9,27 +8,43 @@ type ProfileProps = {
   avatar: string
   diets: list<string>
   allergies: list<string>
+  onDeleteProfile: () => void
 }
 
-export default function ProfileModification(props: ProfileProps) {
-  const [name, onChangeName] = useState(props.name);
+export default function ProfileDetails(props: ProfileProps) {
+  const [display, setDisplay] = useState("none")
+  const changeListVisibility = () => {
+    if (display == "none"){
+        setDisplay("flex")
+    }
+    else{
+        setDisplay("none")
+    }
+  };
 
   return (
     <View style={styles.background}>
         <View style={styles.pseudoBar}>
             <Image source={require("../assets/images/"+props.avatar)} style={styles.avatar}></Image>
-            <TextInput style={styles.textInput} value={name} onChangeText={onChangeName} placeholder="Name"></TextInput>
+            <Text style={styles.text}>{props.name}</Text>
             <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
+            <Pressable onPress={props.onDeleteProfile}>
+                <Image source={require("../assets/images/delete.png")} style={styles.delete}></Image>
+            </Pressable>
         </View>
-        <View style={styles.filterBar}>
-            <Text style={styles.filters}>Filters</Text>
-            <Text style={styles.nbSelected}>3 selected</Text>
+        <Pressable onPress={changeListVisibility} style={{height: 20, marginTop: 20,}}>
+            <View style={styles.filterBar}>
+                <Text style={styles.filters}>Filters</Text>
+                <Text style={styles.nbSelected}>3 selected</Text>
+                <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
+            </View>
+        </Pressable>
+        <View style={{display: display}}>
+            <ListWithoutSelect title="Diets" content={props.diets}></ListWithoutSelect>
+            <View style={{marginTop: 10}}/>
+            <ListWithoutSelect title="Allergies" content={props.allergies}></ListWithoutSelect>
+            <View style={{marginTop: 10}}/>
         </View>
-        <ListSelect title="Diets" content={props.diets}></ListSelect>
-        <View style={{marginTop: 10}}/>
-        <ListWithoutSelect title="Allergies" content={props.allergies}></ListWithoutSelect>
-        <View style={{marginTop: 10}}/>
-        <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
     </View>
   );
 }
@@ -60,15 +75,9 @@ const styles = StyleSheet.create({
     borderColor: "#ACA279",
     borderRadius: 45,
   },
-  textInput: {
-    flex: 0.5,
-    fontSize: 15,
+  text: {
+    fontSize: 20,
     color: '#ACA279',
-    width : 150,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderStyle: 'dashed',
-    borderColor: '#ACA279',
     alignItems: 'center',
     justifyContent: 'left',
     flex: 0.8,
@@ -80,8 +89,15 @@ const styles = StyleSheet.create({
       width: 20,
       tintColor: "#ACA279",
       resizeMode: 'contain',
-      flex: 0.1,
-      marginLeft: 5,
+      flex: 0.05,
+      marginLeft: 15,
+  },
+  delete: {
+        height: 20,
+        width: 20,
+        tintColor: "#ACA279",
+        resizeMode: 'contain',
+        flex: 0.05,
   },
 
 
@@ -109,5 +125,12 @@ const styles = StyleSheet.create({
       flex: 1,
       color: "#3F3C42",
       textAlign: "right",
-    }
+  },
+  arrow: {
+      height: 20,
+      width: 20,
+      resizeMode: 'contain',
+      tintColor: "#3F3C42",
+      flex: 0.1,
+  },
 });
