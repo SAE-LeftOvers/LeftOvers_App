@@ -12,7 +12,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 
-export default function HomePage(props, { navigation }) {
+export default function HomePage({ navigation , props}) {
   const profiles = [
         {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
         {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
