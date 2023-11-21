@@ -6,6 +6,8 @@ import HomePage from '../screens/HomePage';
 import Profiles from '../screens/Profiles';
 import { HeaderTitle } from './Utils';
 import appLogo from '../assets/images/logo.png';
+import CreateProfile from '../screens/CreateProfile';
+import ModifyProfile from '../screens/ModifyProfile';
 
 const HomeStack = createNativeStackNavigator()
 
@@ -47,6 +49,16 @@ export default function HomeStackScreen() {
                     headerStyle: styles.headerBarContainer,
                     headerTitle: () => (
                       <HeaderTitle title='Profiles'/>
+                    )
+                }}
+            />
+            <HomeStack.Screen
+                name='ProfileModification'
+                component={ModifyProfile}
+                options={{
+                    headerStyle: styles.headerBarContainer,
+                    headerTitle: () => (
+                        <HeaderTitle title='Profile Modification'/>
                     )
                 }}
             />
