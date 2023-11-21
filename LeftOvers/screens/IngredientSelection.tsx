@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, Pressable,ScrollView} from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {View, StyleSheet, Text, Image, Pressable, ScrollView} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import TopBar from '../components/TopBar';
-import { Searchbar } from 'react-native-paper';
+import {Searchbar} from 'react-native-paper';
 import brochette from '../assets/images/brochette.png'; 
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';

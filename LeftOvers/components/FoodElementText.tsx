@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   view: {
-
     alignItems: 'flex-start',
     justifyContent: 'center',
     marginRight: 5 // Centre le contenu horizontalement
