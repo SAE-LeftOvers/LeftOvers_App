@@ -1,4 +1,5 @@
-import {React, useState} from 'react';
+import React from 'react';
+import { useState } from 'react';
 import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
 import ProfileModification from '../components/ProfileModification';
 import ValidateButton from '../components/ValidateButton';
@@ -14,10 +15,10 @@ import bracketRight from '../assets/images/angle_bracket_right.png';
 
 export default function HomePage({ navigation , props}) {
   const profiles = [
-        {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
-        {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
-        {name: "Goro Takemura", avatar: "plus_small.png", isActive: "none"},
-        {name: "David Martinez", avatar: "plus_small.png", isActive: "flex"},
+      {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
+      {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
+      {name: "Goro Takemura", avatar: "plus_small.png", isActive: "none"},
+      {name: "David Martinez", avatar: "plus_small.png", isActive: "flex"},
   ]
 
   const ingredientList = [{title: "Carrot"}, {title: "Potato"}, {title: "Peach"}]
@@ -72,7 +73,7 @@ export default function HomePage({ navigation , props}) {
                         <Text style={styles.filters}>Ingredient Stocks</Text>
                     </View>
                     <View style={{marginTop: 10}}/>
-                    <ValidateButton title="Manage Stocks" image="warehouse.png" colour="#59BDCD" backColour="#E3DEC9"/>
+                    <ValidateButton title="Manage Stocks" image="warehouse.png" colour="#59BDCD" backColour="#E3DEC9" todo={() => console.log('ManageStocks')}/>
                 </View>
                 <View style={{marginTop: 20}}/>
                 <View style={styles.profilesSelection}>
@@ -93,9 +94,9 @@ export default function HomePage({ navigation , props}) {
                          </View>
                      </View>
                      <View style={{marginTop: 15}}/>
-                     <ValidateButton title="Change Selected Ingredients" image="cook.png" colour="#59BDCD" backColour="#E3DEC9"/>
+                     <ValidateButton title="Change Selected Ingredients" image="cook.png" colour="#59BDCD" backColour="#E3DEC9" todo={ () => console.log('Chnge Selected Ingredient')}/>
                      <View style={{marginTop: 10}}/>
-                     <ValidateButton title="Search Recipes" image="search.png" colour="#59BDCD" backColour="#E3DEC9"/>
+                     <ValidateButton title="Search Recipes" image="search.png" colour="#59BDCD" backColour="#E3DEC9" todo={ () => console.log('Go and search for recipe')}/>
                 </View>
             </LinearGradient>
         </View>

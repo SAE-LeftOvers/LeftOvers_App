@@ -19,23 +19,26 @@ export default function ValidateButton(props: ValidateButtonProps) {
           borderRadius: 20,
         }}
         onPress={props.todo}>
-        <View style={{
-            borderRadius: 30,
-            borderWidth: 2,
-            borderColor: props.colour,
-            backgroundColor: props.backColour,
-            alignItems: 'center',
-            justifyContent: "center",
-            flexDirection: "row",
-            padding: 5,
-            paddingRight: 10,}}>
-            <Image source={require('../assets/images/'+props.image)} style={{
-                height: 20,
-                width: 20,
-                marginLeft: 5,
-                marginRight: 10,
-                resizeMode: "center",
-                tintColor: props.colour,}}>
+        <View 
+            style={{
+                borderRadius: 30,
+                borderWidth: 2,
+                borderColor: props.colour,
+                backgroundColor: props.backColour,
+                alignItems: 'center',
+                justifyContent: "center",
+                flexDirection: "row",
+                padding: 5,
+                paddingRight: 10,}}>
+            <Image 
+                source={require('../assets/images/'+props.image)} 
+                style={{
+                    height: 20,
+                    width: 20,
+                    marginLeft: 5,
+                    marginRight: 10,
+                    resizeMode: "center",
+                    tintColor: props.colour,}}>
             </Image>
             <Text style={{
                 fontSize: 20,
