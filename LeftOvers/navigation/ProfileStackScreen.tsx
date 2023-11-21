@@ -1,18 +1,24 @@
 import React from 'react'
-import { View, Image, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Profiles from '../screens/Profiles';
+import TopBar from '../components/TopBar';
 
 const ProfilesStack = createNativeStackNavigator()
 
 export default function ProfilesStackScreen() {
   return (
     <ProfilesStack.Navigator>
-      <ProfilesStack.Screen
-        name='Profiles'
-        component={Profiles}
-      />
+        <ProfilesStack.Screen
+          name='Profiles'
+          component={Profiles}
+          options={{
+            headerTitle: () => (
+                <TopBar title='Profiles' isVisible={true}/>
+            )
+          }}
+        />
     </ProfilesStack.Navigator>
   )
 }

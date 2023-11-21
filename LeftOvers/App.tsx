@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeStackScreen from './navigation/HomeStackScreen';
 import ProfilesStackScreen from './navigation/ProfileStackScreen';
+import CookingStackScreen from './navigation/CookingStackScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,9 +46,10 @@ export default function App() {
   
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={HomeStackScreen} />
-        <Tab.Screen name="Profile" component={ProfilesStackScreen}/>
+      <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName='Home'>
+        <Tab.Screen name='Profile' component={ProfilesStackScreen}/>
+        <Tab.Screen name='Home' component={HomeStackScreen} />
+        <Tab.Screen name='Cooking' component={CookingStackScreen}/>
       </Tab.Navigator>
     </NavigationContainer>
     // <IngredientSelection listIngredient={ingredients}></IngredientSelection>

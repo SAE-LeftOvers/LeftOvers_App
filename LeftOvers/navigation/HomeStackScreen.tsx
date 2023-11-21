@@ -8,64 +8,74 @@ import appLogo from '../assets/images/icon.png';
 
 const HomeStack = createNativeStackNavigator()
 
+function AppIcon() {
+    return (
+        <Image
+            source={appLogo}
+            style={styles.headerAppIcon}/>
+    )
+}
+
+function TextTitle(props) {
+    return (
+      <Text 
+          style={styles.headerTitle}>
+          {props.title}
+      </Text>
+    )
+}
+
 export default function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen 
-        name="Home" 
-        component={HomePage}
-        options={{
-          headerStyle: styles.headerBarContainer,
-          headerLeft: () => (
-            <View style={styles.headerAppIconContainer}>
-              <Image 
-                source={appLogo}
-                style={styles.headerAppIcon}/>
-            </View>
-          ),
-          headerTitle: () => (
-            <Text style={styles.headerTitle}>
-              LeftOvers
-            </Text>
-          ),
-          headerRight: () => (
-            <Image 
-              source={appLogo}
-              style={styles.headerAppIcon}/>
-          ),
-          headerTitleAlign: 'center'
-        }} 
-      />
-      <HomeStack.Screen
-        name='Profiles'
-        component={Profiles}
-      />
-    </HomeStack.Navigator>
-  )
+    return (
+        <HomeStack.Navigator>
+            <HomeStack.Screen 
+                name='Home'
+                component={HomePage}
+                options={{
+                    headerStyle: styles.headerBarContainer,
+
+                    headerLeft: () => (
+                        <AppIcon/>
+                    ),
+
+                    headerTitle: () => (
+                        <TextTitle title='LeftOvers'/>
+                    ),
+                    headerTitleAlign: 'center',
+
+                    headerRight: () => (
+                        <AppIcon/>
+                    ),
+                }} 
+            />
+            <HomeStack.Screen
+                name='Profiles'
+                component={Profiles}
+                options={{
+                    headerStyle: styles.headerBarContainer,
+                    headerTitle: () => (
+                      <TextTitle title='Profiles'/>
+                    )
+                }}
+            />
+        </HomeStack.Navigator>
+    )
 }
 
 const styles = StyleSheet.create({
     headerBarContainer: {
-        flexDirection: 'row',
-        width: "100%",
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#F2F0E4',
-        padding: 5,
     },
     headerTitle: {
         fontSize: 20,
         fontWeight: "bold",
         color: '#3F3C42',
-        textAlign: "center",
-        textAlignVertical: 'center',
-        flex: 0.8,
     },
     headerAppIcon: {
         width: 35,
-        height: 35
-    },
-    headerAppIconContainer: {
-        
+        height: 35,
+        borderRadius: 20,
+        overflow:'hidden',
+        marginHorizontal: 10,
     }
 })
