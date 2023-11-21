@@ -12,7 +12,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 
-export default function HomePage(props) {
+export default function HomePage(props, { navigation }) {
   const profiles = [
         {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
         {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
@@ -69,7 +69,7 @@ export default function HomePage(props) {
                     <View style={{marginTop: 10}}/>
                     <ProfileSelection listProfile={profiles} disableSelection={true}/>
                     <View style={{marginTop: 20}}/>
-                    <ValidateButton title="Modify Profiles" image="parameter.png" colour="#59BDCD" backColour="#E3DEC9"/>
+                    <ValidateButton title="Modify Profiles" image="parameter.png" colour="#59BDCD" backColour="#E3DEC9" todo={() => navigation.navigate('Profiles')}/>
                 </View>
                 <View style={{marginTop: 20}}/>
                 <View style={styles.profilesSelection}>
@@ -190,7 +190,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         padding: 5
   },
-
   appName: {
         fontSize: 20,
         fontWeight: "bold",

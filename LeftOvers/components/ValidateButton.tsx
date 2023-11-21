@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Pressable, Text, View, Image} from 'react-native';
+import {StyleSheet, Pressable, Text, View, Image, GestureResponderEvent} from 'react-native';
 
 
 type ValidateButtonProps = {
@@ -7,14 +7,18 @@ type ValidateButtonProps = {
   image: string
   colour: string
   backColour: string
+  todo: (event: GestureResponderEvent) => void
 }
 
 export default function ValidateButton(props: ValidateButtonProps) {
   return (
-    <Pressable style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 20,}}>
+    <Pressable 
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 20,
+        }}
+        onPress={props.todo}>
         <View style={{
             borderRadius: 30,
             borderWidth: 2,

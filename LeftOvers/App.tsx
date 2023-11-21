@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View } from 'react-native';
+import {StyleSheet, View, Image, Text } from 'react-native';
 import ProfileModification from './components/ProfileModification';
 import ValidateButton from './components/ValidateButton';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,44 +7,48 @@ import RecipeSuggestion from './screens/RecipeSuggestion';
 import RecipeDetails from './screens/RecipeDetails';
 import IngredientSelection from './screens/IngredientSelection';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Stack = createNativeStackNavigator();
+import HomeStackScreen from './navigation/HomeStackScreen';
+import ProfilesStackScreen from './navigation/ProfileStackScreen';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const all = [{value: "Mussels"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
-  const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
-  const ingredient = [{value: "Chocolate"}, {value: "Skimmed Milk"}, {value: "Eggs"}, , {value: "Farine"}]
-  const ustensils = [{value: "Bol"}, {value: "Fouet"}, {value: "Casserole"}]
-  const steps = [{value: "Chauffer chocolat"}, 
-  {value: "1. Casser oeuf"}, 
-  {value: "2. Melanger la farine, le lait et les oeufs"},
-  {value: "3. Battre fort"},
-  {value: "4. Voler la montre de Louison"},
-  {value: "5. Melanger avec le chocolat"},
-  {value: "6. Mettre au four"},
-]
+  // const all = [{value: "Mussels"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
+  // const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
+  // const ingredient = [{value: "Chocolate"}, {value: "Skimmed Milk"}, {value: "Eggs"}, , {value: "Farine"}]
+  // const ustensils = [{value: "Bol"}, {value: "Fouet"}, {value: "Casserole"}]
+  // const steps = [{value: "Chauffer chocolat"}, 
+  //   {value: "1. Casser oeuf"}, 
+  //   {value: "2. Melanger la farine, le lait et les oeufs"},
+  //   {value: "3. Battre fort"},
+  //   {value: "4. Voler la montre de Louison"},
+  //   {value: "5. Melanger avec le chocolat"},
+  //   {value: "6. Mettre au four"},
+  // ]
   
-  function generateList() {
-    const list = [];
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Teat");
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Meat");
-    return list;
-}
+  // function generateList() {
+  //   const list = [];
+  //   list.push("Meat");
+  //   list.push("Meat");
+  //   list.push("Meat");
+  //   list.push("Meat");
+  //   list.push("Teat");
+  //   list.push("Meat");
+  //   list.push("Meat");
+  //   list.push("Meat");
+  //   return list;
+  // }
 
-const ingredients = generateList();
+  // const ingredients = generateList();
   
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={IngredientSelection} />
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Home" component={HomeStackScreen} />
+        <Tab.Screen name="Profile" component={ProfilesStackScreen}/>
+      </Tab.Navigator>
     </NavigationContainer>
     // <IngredientSelection listIngredient={ingredients}></IngredientSelection>
     /*<RecipeSuggestion list={ingredients} diets={die} allergy={all}></RecipeSuggestion>*/
