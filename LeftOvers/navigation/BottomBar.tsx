@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
-import {Appearance } from 'react-native';
-import type { AppearancePreferences, ColorSchemeName } from 'react-native/Libraries/Utilities/NativeAppearance';
 import { BlurView } from 'expo-blur';
+import ThemeContext from '../theme/ThemeContext';
 
 import HomeIcon from '../assets/images/home.png';
 import ProfileIcon from '../assets/images/person_icon.png';
 import CookingIcon from '../assets/images/cook.png';
-import LightIcon from '../assets/images/update.png';
-import DarkIcon from '../assets/images/validate.png';
-import ThemeContext from '../theme/ThemeContext';
+import LightIcon from '../assets/images/sun.png';
+import DarkIcon from '../assets/images/moon.png';
+
 
 export default function BottomBar({ state, descriptors, navigation }) {
     const {theme, toggleTheme} = useContext(ThemeContext)
