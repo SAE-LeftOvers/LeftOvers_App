@@ -1,12 +1,12 @@
 import {React, useState} from 'react';
-import {StyleSheet, View, Modal, Pressable, Text, Image} from 'react-native';
+import {StyleSheet, View, Modal, Pressable, Text, Image, ScrollView} from 'react-native';
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
 import TopBar from '../components/TopBar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-export default function ModifyProfile(props) {
+export default function Profiles(props) {
   const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
   const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
 
@@ -31,8 +31,8 @@ export default function ModifyProfile(props) {
   }
 
   return (
-    <SafeAreaProvider>
-        <View style={styles.container}>
+    <SafeAreaProvider style={{flex: 1}}>
+        <ScrollView>
             <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1, backgroundColor: '#3F3C42',}}>
                 <TopBar title="Profiles" isVisible="true"/>
                 <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
@@ -75,7 +75,7 @@ export default function ModifyProfile(props) {
                     </View>
                 </LinearGradient>
             </View>
-        </View>
+        </ScrollView>
     </SafeAreaProvider>
   );
 }
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3F3C42',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   linearGradient: {
     height: "100%",

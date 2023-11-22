@@ -21,10 +21,22 @@ export default function ProfileDelete(props: ProfileProps) {
     }
   };
 
+  let imageSource
+
+  if (props.avatar == "plus.png"){
+     imageSource = require('../assets/images/plus.png')
+  }
+  else if (props.avatar == "plus_small.png"){
+     imageSource = require('../assets/images/plus_small.png')
+  }
+  else{
+     imageSource = require('../assets/images/logo.png')
+  }
+
   return (
     <View style={styles.background}>
         <View style={styles.pseudoBar}>
-            <Image source={require("../assets/images/"+props.avatar)} style={styles.avatar}></Image>
+            <Image source={imageSource} style={styles.avatar}></Image>
             <Text style={styles.text}>{props.name}</Text>
         </View>
         <Pressable onPress={changeListVisibility} style={{height: 20, marginTop: 20,}}>

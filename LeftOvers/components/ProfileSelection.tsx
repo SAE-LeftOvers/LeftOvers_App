@@ -36,12 +36,12 @@ export default function ProfileSelection(props: ProfileSelectionProps) {
 
   return (
       <View style={styles.background}>
-          <Pressable onPress={decreaseCounter} style={{}}>
-             <Image source={bracketLeft} style={{ width: 40, height: 40 }} />
+          <Pressable onPress={decreaseCounter}>
+             <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}}/>
           </Pressable>
           <ProfileElement name={props.listProfile[cpt].name} avatar={props.listProfile[cpt].avatar} isActive={props.listProfile[cpt].isActive} disableSelection={props.disableSelection}/>
-          <Pressable onPress={increaseCounter} style={{}}>
-             <Image source={bracketRight} style={{ width: 40, height: 40 }} />
+          <Pressable onPress={increaseCounter}>
+             <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain"}}/>
           </Pressable>
       </View>
   );
@@ -49,10 +49,9 @@ export default function ProfileSelection(props: ProfileSelectionProps) {
 
 const styles = StyleSheet.create({
   background: {
-    //height: 120,
-    height: 100,
+    width: "92%",
+    height: 80,
     borderRadius: 20,
-    marginHorizontal: 10,
     borderWidth: 2,
     borderColor: '#ACA279',
     backgroundColor: '#E3DEC9',

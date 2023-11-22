@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import ProfileModification from '../components/ProfileModification';
 import ValidateButton from '../components/ValidateButton';
 import TopBar from '../components/TopBar';
@@ -26,9 +26,9 @@ export default function FiltersSelection(props) {
   const allAdd = []
 
   return (
-    <SafeAreaProvider>
-        <TopBar title="Filters Selection" isVisible="true"/>
-        <View style={styles.container}>
+    <SafeAreaProvider style={{flex: 1}}>
+        <ScrollView>
+            <TopBar title="Filters Selection" isVisible="true"/>
             <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
                 <View style={{marginTop: 20}}/>
                 <View style={styles.profilesSelection}>
@@ -65,7 +65,7 @@ export default function FiltersSelection(props) {
                 <View style={{marginTop: 20}}/>
                 <ValidateButton title="Save Filters" image="save.png" colour="#ACA279" backColour="#F2F0E4"></ValidateButton>
             </LinearGradient>
-        </View>
+        </ScrollView>
     </SafeAreaProvider>
   );
 }
