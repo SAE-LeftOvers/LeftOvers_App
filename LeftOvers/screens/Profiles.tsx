@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, Modal, Pressable, Text, Image} from 'react-native';
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
@@ -19,8 +19,8 @@ export default function ModifyProfile(props) {
   const allViktor = [{value: "Pasta"}, {value: "Fish"}]
   const dieViktor = [{value: "Dairy free"}, {value: "Vegan"}]
 
-  const [visible, setVisible] = useState(false);
-  const [opacity, setOpacity] = useState(1);
+  const [visible, setVisible] = React.useState(false);
+  const [opacity, setOpacity] = React.useState(1);
   const raisePopUp = () => {
         setVisible(true)
         setOpacity(0.4)
@@ -96,9 +96,6 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 0,
   },
-
-
-
   modal: {
         position: 'absolute',
         top: '50%',
@@ -116,8 +113,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 200,
   },
-
-
   profileValidation: {
         width: "100%",
         alignItems: "center",

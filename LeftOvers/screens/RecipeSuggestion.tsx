@@ -11,7 +11,7 @@ import ParameterTopBar from '../components/ParameterTopBar';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 import CustomButton from '../components/CustomButton';
-import DietsTab from '../components/DietsTab';
+import DietsTab from '../components/ListSelect';
 
 
 export default function RecipeSuggestion(props) {
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   horizontalAlignement: {
     display: 'flex',
     height: 30,
-    width: 350,
+    width: '80%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

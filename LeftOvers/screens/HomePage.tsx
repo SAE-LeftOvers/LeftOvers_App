@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text, Pressable, Image} from 'react-native';
 import ProfileModification from '../components/ProfileModification';
 import ValidateButton from '../components/ValidateButton';
@@ -22,7 +22,7 @@ export default function HomePage(props) {
 
   const ingredientList = [{title: "Carrot"}, {title: "Potato"}, {title: "Peach"}]
 
-  const [cpt, setCpt] = useState(0);
+  const [cpt, setCpt] = React.useState(0);
   const decreaseCounter = () => {
     if (cpt > 0) {
       setCpt(cpt - 1);
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
         flex: 0.8,
         fontSize: 20,
         color: '#ACA279',
-        flex: 1,
         padding: 5,
         paddingLeft: 0,
         paddingBottom: 0,
