@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     flex: 0.04,
   },
   textInput: {
-    flex: 0.9,
     fontSize: 15,
     color: '#ACA279',
     borderRadius: 10,

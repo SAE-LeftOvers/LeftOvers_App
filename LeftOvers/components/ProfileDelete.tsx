@@ -22,7 +22,6 @@ export default function ProfileDelete(props: ProfileProps) {
   };
 
   let imageSource
-
   if (props.avatar == "plus.png"){
      imageSource = require('../assets/images/plus.png')
   }
@@ -39,7 +38,7 @@ export default function ProfileDelete(props: ProfileProps) {
             <Image source={imageSource} style={styles.avatar}></Image>
             <Text style={styles.text}>{props.name}</Text>
         </View>
-        <Pressable onPress={changeListVisibility} style={{height: 20, marginTop: 20,}}>
+        <Pressable onPress={changeListVisibility} style={{height: "5%", marginTop: "6%", flex: 1, marginBottom: "3%"}}>
             <View style={styles.filterBar}>
                 <Text style={styles.filters}>Filters</Text>
                 <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
@@ -47,9 +46,8 @@ export default function ProfileDelete(props: ProfileProps) {
         </Pressable>
         <View style={{display: display}}>
             <ListWithoutSelect title="Diets" content={props.diets}></ListWithoutSelect>
-            <View style={{marginTop: 10}}/>
+            <View style={{marginTop: "3%"}}/>
             <ListWithoutSelect title="Allergies" content={props.allergies}></ListWithoutSelect>
-            <View style={{marginTop: 10}}/>
         </View>
     </View>
   );
@@ -57,69 +55,61 @@ export default function ProfileDelete(props: ProfileProps) {
 
 const styles = StyleSheet.create({
   background: {
-    //maxWidth: 370,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
     backgroundColor: '#F2F0E4',
-    padding: 10,
-    marginHorizontal: 10,
+    padding: "3%",
+    marginHorizontal: "3%",
+    height: "100%",
   },
+
   pseudoBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    flex: 0.7,
-    width: 330,
-    marginBottom: 10,
+    width: "100%",
+    marginHorizontal: "3%",
+    marginBottom: "3%",
   },
   avatar: {
-    padding: 20,
+    padding: "5%",
     resizeMode: 'contain',
     borderWidth: 2,
     borderColor: "#ACA279",
     borderRadius: 45,
+    height: "100%",
+    flex: 0.03,
   },
   text: {
+    flex: 1,
     fontSize: 20,
     color: '#ACA279',
     alignItems: 'center',
-    justifyContent: 'left',
-    flex: 0.8,
-    marginLeft: 20,
-    padding: 5,
+    textAlign: 'left',
+    marginLeft: "10%",
+    padding: "2%",
+    height: "100%",
   },
-
-
 
   filterBar: {
       flexDirection: "row",
-      width: 300,
-      paddingTop: 10,
-      paddingBottom: 5,
+      width: "90%",
+      paddingTop: "3%",
       alignItems: "flex-end",
       justifyContent: "center",
-      flex: 0.2,
   },
   filters: {
-      flex: 0.5,
       fontSize: 20,
       color: '#ACA279',
       flex: 1,
-      padding: 5,
+      padding: "2%",
       paddingLeft: 0,
       paddingBottom: 0,
   },
-  nbSelected: {
-      fontSize: 11,
-      flex: 1,
-      color: "#3F3C42",
-      textAlign: "right",
-  },
   arrow: {
-      height: 20,
-      width: 20,
+      height: "100%",
       resizeMode: 'contain',
       tintColor: "#3F3C42",
       flex: 0.1,

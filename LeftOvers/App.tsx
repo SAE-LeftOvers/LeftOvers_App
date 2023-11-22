@@ -12,8 +12,8 @@ import {LinearGradient} from 'expo-linear-gradient';
 export default function App(props) {
   return(
     //<HomePage/>
-    <ModifyProfile/>
-    //<Profiles/>
+    //<ModifyProfile/>
+    <Profiles/>
     //<RecipeSuggestion/>
     //<CreateProfile/>
     //<FiltersSelection/>
