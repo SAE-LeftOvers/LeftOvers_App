@@ -18,8 +18,6 @@ export default function BottomBar({ state, descriptors, navigation }) {
     const [iconThemeButton, setThemeIconButton] = useState(( colorScheme === 'dark' ) ? LightIcon : DarkIcon)
     const [textThemeButton, setTextThemeButton] = useState(( colorScheme === 'dark' ) ? 'Light' : 'Dark');
     
-    
-    
     useEffect(() => {
         const subscription = Appearance.addChangeListener(
             (preferences: AppearancePreferences) => {
