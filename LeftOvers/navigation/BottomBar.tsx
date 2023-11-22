@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
 import {Appearance } from 'react-native';
@@ -10,44 +10,64 @@ import ProfileIcon from '../assets/images/person_icon.png';
 import CookingIcon from '../assets/images/cook.png';
 import LightIcon from '../assets/images/update.png';
 import DarkIcon from '../assets/images/validate.png';
+import ThemeContext from '../theme/ThemeContext';
 
 export default function BottomBar({ state, descriptors, navigation }) {
-    const [colorScheme, setScheme] = useState<ColorSchemeName | string>(
-        Appearance.getColorScheme(),
-    );
-    const [iconThemeButton, setThemeIconButton] = useState(( colorScheme === 'dark' ) ? LightIcon : DarkIcon)
-    const [textThemeButton, setTextThemeButton] = useState(( colorScheme === 'dark' ) ? 'Light' : 'Dark');
-    
-    useEffect(() => {
-        const subscription = Appearance.addChangeListener(
-            (preferences: AppearancePreferences) => {
-                const {colorScheme: scheme} = preferences;
-                setScheme(scheme);
-            },
-        );
-
-        return () => subscription?.remove();
-    }, [setScheme]);
+    const {theme, toggleTheme} = useContext(ThemeContext)
+    const [iconThemeButton, setThemeIconButton] = useState(( theme === 'dark' ) ? LightIcon : DarkIcon)
+    const [textThemeButton, setTextThemeButton] = useState(( theme === 'dark' ) ? 'Light' : 'Dark');
     
     const onThemeButtonPress = (event: GestureResponderEvent) => {
         if (textThemeButton === "Light") {
-            setThemeIconButton(ProfileIcon);
+            setThemeIconButton(DarkIcon);
             setTextThemeButton("Dark");
-            //Appearance.setColorScheme('light')
+            toggleTheme('light');
         } else {
-            setThemeIconButton(HomeIcon);
+            setThemeIconButton(LightIcon);
             setTextThemeButton("Light");
-            //Appearance.setColorScheme('dark')
+            toggleTheme('dark')
         }
         console.log('TextThemeButton is now: ' + textThemeButton);
     }
+
+    const styles = StyleSheet.create({
+        BottomBarMainContainer: {
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            left: 0,
+            height: 70,
+            backgroundColor: theme === 'dark' ? "#3F3C42": "transparent"
+        },
+        BottomBarBlurContainer: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignContent: 'space-around',
+            padding: 2,
+            borderBlockColor: theme === 'light' ? '#F2F0E4' : '#222222', 
+            borderWidth: 3, 
+            borderLeftColor: theme === 'light'? '#F2F0E4' : '#222222', 
+            borderLeftWidth: 3,
+            borderRightColor: theme === 'light'? '#F2F0E4' : '#222222',
+            borderRightWidth: 3
+        },
+        BottomBarIcon: {
+            width: 35,
+            height: 35
+        },
+        BottomBarElementContainer: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            margin: 3
+        }
+    })
 
     return (
         <View style={styles.BottomBarMainContainer}>
             <BlurView 
                 style={[StyleSheet.absoluteFill, styles.BottomBarBlurContainer]}
                 tint='dark'
-                intensity={50}
+                intensity={theme === 'light' ? 50 : 0}
             >
                 {state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];
@@ -90,7 +110,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                         onPress={onPress}
                         style={[styles.BottomBarElementContainer, { flex: 1 }]}
                     >
-                            <Image source={icon} style={[styles.BottomBarIcon, {tintColor: isFocused ? '#59BDCD': '#F2F0E4'}]} />
+                            <Image source={icon} style={[styles.BottomBarIcon, {tintColor: isFocused ? (theme === 'light' ? '#59BDCD': '#8DB4D9'): '#F2F0E4'}]} />
                             <Text style={{ color: isFocused ? '#59BDCD' : '#F2F0E4' }}>
                                 {label}
                             </Text>
@@ -107,34 +127,3 @@ export default function BottomBar({ state, descriptors, navigation }) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    BottomBarMainContainer: {
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        left: 0,
-        height: 70
-    },
-    BottomBarBlurContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignContent: 'space-around',
-        padding: 2,
-        borderBlockColor: '#F2F0E4', 
-        borderWidth: 3, 
-        borderLeftColor: '#F2F0E4', 
-        borderLeftWidth: 3,
-        borderRightColor: '#F2F0E4',
-        borderRightWidth: 3
-    },
-    BottomBarIcon: {
-        width: 35,
-        height: 35
-    },
-    BottomBarElementContainer: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        margin: 3
-    }
-})
