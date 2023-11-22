@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 
   filterBar: {
       flexDirection: "row",
-      width: "90%",
+      width: "85%",
       paddingTop: "3%",
       paddingBottom: "1%",
       alignItems: "flex-end",

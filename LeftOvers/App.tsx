@@ -14,8 +14,8 @@ export default function App(props) {
     //<HomePage/>
     //<Profiles/>
     //<ModifyProfile/>
-    <CreateProfile/>
-    //<FiltersSelection/>
+    //<CreateProfile/>
+    <FiltersSelection/>
     //<RecipeSuggestion/>
   );
 }
