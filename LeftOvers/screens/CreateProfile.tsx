@@ -11,13 +11,12 @@ export default function CreateProfile(props) {
   const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
   return (
     <SafeAreaProvider style={{flex: 1}}>
-        <TopBar title="Create Profile" isVisible="true"/>
         <ScrollView>
             <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}/>
                 <ProfileModification name="" avatar="plus_small.png" diets={die} allergies={all}></ProfileModification>
                 <View style={{marginTop: "3%"}}/>
-                <ValidateButton title="Create Profile" image="plus.png" colour="#ACA279" backColour="#F2F0E4"></ValidateButton>
+                <ValidateButton title="Create Profile" image="plus.png" colour="#ACA279" backColour="#F2F0E4" todo={() => (console.log("Profile Created"))}></ValidateButton>
                 <View style={{marginTop: "20%"}}/>
             </LinearGradient>
         </ScrollView>

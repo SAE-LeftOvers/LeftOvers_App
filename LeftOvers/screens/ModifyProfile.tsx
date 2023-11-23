@@ -16,7 +16,7 @@ export default function ModifyProfile(props) {
                 <View style={{marginTop: "6%"}}/>
                 <ProfileModification name="Johnny Silverhand" avatar="plus_small.png" diets={die} allergies={all}></ProfileModification>
                 <View style={{marginTop: "3%"}}/>
-                <ValidateButton title="Update Profile" image="update.png" colour="#ACA279" backColour="#F2F0E4"></ValidateButton>
+                <ValidateButton title="Update Profile" image="update.png" colour="#ACA279" backColour="#F2F0E4" todo={() => (console.log("Profile Modified"))}></ValidateButton>
                 <View style={{marginBottom: "20%"}}/>
             </LinearGradient>
         </ScrollView>

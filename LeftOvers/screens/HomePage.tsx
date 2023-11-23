@@ -1,19 +1,16 @@
-import React from 'react';
-import { useState } from 'react';
-import {StyleSheet, View, Text, Pressable, Image, ScrollView, SafeAreaView} from 'react-native';
-import ProfileModification from '../components/ProfileModification';
-import ValidateButton from '../components/ValidateButton';
-import TopBar from '../components/TopBar';
-import ListSelect from '../components/ListSelect';
-import ListWithoutSelect from '../components/ListWithoutSelect';
-import ProfileSelection from '../components/ProfileSelection';
-import FoodElementText from '../components/FoodElementText';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Pressable, Image, ScrollView } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+
+import ValidateButton from '../components/ValidateButton';
+import ProfileSelection from '../components/ProfileSelection';
+import FoodElementText from '../components/FoodElementText';
+
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 
-export default function HomePage({ navigation , props}) {
+export default function HomePage({ navigation, props }) {
   const profiles = [
       {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
       {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
@@ -44,11 +41,6 @@ export default function HomePage({ navigation , props}) {
   return (
     <SafeAreaProvider style={{flex: 1}}>
         <ScrollView>
-            <View style={styles.topBar}>
-                <Image source={require("../assets/images/logo.png")} style={{width: "100%", height: "100%", flex: 0.1, marginLeft: "5%", resizeMode: "contain"}}/>
-                <Text style={styles.appName}>LeftOvers</Text>
-                <Image source={require("../assets/images/logo.png")} style={{width: "100%", height: "100%", flex: 0.1, marginRight: "5%", resizeMode: "contain"}}/>
-            </View>
             <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
                 <View style={styles.separator}/>
                 <View style={styles.welcome}>

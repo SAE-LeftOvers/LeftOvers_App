@@ -1,13 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
-import { StyleSheet, View, Modal, Pressable, Text, Image, ScrollView } from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { StyleSheet, View, Modal, Pressable, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
+
+import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
 
-export default function Profiles({props, navigation}) {
+export default function Profiles({navigation, props}) {
   const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
   const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
 
@@ -37,13 +37,33 @@ export default function Profiles({props, navigation}) {
             <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1, backgroundColor: '#3F3C42',}}>
                 <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                     <View style={styles.separator}/>
-                    <ProfileDetails name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
+                    <ProfileDetails 
+                        name="Johnny Silverhand" 
+                        avatar="plus_small.png" 
+                        diets={dieJohnny} 
+                        allergies={allJohnny} 
+                        onDeleteProfile={raisePopUp}/>
                     <View style={styles.separator}/>
-                    <ProfileDetails name="Jackie Welles" avatar="plus_small.png" diets={dieJackie} allergies={allJackie} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
+                    <ProfileDetails 
+                        name="Jackie Welles" 
+                        avatar="plus_small.png" 
+                        diets={dieJackie} 
+                        allergies={allJackie} 
+                        onDeleteProfile={raisePopUp} />
                     <View style={styles.separator}/>
-                    <ProfileDetails name="Goro Takemura" avatar="plus_small.png" diets={dieGoro} allergies={allGoro} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
+                    <ProfileDetails 
+                        name="Goro Takemura" 
+                        avatar="plus_small.png" 
+                        diets={dieGoro} 
+                        allergies={allGoro} 
+                        onDeleteProfile={raisePopUp} />
                     <View style={styles.separator}/>
-                    <ProfileDetails name="Viktor Vector" avatar="plus_small.png" diets={dieViktor} allergies={allViktor} onDeleteProfile={raisePopUp} navigation={navigation}></ProfileDetails>
+                    <ProfileDetails 
+                        name="Viktor Vector" 
+                        avatar="plus_small.png" 
+                        diets={dieViktor} 
+                        allergies={allViktor} 
+                        onDeleteProfile={raisePopUp} />
                     <View style={styles.modal}>
                         <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>
                             <View style={styles.modal}>

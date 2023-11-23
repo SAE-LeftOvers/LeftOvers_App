@@ -78,11 +78,11 @@ export default function BottomBar({ state, descriptors, navigation }) {
                             : route.name;
 
                     let icon;
-                    if (route.name === 'Home') {
+                    if (route.name === 'HOME') {
                         icon = HomeIcon;
-                    } else if (route.name === 'Profile') {
+                    } else if (route.name === 'PROFILE') {
                         icon = ProfileIcon;
-                    } else if (route.name === 'Cooking') {
+                    } else if (route.name === 'COOKING') {
                         icon = CookingIcon;
                     }
 
@@ -108,6 +108,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                         testID={options.tabBarTestID}
                         onPress={onPress}
                         style={[styles.BottomBarElementContainer, { flex: 1 }]}
+                        key={route.name}
                     >
                             <Image source={icon} style={[styles.BottomBarIcon, {tintColor: isFocused ? (theme === 'light' ? '#59BDCD': '#8DB4D9'): '#F2F0E4'}]} />
                             <Text style={{ color: isFocused ? '#59BDCD' : '#F2F0E4' }}>

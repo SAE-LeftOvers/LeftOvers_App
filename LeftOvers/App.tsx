@@ -17,9 +17,9 @@ export default function App() {
         <ThemeProvider>
             <NavigationContainer>
                 <Tab.Navigator initialRouteName='Home' tabBar={ (props) => <BottomBar {...props}/> }>
-                    <Tab.Screen name='Profile' component={ProfilesStackScreen} options={{ headerShown: false }} />
-                    <Tab.Screen name='Home' component={HomeStackScreen} options={{ headerShown: false }}/>
-                    <Tab.Screen name='Cooking' component={CookingStackScreen} options={{ headerShown: false }}/>
+                    <Tab.Screen name='PROFILE' component={ProfilesStackScreen} options={{ headerShown: false, title: 'Home' }} />
+                    <Tab.Screen name='HOME' component={HomeStackScreen} options={{ headerShown: false, title: 'Home' }}/>
+                    <Tab.Screen name='COOKING' component={CookingStackScreen} options={{ headerShown: false, title: 'Cooking' }}/>
                 </Tab.Navigator>
             </NavigationContainer>
         </ThemeProvider>

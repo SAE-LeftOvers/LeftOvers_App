@@ -1,5 +1,5 @@
-import {React, useState} from 'react';
-import {StyleSheet, Text, TextInput, View, Image, Pressable} from 'react-native';
+import React, { useState } from 'react';
+import {StyleSheet, Text, TextInput, View, Image, Pressable, FlexStyle} from 'react-native';
 import ValidateButton from './ValidateButton';
 import ListWithoutSelect from './ListWithoutSelect';
 import { useNavigation } from '@react-navigation/native';
@@ -10,11 +10,10 @@ type ProfileProps = {
   diets: list<string>
   allergies: list<string>
   onDeleteProfile: () => void
-  navigation
 }
 
-export default function ProfileDetails(props: ProfileProps) {
-
+export default function ProfileDetails(props) {
+  const navigation = useNavigation()
   const [display, setDisplay] = useState("none")
   const changeListVisibility = () => {
     if (display == "none"){
@@ -27,10 +26,10 @@ export default function ProfileDetails(props: ProfileProps) {
 
   let imageSource
 
-  if (props.avatar == "plus.png"){
+  if (props.avatar === "plus.png"){
      imageSource = require('../assets/images/plus.png')
   }
-  else if (props.avatar == "plus_small.png"){
+  else if (props.avatar === "plus_small.png"){
      imageSource = require('../assets/images/plus_small.png')
   }
   else{
@@ -42,7 +41,7 @@ export default function ProfileDetails(props: ProfileProps) {
         <View style={styles.pseudoBar}>
             <Image source={imageSource} style={styles.avatar}></Image>
             <Text style={styles.text}>{props.name}</Text>
-            <Pressable onPress={() => props.navigation.navigate('ProfileModification')}>
+            <Pressable onPress={() => navigation.navigate('ProfileModification')}>
                 <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
             </Pressable>
             <Pressable onPress={props.onDeleteProfile} style={{flex: 0.1, marginLeft: "1%",}}>
@@ -56,7 +55,7 @@ export default function ProfileDetails(props: ProfileProps) {
                 <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
             </View>
         </Pressable>
-        <View style={{display: display, alignItems: "center", justifyContent: "center"}}>
+        <View style={{display: display === "flex" ? 'flex' : 'none', alignItems: "center", justifyContent: "center"}}>
             <ListWithoutSelect title="Diets" content={props.diets}></ListWithoutSelect>
             <View style={{marginTop: "3%"}}/>
             <ListWithoutSelect title="Allergies" content={props.allergies}></ListWithoutSelect>
