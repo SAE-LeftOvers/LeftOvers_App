@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, Pressable, ScrollView} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import TopBar from '../components/TopBar';
 import {Searchbar} from 'react-native-paper';
-import brochette from '../assets/images/brochette.png'; 
+
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
+
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
 import meat from '../assets/images/meat_icon.png';
@@ -41,7 +41,6 @@ const ChooseItem = ({value}: ItemProps) => (
 
   return (
     <SafeAreaProvider>
-          <TopBar title="Ingredient selection" />
           <View style={styles.page}>
 
             <View style={styles.element}>

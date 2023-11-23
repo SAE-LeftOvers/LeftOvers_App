@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, View, ScrollView, useWindowDimensions} from 'react-native';
-import ProfileModification from '../components/ProfileModification';
-import ValidateButton from '../components/ValidateButton';
-import TopBar from '../components/TopBar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import ProfileModification from '../components/ProfileModification';
+import ValidateButton from '../components/ValidateButton';
 
 export default function CreateProfile(props) {
   const all = []

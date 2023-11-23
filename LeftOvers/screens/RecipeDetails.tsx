@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TopBar from '../components/TopBar';
+
 import RecipeElementReduce from '../components/RecipeElementReduce';
 import AllergiesTab from '../components/AllergiesTab';
 
@@ -9,7 +9,6 @@ import AllergiesTab from '../components/AllergiesTab';
 export default function RecipeDetails(props) {
     return (
         <SafeAreaProvider>
-          <TopBar title="Recipe Detail"/>
           <View style={styles.page}>
             <RecipeElementReduce 
                 title={props.title} 
