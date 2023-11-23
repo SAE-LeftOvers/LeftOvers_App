@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, useWindowDimensions} from 'react-native';
 import ProfileModification from '../components/ProfileModification';
 import ValidateButton from '../components/ValidateButton';
 import TopBar from '../components/TopBar';
@@ -17,55 +17,72 @@ export default function FiltersSelection(props) {
         {name: "David Martinez", avatar: "plus_small.png", isActive: "flex"},
   ]
 
+  let cptActive = 0
+  profiles.forEach(function (value) {
+    if(value.isActive=="flex"){
+        cptActive=cptActive+1
+    }
+  })
+
   const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
 
   const allProfiles = [{value: "Skimmed Milk"}, {value: "Nuts"}]
   const dieProfiles = [{value: "Porkless"}, {value: "Pescatarian"}]
 
-  const dieAdd = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Vegan"}, {value: "Vegetarian"}]
+  function isInProfileDiets(element, index, array) {
+       var retType = true
+       dieProfiles.forEach(function (diets) {
+          if(diets.value==element.value){
+              retType = false
+          }
+       })
+       return retType
+    }
+  const dieAdd = die.filter(isInProfileDiets);
   const allAdd = []
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{flex: 1}}>
         <TopBar title="Filters Selection" isVisible="true"/>
-        <View style={styles.container}>
-            <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
-                <View style={{marginTop: 20}}/>
+        <ScrollView>
+            <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+                <View style={{marginTop: "6%"}}/>
                 <View style={styles.profilesSelection}>
                     <View style={styles.filterBar}>
                         <Text style={styles.filters}>Profiles</Text>
-                        <Text style={styles.nbSelected}>2 selected, 1 waiting</Text>
+                        <Text style={styles.nbSelected}>{cptActive} selected, 1 waiting</Text>
                     </View>
-                    <View style={{marginTop: 10}}/>
+                    <View style={{marginTop: "3%"}}/>
                     <ProfileSelection listProfile={profiles} disableSelection={false}/>
-                    <View style={{marginTop: 20}}/>
+                    <View style={{marginTop: "4%"}}/>
                     <ValidateButton title="Change Selected Profiles" image="update.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
                 </View>
-                <View style={{marginTop: 20}}/>
+                <View style={{marginTop: "6%"}}/>
                 <View style={styles.background}>
                     <View style={styles.filterBar}>
                         <Text style={styles.filters}>Filters from Profiles</Text>
                     </View>
                     <ListWithoutSelect title="Diets" content={dieProfiles}></ListWithoutSelect>
-                    <View style={{marginTop: 10}}/>
+                    <View style={{marginTop: "3%"}}/>
                     <ListWithoutSelect title="Allergies" content={allProfiles}></ListWithoutSelect>
                 </View>
-                <View style={{marginTop: 20}}/>
+                <View style={{marginTop: "6%"}}/>
                 <View style={styles.background}>
                     <View style={styles.filterBar}>
                         <Text style={styles.filters}>Additional Filters</Text>
-                        <Text style={styles.nbSelected}>3 selected</Text>
+                        <Text style={styles.nbSelected}>{dieAdd.length} available</Text>
                     </View>
                     <ListSelect title="Diets" content={dieAdd}></ListSelect>
-                    <View style={{marginTop: 10}}/>
+                    <View style={{marginTop: "3%"}}/>
                     <ListWithoutSelect title="Allergies" content={allAdd}></ListWithoutSelect>
-                    <View style={{marginTop: 10}}/>
+                    <View style={{marginTop: "3%"}}/>
                     <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
                 </View>
-                <View style={{marginTop: 20}}/>
+                <View style={{marginTop: "6%"}}/>
                 <ValidateButton title="Save Filters" image="save.png" colour="#ACA279" backColour="#F2F0E4"></ValidateButton>
+                <View style={{marginTop: "20%"}}/>
             </LinearGradient>
-        </View>
+        </ScrollView>
     </SafeAreaProvider>
   );
 }
@@ -83,53 +100,45 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     flex: 1,
-    padding: 10,
+    padding: "2%",
     paddingTop: 0,
   },
 
   background: {
-      //maxWidth: 370,
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 20,
       backgroundColor: '#F2F0E4',
-      padding: 10,
-      paddingBottom: 0,
-      marginHorizontal: 10,
+      padding: "3%",
+      marginHorizontal: "3%",
   },
+
   filterBar: {
         flexDirection: "row",
-        width: 300,
-        paddingTop: 10,
-        paddingBottom: 5,
+        width: "85%",
+        paddingTop: "3%",
+        paddingBottom: "2%",
         alignItems: "flex-end",
         justifyContent: "center",
-        flex: 0.2,
   },
   filters: {
-        flex: 0.8,
         fontSize: 20,
         color: '#ACA279',
         flex: 1,
-        padding: 5,
-        paddingLeft: 0,
-        paddingBottom: 0,
   },
   nbSelected: {
         fontSize: 11,
-        //flex: 0.2,
         color: "#3F3C42",
         textAlign: "right",
   },
 
   profilesSelection: {
-        //maxWidth: 370,
-        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
         backgroundColor: '#F2F0E4',
-        marginHorizontal: 10,
+        marginHorizontal: "3%",
+        paddingBottom: "3%",
   },
 });

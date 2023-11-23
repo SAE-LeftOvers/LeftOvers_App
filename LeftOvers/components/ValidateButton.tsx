@@ -11,6 +11,47 @@ type ValidateButtonProps = {
 }
 
 export default function ValidateButton(props: ValidateButtonProps) {
+  let imageSource
+  if (props.image == "cook.png"){
+    imageSource = require('../assets/images/cook.png')
+  }
+  else if (props.image == "cross.png"){
+      imageSource = require('../assets/images/cross.png')
+    }
+  else if (props.image == "delete.png"){
+      imageSource = require('../assets/images/delete.png')
+  }
+  else if (props.image == "modify.png"){
+      imageSource = require('../assets/images/modify.png')
+  }
+  else if (props.image == "parameter.png"){
+      imageSource = require('../assets/images/parameter.png')
+  }
+  else if (props.image == "plus.png"){
+      imageSource = require('../assets/images/plus.png')
+  }
+  else if (props.image == "plus_small.png"){
+      imageSource = require('../assets/images/plus_small.png')
+  }
+  else if (props.image == "save.png"){
+      imageSource = require('../assets/images/save.png')
+  }
+  else if (props.image == "search.png"){
+      imageSource = require('../assets/images/search.png')
+  }
+  else if (props.image == "update.png"){
+      imageSource = require('../assets/images/update.png')
+  }
+  else if (props.image == "validate.png"){
+      imageSource = require('../assets/images/validate.png')
+  }
+  else if (props.image == "warehouse.png"){
+      imageSource = require('../assets/images/warehouse.png')
+  }
+  else{
+      imageSource = require('../assets/images/logo.png')
+  }
+
   return (
     <Pressable 
         style={{
@@ -28,20 +69,20 @@ export default function ValidateButton(props: ValidateButtonProps) {
                 alignItems: 'center',
                 justifyContent: "center",
                 flexDirection: "row",
-                padding: 5,
-                paddingRight: 10,}}>
+                padding: "2%",
+                paddingRight: "3%",}}>
             <Image 
-                source={require('../assets/images/'+props.image)} 
+                source={imageSource} 
                 style={{
-                    height: 20,
-                    width: 20,
-                    marginLeft: 5,
-                    marginRight: 10,
-                    resizeMode: "center",
+                    height: "90%",
+                    width: "9%",
+                    marginLeft: "2%",
+                    marginRight: "3%",
+                    resizeMode: "contain",
                     tintColor: props.colour,}}>
             </Image>
             <Text style={{
-                fontSize: 20,
+                fontSize: 15,
                 color: props.colour,
             }}>{props.title}</Text>
         </View>
