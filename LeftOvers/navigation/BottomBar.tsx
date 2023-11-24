@@ -36,7 +36,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
             right: 0,
             left: 0,
             height: 70,
-            backgroundColor: theme === 'dark' ? "#3F3C42": "transparent"
+            backgroundColor: theme === 'dark' ? "#3F3C42" : "transparent"
         },
         BottomBarBlurContainer: {
             flexDirection: 'row',

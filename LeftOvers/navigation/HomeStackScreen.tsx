@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, Text, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomePage from '../screens/HomePage';
 import Profiles from '../screens/Profiles';
-import { HeaderTitle } from './Utils';
-import appLogo from '../assets/images/logo.png';
 import CreateProfile from '../screens/CreateProfile';
 import ModifyProfile from '../screens/ModifyProfile';
+import ThemeContext from '../theme/ThemeContext';
+import { HeaderTitle } from './Utils';
+
+import appLogo from '../assets/images/logo.png';
 
 const HomeStack = createNativeStackNavigator()
 
@@ -20,13 +22,15 @@ function AppIcon() {
 }
 
 export default function HomeStackScreen() {
+    const {theme, toggleTheme} = useContext(ThemeContext)
+    
     return (
         <HomeStack.Navigator>
             <HomeStack.Screen 
                 name='Home'
                 component={HomePage}
                 options={{
-                    headerStyle: styles.headerBarContainer,
+                    headerStyle: {backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42'},
 
                     headerLeft: () => (
                         <AppIcon/>
@@ -46,7 +50,7 @@ export default function HomeStackScreen() {
                 name='Profiles'
                 component={Profiles}
                 options={{
-                    headerStyle: styles.headerBarContainer,
+                    headerStyle: {backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42'},
                     headerTitle: () => (
                       <HeaderTitle title='Profiles'/>
                     )
@@ -56,7 +60,7 @@ export default function HomeStackScreen() {
                 name='ProfileModification'
                 component={ModifyProfile}
                 options={{
-                    headerStyle: styles.headerBarContainer,
+                    headerStyle: {backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42'},
                     headerTitle: () => (
                         <HeaderTitle title='Profile Modification'/>
                     )
@@ -67,9 +71,6 @@ export default function HomeStackScreen() {
 }
 
 const styles = StyleSheet.create({
-    headerBarContainer: {
-        backgroundColor: '#F2F0E4',
-    },
     headerAppIcon: {
         width: 45,
         height: 45,
