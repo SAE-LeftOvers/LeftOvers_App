@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, ScrollView } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -6,11 +6,14 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import ValidateButton from '../components/ValidateButton';
 import ProfileSelection from '../components/ProfileSelection';
 import FoodElementText from '../components/FoodElementText';
+import ThemeContext from '../theme/ThemeContext';
 
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 
 export default function HomePage({ navigation, props }) {
+  const {theme, toggleTheme} = useContext(ThemeContext);
+
   const profiles = [
       {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
       {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
@@ -38,10 +41,87 @@ export default function HomePage({ navigation, props }) {
     }
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      width: "100%",
+      flex: 1,
+      backgroundColor: '#3F3C42',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    linearGradient: {
+      width: "100%",
+      flex: 1,
+      padding: "2%",
+      paddingTop: 0,
+    },
+    separator: {
+      marginTop: "6%"
+    },
+    
+    filterBar: {
+          flexDirection: "row",
+          width: "85%",
+          paddingTop: "3%",
+          paddingBottom: "2%",
+          alignItems: "flex-end",
+          justifyContent: "center",
+    },
+    filters: {
+          fontSize: 20,
+          color: '#ACA279',
+          flex: 1,
+    },
+    nbSelected: {
+          fontSize: 11,
+          color: "#3F3C42",
+          textAlign: "right",
+    },
+  
+    profilesSelection: {
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 20,
+          backgroundColor: '#F2F0E4',
+          marginHorizontal: "3%",
+          paddingBottom: "3%",
+    },
+  
+    welcome: {
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 20,
+          backgroundColor: '#F2F0E4',
+          paddingVertical: "3%",
+          paddingHorizontal: "7%",
+          marginHorizontal: "3%",
+    },
+    text: {
+          fontSize: 20,
+          color: '#ACA279',
+      },
+      name: {
+          fontSize: 20,
+          fontWeight: "bold",
+          color: '#59BDCD',
+    },
+  
+    ingredientSelection: {
+          width: "90%",
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 20,
+          backgroundColor: '#E3DEC9',
+          borderWidth: 2,
+          borderColor: "#ACA279",
+          padding: "2%"
+    }
+  });
+
   return (
     <SafeAreaProvider style={{flex: 1}}>
         <ScrollView>
-            <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
+            <LinearGradient colors={theme === 'light' ? ['#2680AA', '#59BDCD'] : ['#222222', '#3F3C42']} style={styles.linearGradient}>
                 <View style={styles.separator}/>
                 <View style={styles.welcome}>
                     <View style={{flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "100%"}}>
@@ -102,96 +182,3 @@ export default function HomePage({ navigation, props }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    flex: 1,
-    backgroundColor: '#3F3C42',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  linearGradient: {
-    width: "100%",
-    flex: 1,
-    padding: "2%",
-    paddingTop: 0,
-  },
-  separator: {
-    marginTop: "6%"
-  },
-
-  filterBar: {
-        flexDirection: "row",
-        width: "85%",
-        paddingTop: "3%",
-        paddingBottom: "2%",
-        alignItems: "flex-end",
-        justifyContent: "center",
-  },
-  filters: {
-        fontSize: 20,
-        color: '#ACA279',
-        flex: 1,
-  },
-  nbSelected: {
-        fontSize: 11,
-        color: "#3F3C42",
-        textAlign: "right",
-  },
-
-  profilesSelection: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 20,
-        backgroundColor: '#F2F0E4',
-        marginHorizontal: "3%",
-        paddingBottom: "3%",
-  },
-
-  welcome: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 20,
-        backgroundColor: '#F2F0E4',
-        paddingVertical: "3%",
-        paddingHorizontal: "7%",
-        marginHorizontal: "3%",
-  },
-  text: {
-        fontSize: 20,
-        color: '#ACA279',
-    },
-    name: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: '#59BDCD',
-  },
-
-  ingredientSelection: {
-        width: "90%",
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 20,
-        backgroundColor: '#E3DEC9',
-        borderWidth: 2,
-        borderColor: "#ACA279",
-        padding: "2%"
-  },
-
-  appName: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: '#3F3C42',
-        textAlign: "center",
-        flex: 0.8,
-  },
-  topBar: {
-        flexDirection: 'row',
-        width: "100%",
-        height: "11%",
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#F2F0E4',
-        paddingTop: "8%",
-  },
-});

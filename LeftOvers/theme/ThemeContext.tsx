@@ -9,7 +9,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
-export const ThemeProvider = ({children}) => {
+export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {

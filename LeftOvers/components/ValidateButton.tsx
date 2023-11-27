@@ -72,15 +72,14 @@ export default function ValidateButton(props: ValidateButtonProps) {
                 padding: "2%",
                 paddingRight: "3%",}}>
             <Image 
-                source={imageSource} 
+                source={imageSource}
                 style={{
-                    height: "90%",
-                    width: "9%",
-                    marginLeft: "2%",
-                    marginRight: "3%",
-                    resizeMode: "contain",
-                    tintColor: props.colour,}}>
-            </Image>
+                  height: "90%",
+                  width: "9%",
+                  marginLeft: "2%",
+                  marginRight: "3%",
+                  resizeMode: "contain",}}
+                tintColor={props.colour}/>
             <Text style={{
                 fontSize: 15,
                 color: props.colour,

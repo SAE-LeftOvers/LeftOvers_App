@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import React, { useState } from 'react';
 import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
 
 type Profile = {

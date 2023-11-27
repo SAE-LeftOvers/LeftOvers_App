@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import ThemeContext from '../theme/ThemeContext';
+import ColorContext from '../theme/ColorContext';
+import { LightTheme, DarkTheme } from '../theme/colors';
 
 import HomeIcon from '../assets/images/home.png';
 import ProfileIcon from '../assets/images/person_icon.png';
@@ -11,8 +13,10 @@ import LightIcon from '../assets/images/sun.png';
 import DarkIcon from '../assets/images/moon.png';
 
 
+
 export default function BottomBar({ state, descriptors, navigation }) {
-    const {theme, toggleTheme} = useContext(ThemeContext)
+    const {theme, toggleTheme} = useContext(ThemeContext);
+    const {colors, toggleColor} = useContext(ColorContext)
     const [iconThemeButton, setThemeIconButton] = useState(( theme === 'dark' ) ? LightIcon : DarkIcon)
     const [textThemeButton, setTextThemeButton] = useState(( theme === 'dark' ) ? 'Light' : 'Dark');
     
@@ -21,10 +25,12 @@ export default function BottomBar({ state, descriptors, navigation }) {
             setThemeIconButton(DarkIcon);
             setTextThemeButton("Dark");
             toggleTheme('light');
+            toggleColor(LightTheme)
         } else {
             setThemeIconButton(LightIcon);
             setTextThemeButton("Light");
             toggleTheme('dark')
+            toggleColor(DarkTheme)
         }
         console.log('TextThemeButton is now: ' + textThemeButton);
     }
