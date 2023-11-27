@@ -19,6 +19,33 @@ export default function IngredientSelection(props) {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const ingredientService = new IngredientService();
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredIngredients, setFilteredIngredients] = useState([]);
+
+  const filterIngredients = async (query) => {
+    try {
+      setIsLoading(true);
+      if (query === '') {
+        // Si le query (prompt) est vide, charger tous les ingrédients
+        loadIngredients();
+      } else {
+        const filtered = await ingredientService.getfilteredIngredient(query);
+        setResponse(filtered);
+      }
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Appelée à chaque changement de la recherche
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    filterIngredients(query);
+  };
+
+
   const loadIngredients = async () => {
     try {
       const ingredients = await ingredientService.getAllIngredient();
@@ -87,7 +114,7 @@ export default function IngredientSelection(props) {
       <TopBar title="Ingredient selection" />
       <View style={styles.page}>
         <View style={styles.element}>
-          
+
           <View style={[styles.horizontalAlignement, { margin: 10 }]}>
             {alphabetArray.map((source, index) => (
               <Pressable key={index} onPress={() => handleLetterPress(source)}>
@@ -99,8 +126,8 @@ export default function IngredientSelection(props) {
           <View>
             <Searchbar
               placeholder="Rechercher"
-              onChangeText={query => setSearchValue(query)}
-              value={searchValue}
+              onChangeText={handleSearch}
+              value={searchQuery}
               style={{
                 margin: 10,
                 backgroundColor: '#F2F0E4',

@@ -18,8 +18,12 @@ export default class IngredientService implements IIngredientService {
 
 
     async getIngredientById(id: Number): Promise<Ingredient | null>{
-
-        return;
+        try {
+            const response = await axios.get(`${this.API_URL}/${id}`);
+            return response.data as Ingredient;
+        } catch (error) {
+            throw new Error('Erreur lors de la récupération des ingrédients : ' + error.message);
+        }
     }
     
     async getIngredientByLetter(letter: String): Promise<any>{
@@ -29,5 +33,15 @@ export default class IngredientService implements IIngredientService {
         } catch (error) {
             throw new Error('Erreur lors de la récupération des ingrédients : ' + error.message);
         }
+    }
+
+    async getfilteredIngredient(prompt: String): Promise<Ingredient[]> {
+        try {
+            const response = await axios.get(`${this.API_URL}/filter/${prompt}`);
+            return response.data as Ingredient[];
+        } catch (error) {
+            throw new Error('Erreur lors de la récupération des ingrédients : ' + error.message);
+        }
+        return;
     }
 }
