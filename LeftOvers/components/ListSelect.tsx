@@ -6,7 +6,7 @@ import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-lis
 
 type ListProps = {
     title: string
-    content : list<string>
+    content : string[]
 }
 
 export default function ListSelect(props: ListProps) {
