@@ -1,72 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import {View, StyleSheet, Text, Image, Pressable, ScrollView, ActivityIndicator} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TopBar from '../components/TopBar';
-import {Searchbar} from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
-import meat from '../assets/images/meat_icon.png';
-import vegetable from '../assets/images/vegetable_icon.png';
-import fruit from '../assets/images/fruit_icon.png';
-import Ingredient from '../Models/Ingredient'
-
+import Ingredient from '../Models/Ingredient';
+import IngredientService from '../Services/Ingredients/IngredientsServices';
 
 export default function IngredientSelection(props) {
-
   const [searchValue, setSearchValue] = useState('');
-  const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-  let [isLoading, setIsLoading] = useState(true);
-  let [error, setError] = useState();
-  let [response, setResponse] = useState();
-  let [SelectedIngredient, setSelectedIngredients] = useState([]);
-  let instancesArray: Array<any> = [];
- 
+  const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
+  const [response, setResponse] = useState<Ingredient[] | undefined>(undefined);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const ingredientService = new IngredientService();
 
-// Pour se connecter à l'API
-  useEffect(() => {
-    fetch('http://localhost:3000/ingredients')
-      .then(res => res.json())
-      .then(
-        result => {
-          setIsLoading(false);
-          setResponse(result);
-        },
-        error => {
-          setIsLoading(false);
-          setError(error);
-        }
-      );
-  }, []);
-
-// Pour 
-  const getContent = () => {
-    
-    if (isLoading) {
-      return <ActivityIndicator size="large" />;
-    }
-
-    if (error) {
-      console.log('Erreur ici' + error);
-      return <Text>Ca marche Pos</Text>;
-    }
-
-    if (response) {
-      try {
-        instancesArray = Ingredient.convertApiResponse(JSON.stringify(response));
-
-        return instancesArray.map((ingredient, index) => (
-          <AvailableItem key={index} value={ingredient} />
-        ));
-      } catch (error) {
-        console.error("Erreur de conversion de la réponse en instances d'Ingredient:", error);
-        return <Text>Erreur lors du traitement des données</Text>;
-      }
+  const loadIngredients = async () => {
+    try {
+      const ingredients = await ingredientService.getAllIngredient();
+      setResponse(ingredients);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-// Ingredients disponible
+  useEffect(() => {
+    loadIngredients();
+  }, []);
+
   const AvailableItem = ({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignement}>
@@ -79,8 +46,7 @@ export default function IngredientSelection(props) {
     </>
   );
 
-// Ingredient choisi par l'utilisateur 
-  const ChooseItem = ({ value }: { value: { id: number; name: string } }) => (
+  const ChooseItem = ({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignement}>
         <FoodElementText title={value.name} />
@@ -92,90 +58,98 @@ export default function IngredientSelection(props) {
     </>
   );
 
-  function SelectIngredient(newIngredient: Ingredient) {
-    const exists = SelectedIngredient.find(
-        (ingredient) => ingredient.id === newIngredient.id
-    );
+  const SelectIngredient = (newIngredient: Ingredient) => {
+    const exists = selectedIngredients.find((ingredient) => ingredient.id === newIngredient.id);
 
     if (!exists) {
-        setSelectedIngredients([...SelectedIngredient, newIngredient]);
-        console.log(newIngredient);
-        console.log(SelectedIngredient);
-    }else{
-      console.log(exists)
-      console.log("cheh pas ajouté")
+      setSelectedIngredients([...selectedIngredients, newIngredient]);
     }
-}
+  };
 
-function RemoveIngredient(idIngredient: Number){
-  const updatedIngredients = SelectedIngredient.filter(
-    (ingredient) => ingredient.id !== idIngredient
-  );
+  const RemoveIngredient = (idIngredient: number) => {
+    const updatedIngredients = selectedIngredients.filter((ingredient) => ingredient.id !== idIngredient);
+    setSelectedIngredients(updatedIngredients);
+  };
 
-  setSelectedIngredients(updatedIngredients);
-}
-
+  const handleLetterPress = async (letter: string) => {
+    try {
+      const ingredientsByLetter = await ingredientService.getIngredientByLetter(letter);
+      setResponse(ingredientsByLetter);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <SafeAreaProvider>
-          <TopBar title="Ingredient selection" />
-        <ScrollView contentContainerStyle={{ alignItems: 'center', height: '100%'}}>
-          <View style={styles.page}>
-            <View style={styles.element}>
-              <View style={[styles.horizontalAlignement, {justifyContent: 'center'}]}>
-                <Pressable>
-                    <Image source={meat} style={{ width: 30, height: 30 }} />
-                </Pressable>
-                <Pressable>
-                    <Image source={vegetable} style={{ width: 30, height: 30 }} />
-                </Pressable>
-                <Pressable>
-                    <Image source={fruit} style={{ width: 30, height: 30 }} />
-                </Pressable>
-              </View>
-              <View>
-              <Searchbar
-                  placeholder="Rechercher"
-                  onChangeText={query => setSearchValue(query)}
-                  value={searchValue}
-                  style={{margin: 10, 
-                    backgroundColor: '#F2F0E4', 
-                    borderWidth : 1,
-                    borderColor: "#ACA279", 
-                    borderRadius: 15,
-                    height: 50,
-                    }}/> 
-                  
-              </View>
-              <View style={{ flex: 1}} >
-                <ScrollView contentContainerStyle={{ alignItems: 'center', height: 300}}>
-                  {getContent()}
-                </ScrollView>
-              </View>
-              <View style={{ height: 20 }}></View>
-            </View>
+      <TopBar title="Ingredient selection" />
+      <View style={styles.page}>
+        <View style={styles.element}>
+          
+          <View style={[styles.horizontalAlignement, { margin: 10 }]}>
+            {alphabetArray.map((source, index) => (
+              <Pressable key={index} onPress={() => handleLetterPress(source)}>
+                <Text style={{ color: "blue" }}>{source}</Text>
+              </Pressable>
+            ))}
+          </View>
 
-            <View style={[styles.element, {marginTop:  40}]}>
-                <View style={[styles.horizontalAlignement, {justifyContent: "flex-start", marginLeft: 10}]}>
-                  <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
-                </View>
-                
-                <View style={{ height: 5 }}></View>
+          <View>
+            <Searchbar
+              placeholder="Rechercher"
+              onChangeText={query => setSearchValue(query)}
+              value={searchValue}
+              style={{
+                margin: 10,
+                backgroundColor: '#F2F0E4',
+                borderWidth: 1,
+                borderColor: "#ACA279",
+                borderRadius: 15,
+                height: 50,
+              }} />
+          </View>
+          
+          <View style={{ alignItems: 'center', height: 300}}>
+              <FlatList
+                data={response ? response : []}
+                renderItem={({ item }) => (
+                  <AvailableItem value={item} />
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                ListEmptyComponent={() => (
+                  isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
+                )}
+                style={{ flex: 1 }}
+              />
+          </View>
+          <View style={{ height: 20 }}></View>
+        </View>
 
-                <View style={{ flex: 1}} > 
-                <ScrollView contentContainerStyle={{ alignItems: 'center', height: 150}}>
-                      {SelectedIngredient.map((source, index) => (
-                        <ChooseItem key={index} value={source}></ChooseItem>
-                      ))}
-                </ScrollView>
-              </View>
-              <View style={{ height: 20 }}></View>
-            </View>
+        <View style={[styles.element, { marginTop: 40 }]}>
+          <View style={[styles.horizontalAlignement, { justifyContent: "flex-start", marginLeft: 10 }]}>
+            <Text style={{ fontSize: 20, color: '#ACA279' }}>Selected</Text>
+          </View>
+          <View style={{ height: 5 }}></View>
 
-            <View style={{ height: 15 }}></View>
-            <CustomButton title="Find a recipe"/>                
-            </View>
-        </ScrollView>
+          <View style={{ alignItems: 'center', maxHeight: 200}}>
+              <FlatList
+                data={selectedIngredients}
+                renderItem={({ item }) => (
+                  <ChooseItem value={item} />
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                style={{ flex: 1 }}
+              />
+          </View>
+
+          <View style={{ height: 20 }}></View>
+        </View>
+
+        <View style={{ height: 15 }}></View>
+        <CustomButton title="Find a recipe" />
+      </View>
     </SafeAreaProvider>
   );
 }
@@ -190,7 +164,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   element: {
-    backgroundColor:'#F2F0E4', 
+    backgroundColor: '#F2F0E4',
     borderRadius: 30,
   },
   horizontalAlignement: {
