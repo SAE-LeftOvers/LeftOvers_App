@@ -1,50 +1,52 @@
-import React from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
-import Separator from '../components/Separator';
+import React, { useContext } from 'react';
+import { StyleSheet,Pressable, Text, View } from 'react-native';
+
+import ColorContext from '../theme/ColorContext';
 
 
 
 interface foodElementImageProps {
-  title  : string
+    title  : string
 }
 
 
 export default function FoodElementText(props : any) {
-  return (
-    <Pressable style={styles.button}>
-      <View style={styles.container}>
-        <View style={styles.view}>
-            <Text style={styles.text}>{props.title}</Text>
-        </View>
-      </View>
-    </Pressable>
-  );
-}
+    const {colors, toggleColors } = useContext(ColorContext)
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: "80%",
-    borderRadius: 5,
-    backgroundColor: '#E3DEC9',
-  },
-  text: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    padding : "2%",
-    color: 'black',
-  },
-  view: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  container: {
-    width: "100%",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#3F3C42',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-});
+    const styles = StyleSheet.create({
+        button: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: "80%",
+            borderRadius: 5,
+            backgroundColor: colors.carrouselBackground,
+        },
+        text: {
+            fontSize: 10,
+            fontWeight: 'bold',
+            padding : "2%",
+            color: colors.cardDetail,
+        },
+        view: {
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+        },
+        container: {
+            width: "100%",
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: colors.cardDetail,
+            flexDirection: 'column',
+            justifyContent: 'center',
+        },
+    });
+    return (
+        <Pressable style={styles.button}>
+            <View style={styles.container}>
+                <View style={styles.view}>
+                    <Text style={styles.text}>{props.title}</Text>
+                </View>
+            </View>
+        </Pressable>
+    );
+}

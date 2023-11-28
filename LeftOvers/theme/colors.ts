@@ -27,6 +27,9 @@ export interface Theme {
     buttonDetail: string,
     welcomeText: string,
     welcomeName: string,
+    carrouselBackground: string,
+    carrouselText: string,
+    carrouselDetail: string
 }
 
 export const LightTheme : Theme = {
@@ -45,7 +48,10 @@ export const LightTheme : Theme = {
     buttonBackground: Pearl,
     buttonDetail: Moonstone,
     welcomeText: Ecru,
-    welcomeName: Moonstone
+    welcomeName: Moonstone,
+    carrouselBackground: Pearl,
+    carrouselText: Ecru,
+    carrouselDetail: Moonstone
 }
 
 export const DarkTheme : Theme = {
@@ -64,6 +70,9 @@ export const DarkTheme : Theme = {
     buttonBackground: Jet,
     buttonDetail: CarolinaBlue,
     welcomeText: SteelBlue,
-    welcomeName:Alabaster
+    welcomeName:Alabaster,
+    carrouselBackground: CarolinaBlue,
+    carrouselText: SteelBlue,
+    carrouselDetail: Alabaster
 }
 

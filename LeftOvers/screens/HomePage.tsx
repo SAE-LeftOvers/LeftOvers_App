@@ -112,9 +112,9 @@ export default function HomePage({ navigation, props }) {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 20,
-            backgroundColor: '#E3DEC9',
+            backgroundColor: colors.carrouselBackground,
             borderWidth: 2,
-            borderColor: "#ACA279",
+            borderColor: colors.carrouselText,
             padding: "2%"
         }
     });
@@ -143,7 +143,7 @@ export default function HomePage({ navigation, props }) {
                         <View style={{marginTop: "3%"}}/>
                         <ProfileSelection listProfile={profiles} disableSelection={true}/>
                         <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Modify Profiles" image="parameter.png" colour="#59BDCD" backColour="#E3DEC9" todo={() => navigation.navigate('Profiles')}/>
+                        <ValidateButton title="Modify Profiles" image="parameter.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('Profiles')}/>
                     </View>
                     <View style={styles.separator}/>
                     <View style={styles.profilesSelection}>
@@ -151,7 +151,7 @@ export default function HomePage({ navigation, props }) {
                             <Text style={styles.filters}>Ingredient Stocks</Text>
                         </View>
                         <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Manage Stocks" image="warehouse.png" colour="#59BDCD" backColour="#E3DEC9" todo={() => console.log('ManageStocks')}/>
+                        <ValidateButton title="Manage Stocks" image="warehouse.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => console.log('ManageStocks')}/>
                     </View>
                     <View style={styles.separator}/>
                     <View style={styles.profilesSelection}>
@@ -160,21 +160,21 @@ export default function HomePage({ navigation, props }) {
                         </View>
                         <View style={{marginTop: "3%"}}/>
                         <View style={styles.ingredientSelection}>
-                            <Text style={{fontSize: 15, color: "#3F3C42"}}>Selected Ingredient</Text>
+                            <Text style={{fontSize: 15, color: colors.carrouselText}}>Selected Ingredient</Text>
                             <View style={{flexDirection: "row", padding: "4%", justifyContent: "center", alignItems: "center"}}>
                                 <Pressable onPress={decreaseCounter}>
-                                    <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}} />
+                                    <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText}/>
                                 </Pressable>
                                 <FoodElementText title={ingredientList[cpt].title}/>
                                 <Pressable onPress={increaseCounter}>
-                                    <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain"}} />
+                                    <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText} />
                                 </Pressable>
                             </View>
                         </View>
                         <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour="#59BDCD" backColour="#E3DEC9" todo={ () => console.log('Chnge Selected Ingredient')}/>
+                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Chnge Selected Ingredient')}/>
                         <View style={{marginTop: "3%"}}/>
-                        <ValidateButton title="Search Recipes" image="search.png" colour="#59BDCD" backColour="#E3DEC9" todo={ () => console.log('Go and search for recipe')}/>
+                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Go and search for recipe')}/>
                     </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
