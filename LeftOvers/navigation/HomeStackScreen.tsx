@@ -7,6 +7,7 @@ import Profiles from '../screens/Profiles';
 import CreateProfile from '../screens/CreateProfile';
 import ModifyProfile from '../screens/ModifyProfile';
 import ThemeContext from '../theme/ThemeContext';
+import ColorContext from '../theme/ColorContext';
 import { HeaderTitle } from './Utils';
 
 import appLogo from '../assets/images/logo.png';
@@ -23,6 +24,7 @@ function AppIcon() {
 
 export default function HomeStackScreen() {
     const {theme, toggleTheme} = useContext(ThemeContext)
+    const {colors, toggleColors} = useContext(ColorContext)
     
     return (
         <HomeStack.Navigator>
@@ -30,7 +32,7 @@ export default function HomeStackScreen() {
                 name='Home'
                 component={HomePage}
                 options={{
-                    headerStyle: {backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42'},
+                    headerStyle: {backgroundColor: colors.cardBackground},
 
                     headerLeft: () => (
                         <AppIcon/>
@@ -50,7 +52,7 @@ export default function HomeStackScreen() {
                 name='Profiles'
                 component={Profiles}
                 options={{
-                    headerStyle: {backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42'},
+                    headerStyle: {backgroundColor: colors.cardBackground},
                     headerTitle: () => (
                       <HeaderTitle title='Profiles'/>
                     )
@@ -60,7 +62,7 @@ export default function HomeStackScreen() {
                 name='ProfileModification'
                 component={ModifyProfile}
                 options={{
-                    headerStyle: {backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42'},
+                    headerStyle: {backgroundColor: colors.cardBackground},
                     headerTitle: () => (
                         <HeaderTitle title='Profile Modification'/>
                     )

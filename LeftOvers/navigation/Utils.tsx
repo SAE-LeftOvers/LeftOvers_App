@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-import ThemeContext from '../theme/ThemeContext';
+import ColorContext from '../theme/ColorContext';
 
 export function HeaderTitle(props) {
-    const {theme, toggleTheme} = useContext(ThemeContext);
+    const {colors, toggleColors} = useContext(ColorContext)
 
     const styles = StyleSheet.create({
         headerTitle: {
             fontSize: 20,
             fontWeight: "bold",
-            color: theme === 'light' ? '#3F3C42' : '#F2F0E4',
+            color: colors.cardDetail,
         }
     })
 

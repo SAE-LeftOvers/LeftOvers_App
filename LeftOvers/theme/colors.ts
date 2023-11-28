@@ -23,6 +23,10 @@ export interface Theme {
     ingredientBackground: string,
     ingredientContent: string,
     ingredientBorder: string,
+    buttonBackground: string,
+    buttonDetail: string,
+    welcomeText: string,
+    welcomeName: string,
 }
 
 export const LightTheme : Theme = {
@@ -38,13 +42,17 @@ export const LightTheme : Theme = {
     ingredientBackground: Pearl,
     ingredientBorder: EerieBlack,
     ingredientContent: Jet,
+    buttonBackground: Pearl,
+    buttonDetail: Moonstone,
+    welcomeText: Ecru,
+    welcomeName: Moonstone
 }
 
 export const DarkTheme : Theme = {
     primary: EerieBlack,
     primaryComplement: Jet,
     cardBackground: Jet,
-    cardTitle: Ecru,
+    cardTitle: Alabaster,
     cardDetail: Alabaster,
     cardElementBackground: SteelBlue,
     cardElementText: Jet,
@@ -52,6 +60,10 @@ export const DarkTheme : Theme = {
     cardElementBorder: SteelBlue,
     ingredientBackground: EerieBlack,
     ingredientBorder: SteelBlue,
-    ingredientContent: Alabaster
+    ingredientContent: Alabaster,
+    buttonBackground: Jet,
+    buttonDetail: CarolinaBlue,
+    welcomeText: SteelBlue,
+    welcomeName:Alabaster
 }
 

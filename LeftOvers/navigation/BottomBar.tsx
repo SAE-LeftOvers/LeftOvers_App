@@ -16,7 +16,7 @@ import DarkIcon from '../assets/images/moon.png';
 
 export default function BottomBar({ state, descriptors, navigation }) {
     const {theme, toggleTheme} = useContext(ThemeContext);
-    const {colors, toggleColor} = useContext(ColorContext)
+    const {colors, toggleColors} = useContext(ColorContext)
     const [iconThemeButton, setThemeIconButton] = useState(( theme === 'dark' ) ? LightIcon : DarkIcon)
     const [textThemeButton, setTextThemeButton] = useState(( theme === 'dark' ) ? 'Light' : 'Dark');
     
@@ -25,12 +25,12 @@ export default function BottomBar({ state, descriptors, navigation }) {
             setThemeIconButton(DarkIcon);
             setTextThemeButton("Dark");
             toggleTheme('light');
-            toggleColor(LightTheme)
+            toggleColors(LightTheme)
         } else {
             setThemeIconButton(LightIcon);
             setTextThemeButton("Light");
             toggleTheme('dark')
-            toggleColor(DarkTheme)
+            toggleColors(DarkTheme)
         }
         console.log('TextThemeButton is now: ' + textThemeButton);
     }

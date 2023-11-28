@@ -1,11 +1,11 @@
 import React, {createContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { DarkTheme, LightTheme, Theme } from './colors';
+import { LightTheme, Theme } from './colors';
 
 interface ColorContextType { 
     colors: Theme, 
-    toggleColor: (Theme) => void 
+    toggleColors: (Theme) => void 
 };
 
 const ColorContext = createContext<ColorContextType | null>(null);
@@ -27,13 +27,13 @@ export const ColorProvider = ({ children }) => {
         getColors();
     }, []);
 
-    const toggleColor = (newColors: Theme) => {
+    const toggleColors = (newColors: Theme) => {
         setColors(newColors);
         AsyncStorage.setItem('colors', JSON.stringify(newColors))
     };
 
     return (
-        <ColorContext.Provider value={{colors, toggleColor}}>
+        <ColorContext.Provider value={{colors, toggleColors}}>
             {children}
         </ColorContext.Provider>
     );
