@@ -37,11 +37,11 @@ export default function ProfileSelection(props: ProfileSelectionProps) {
   return (
       <View style={styles.background}>
           <Pressable onPress={decreaseCounter}>
-             <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}}/>
+             <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain", tintColor: "#3F3C42", }}/>
           </Pressable>
           <ProfileElement name={props.listProfile[cpt].name} avatar={props.listProfile[cpt].avatar} isActive={props.listProfile[cpt].isActive} disableSelection={props.disableSelection}/>
           <Pressable onPress={increaseCounter}>
-             <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain"}}/>
+             <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain", tintColor: "#3F3C42", }}/>
           </Pressable>
       </View>
   );

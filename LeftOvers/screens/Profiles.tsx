@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     flex: 1,
-    padding: 10,
+    padding: "2%",
     paddingTop: 0,
   },
   separator: {

@@ -6,63 +6,40 @@ import Union_right from '../assets/images/Union_right.png';
 import background from '../assets/images/Background.png'; 
 
 interface recipeElementProps {
-  number : number
-  title  : string
-  description : string
-  imageList : string[]
-  image : string
+  number: string
+  title: string
+  textList: string[]
+  description: string
 }
 
-export default function RecipeElement(props : any) {
-
-  const totalContentCount = props.imageList.length + 11;
-  const dynamicHeight = totalContentCount * 40;
-  const scrollViewHeight = 100;
-
-
-
+export default function RecipeElement(props: recipeElementProps) {
   return (
-    <Pressable style={[styles.button, { height: dynamicHeight }]}>
-      <View style={[styles.view, { height: dynamicHeight - 10}]}>
+    <Pressable style={styles.button}>
+      <View style={styles.view}>
         <Text style={styles.text}>{props.number}</Text>
         <Text style={styles.title}>{props.title}</Text>
-        <Image source={props.image ? props.image : brochette} style={{ width: 100, height: 100 }}/>
-          <View style={styles.horizontalAlignement}>
-            <Image source={Union_left} style={{ width: 70, height: 4, marginRight: 6 }} />
+        <Image source={props.image ? props.image : brochette} style={{width: 100, resizeMode: "contain"}}/>
+        <View style={styles.horizontalAlignment}>
+            <Image source={Union_left} style={{width: "25%", marginRight: "3%", resizeMode: "contain"}} />
             <Text style={styles.text}>Ingredients</Text>
-            <Image source={Union_right} style={{ width: 70, height: 4, marginLeft: 6 }} />
-          </View>
-        
-        <View style={styles.horizontalAlignement}>
-          {props.imageList.length > 0 && props.imageList.map((source, index) => (
-          <Image key={index} source={source} style={{ width: 40, height: 40 }} />
-          ))}
+            <Image source={Union_right} style={{ width: "25%", marginLeft: "3%", resizeMode: "contain"}} />
         </View>
-
-        
-        {props.imageList.length <= 0 ? (
-          <View style={styles.horizontalAlignement}>
-                  {props.textList.length > 0 && props.textList.map((source, index) => (
-                    <Text key={index} style={styles.smallText}>{source}</Text>
-                  ))}
-          </View>
-          ) : null}
-
-
+        <View style={styles.horizontalAlignment}>
+            {props.textList.length > 0 && props.textList.map((source, index) => (
+                <Text key={index} style={styles.smallText}>- {source.title} -</Text>
+            ))}
+        </View>
         <View style={styles.scrollViewContainer}>
-          <SafeAreaView>
-            <View style={styles.horizontalAlignement}>
-              <Image source={Union_left} style={{ width: 70, height: 4, marginRight: 6 }} />
-              <Text style={styles.text}>Description</Text>
-              <Image source={Union_right} style={{ width: 70, height: 4, marginLeft: 6 }} />
+            <View style={styles.horizontalAlignment}>
+                <Image source={Union_left} style={{width: "27%", marginRight: "3%", resizeMode: "contain"}}/>
+                <Text style={styles.text}>Description</Text>
+                <Image source={Union_right} style={{width: "27%", marginLeft: "3%", resizeMode: "contain"}}/>
             </View>
-            <ScrollView style={{ marginTop: 5, height: scrollViewHeight }}>
-              <Text style={styles.smallText}>{props.description}</Text>
+            <ScrollView style={{marginTop: "3%", overflow: "hidden"}}>
+                <Text style={styles.smallText}>{props.description}</Text>
             </ScrollView>
-          </SafeAreaView>
         </View>
-
-        <Image source={background} style={{width: 210, height: 20, marginTop: dynamicHeight - 50, position: 'absolute'}}></Image>
+        <Image source={background} style={{width: "80%", resizeMode: "contain"}}></Image>
       </View>
     </Pressable>
   ); 
@@ -73,54 +50,47 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width : 300,
+    width: 300,
+    height: "90%",
     borderRadius: 40,
-    elevation: 3,
     backgroundColor: '#E3DEC9',
   },
   text: {
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 15,
     fontWeight: 'bold',
-    letterSpacing: 0.25,
     color: '#756C28',
-    marginTop: 10,
+    marginTop: "4%",
   },
   smallText: {
     fontSize: 12,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
     color: '#71662A',
     textAlign: "center",
-    margin : 5
+    margin : "2%"
   },
   title:{
     fontSize: 18,
-    lineHeight: 21,
     fontWeight: 'bold',
-    letterSpacing: 0.25,
     color: '#524B1A',
   },
   view: {
-    width : 290,
+    width : "95%",
+    height: "96.5%",
     borderRadius: 40,
-    elevation: 3,
     borderWidth: 2,
-    borderColor: 'grey',
-    alignItems: 'center', // Centre le contenu verticalement
-    display: "flex",
-    flexWrap: "wrap",
+    padding: "5%",
+    borderColor: '#3F3C42',
+    alignItems: 'center',
+    justifyContent: "center",
   },
-  horizontalAlignement: {
+  horizontalAlignment: {
     display: "flex",
     flexDirection : 'row',
     alignItems: 'center', 
     justifyContent: 'space-between',
-    marginTop : 5,
+    marginTop : "2%",
     flexWrap: 'wrap',
   },
   scrollViewContainer: {
-    flex: 1, // Assurez-vous que le reste du contenu occupe l'espace restant
+    flex: 1,
   },
 });
