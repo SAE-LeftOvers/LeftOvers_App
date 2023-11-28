@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, Modal, Pressable, Text, Image} from 'react-native';
+import {StyleSheet, View, Modal, Pressable, Text, Image, ScrollView, useWindowDimensions} from 'react-native';
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
 import TopBar from '../components/TopBar';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-export default function ModifyProfile(props) {
+export default function Profiles(props) {
   const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
   const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
 
@@ -23,7 +23,7 @@ export default function ModifyProfile(props) {
   const [opacity, setOpacity] = React.useState(1);
   const raisePopUp = () => {
         setVisible(true)
-        setOpacity(0.4)
+        setOpacity(0.3)
   }
   const erasePopUp = () => {
         setVisible(false)
@@ -31,20 +31,19 @@ export default function ModifyProfile(props) {
   }
 
   return (
-    <SafeAreaProvider>
-        <View style={styles.container}>
+    <SafeAreaProvider style={{flex: 1}}>
+        <ScrollView>
             <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1, backgroundColor: '#3F3C42',}}>
                 <TopBar title="Profiles" isVisible="true"/>
-                <LinearGradient colors={['#2680AA', '#59BDCD']} style={styles.linearGradient}>
-                    <View style={{marginTop: 10}}/>
+                <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+                    <View style={styles.separator}/>
                     <ProfileDetails name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny} onDeleteProfile={raisePopUp}></ProfileDetails>
-                    <View style={{marginTop: 10}}/>
+                    <View style={styles.separator}/>
                     <ProfileDetails name="Jackie Welles" avatar="plus_small.png" diets={dieJackie} allergies={allJackie} onDeleteProfile={raisePopUp}></ProfileDetails>
-                    <View style={{marginTop: 10}}/>
+                    <View style={styles.separator}/>
                     <ProfileDetails name="Goro Takemura" avatar="plus_small.png" diets={dieGoro} allergies={allGoro} onDeleteProfile={raisePopUp}></ProfileDetails>
-                    <View style={{marginTop: 10}}/>
+                    <View style={styles.separator}/>
                     <ProfileDetails name="Viktor Vector" avatar="plus_small.png" diets={dieViktor} allergies={allViktor} onDeleteProfile={raisePopUp}></ProfileDetails>
-                    <View style={{marginTop: 10}}/>
                     <View style={styles.modal}>
                         <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>
                             <View style={styles.modal}>
@@ -57,13 +56,13 @@ export default function ModifyProfile(props) {
                                         <View style={styles.decisionBar}>
                                             <Pressable onPress={erasePopUp} style={{flex:0.5}}>
                                                 <View style={styles.yesButton}>
-                                                    <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: 30, width: 30, flex: 0.2, margin: 10}}/>
+                                                    <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
                                                     <Text style={styles.yesText}>Yes</Text>
                                                 </View>
                                             </Pressable>
                                             <Pressable onPress={erasePopUp} style={{flex:0.5}}>
                                                 <View style={styles.noButton}>
-                                                    <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: 30, width: 30, flex: 0.2, margin: 10}}/>
+                                                    <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
                                                     <Text style={styles.noText}>No</Text>
                                                 </View>
                                             </Pressable>
@@ -73,9 +72,10 @@ export default function ModifyProfile(props) {
                             </View>
                         </Modal>
                     </View>
+                    <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
             </View>
-        </View>
+        </ScrollView>
     </SafeAreaProvider>
   );
 }
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3F3C42',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   linearGradient: {
     height: "100%",
@@ -96,34 +97,36 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 0,
   },
+  separator: {
+    marginTop: "6%"
+  },
+
   modal: {
         position: 'absolute',
-        top: '50%',
-        left: '50%',
+        top: '8%',
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        transform: [{ translateX: -207 }, { translateY: -140 }],
   },
   viewModal: {
         flexDirection: "column",
-        padding: 10,
+        padding: "3%",
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        height: 200,
+        flex: 1,
   },
   profileValidation: {
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        paddingBottom: 20,
+        marginBottom: "6%",
+        flex: 0.7,
   },
   decisionBarVertical: {
           flexDirection: "column",
-          width: "100%",
-          padding: 10,
-          height: "100%",
+          width: "90%",
+          padding: "3%",
           borderRadius: 15,
           alignItems: "center",
           justifyContent: "center",
@@ -135,23 +138,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 0.3,
-        padding: 5,
+        marginBottom: "2%",
+        marginHorizontal: "2%",
   },
   decisionBar: {
           flexDirection: "row",
           flex: 0.7,
           width: "100%",
-          height: "20%",
-          borderRadius: 15,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#F2F0E4",
   },
   yesButton: {
           flexDirection: "row",
           flex: 0.5,
-          padding: 10,
-          marginHorizontal: 10,
+          padding: "2%",
+          marginHorizontal: "5%",
           width: "90%",
           borderRadius: 20,
           alignItems: "center",
@@ -164,13 +165,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       flex: 0.7,
-      padding: 5,
+      padding: "4%",
   },
   noButton: {
         flexDirection: "row",
         flex: 0.5,
-        padding: 10,
-        marginHorizontal: 10,
+        padding: "2%",
+        marginHorizontal: "5%",
         width: "90%",
         borderRadius: 20,
         alignItems: "center",
@@ -183,6 +184,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 0.7,
-        padding: 5,
+        padding: "4%",
   },
 });

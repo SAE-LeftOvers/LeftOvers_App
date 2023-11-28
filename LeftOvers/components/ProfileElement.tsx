@@ -21,19 +21,34 @@ export default function ProfileElement(props : Profile) {
       else{
           setWaiting("flex")
       }
-      if (props.isActive == "flex" && waiting == "none"){
+      if (props.disableSelection){
+          setSeparator("none")
+      }
+      else if (props.isActive == "flex" && waiting == "none"){
           setSeparator("flex")
       }
       else{
           setSeparator("none")
       }
       console.log(waiting, separator, props.name)
-  };
+  }
+
+  let imageSource
+  if (props.avatar == "plus.png"){
+      imageSource = require('../assets/images/plus.png')
+  }
+  else if (props.avatar == "plus_small.png"){
+      imageSource = require('../assets/images/plus_small.png')
+  }
+  else{
+      imageSource = require('../assets/images/logo.png')
+  }
+
   return (
       <Pressable onPress={changeStatus} style={styles.button}>
-          <View style={{flexDirection: "column"}}>
+          <View>
               <View style={styles.pseudoBar}>
-                  <Image source={require("../assets/images/"+props.avatar)} style={styles.avatar}></Image>
+                  <Image source={imageSource} style={styles.avatar}></Image>
                   <Text style={styles.text}>{props.name}</Text>
               </View>
               <View style={styles.pseudoBar}>
@@ -54,42 +69,42 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: 80,
-    //width: "75%",
-    marginVertical: 15,
+    height: "80%",
+    width: "78%",
+    marginVertical: "3%",
   },
   pseudoBar: {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      //width: "120%",
-      width: 225,
-      marginHorizontal: 10,
-      marginBottom: 10,
+      width: "100%",
+      marginHorizontal: "3%",
+      marginBottom: "3%",
   },
   avatar: {
-      padding: 20,
+      padding: "5%",
       resizeMode: 'contain',
       borderWidth: 2,
       borderColor: "#ACA279",
       borderRadius: 45,
+      height: "100%",
+      flex: 0.01,
   },
   text: {
       fontSize: 15,
       color: '#ACA279',
       alignItems: 'center',
-      justifyContent: 'left',
-      flex: 0.8,
-      marginLeft: 20,
-      padding: 5,
-      width: "100%"
+      textAlign: 'left',
+      flex: 0.9,
+      marginLeft: "10%",
+      padding: "2%",
   },
 
   active: {
     borderWidth: 1,
     borderRadius: 20,
     borderColor: "#59BDCD",
-    padding: 5,
+    padding: "1%",
   },
   textActive: {
     fontSize: 10,
@@ -100,7 +115,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     borderColor: "#ACA279",
-    padding: 5,
+    padding: "1%",
   },
   textWaiting: {
     fontSize: 10,

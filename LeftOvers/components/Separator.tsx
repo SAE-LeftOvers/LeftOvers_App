@@ -7,11 +7,11 @@ export default function Separator (){
   
   const styles = StyleSheet.create({
     separator: {
-      width: 200, // Largeur de la ligne
-      backgroundColor: 'black', // Couleur de la ligne
+      width: "90%",
+      backgroundColor: '#3F3C42',
       borderWidth : 1,
-      marginLeft : 10,
-      marginRight : 10,
+      marginLeft : "5%",
+      marginRight : "5%",
     },
   });
   

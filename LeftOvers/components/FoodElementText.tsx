@@ -37,12 +37,10 @@ const styles = StyleSheet.create({
     width : componentWidth,
     minHeight: componentHeight,
     borderRadius: 5,
-    elevation: 3,
     backgroundColor: '#E3DEC9',
   },
   text: {
-    fontSize: 15,
-    lineHeight: 21,
+    fontSize: 10,
     fontWeight: 'bold',
     letterSpacing: 0.25,
     padding: 7,
@@ -52,16 +50,14 @@ const styles = StyleSheet.create({
   view: {
     alignItems: 'flex-start',
     justifyContent: 'center',
-    marginRight: 5 // Centre le contenu horizontalement
   },
   container: {
     width : componentWidth - 10,
     minHeight : componentHeight - 10,
     borderRadius: 5,
-    elevation: 3,
-    borderWidth: 2,
-    borderColor: 'black',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: '#3F3C42',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
