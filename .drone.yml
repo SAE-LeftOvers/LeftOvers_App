@@ -12,7 +12,7 @@ steps:
     commands:
       - cd ./LeftOvers/
       - npm install
-      - npm run android
+      - npm run web
       
   - name: code-analysis
     image: node:latest
