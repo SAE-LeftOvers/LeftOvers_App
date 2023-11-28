@@ -11,7 +11,6 @@ import Ingredient from '../Models/Ingredient';
 import IngredientService from '../Services/Ingredients/IngredientsServices';
 
 export default function IngredientSelection(props) {
-  const [searchValue, setSearchValue] = useState('');
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
@@ -20,7 +19,6 @@ export default function IngredientSelection(props) {
   const ingredientService = new IngredientService();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredIngredients, setFilteredIngredients] = useState([]);
 
   const filterIngredients = async (query) => {
     try {

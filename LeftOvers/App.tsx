@@ -37,15 +37,9 @@ export default function App() {
 const ingredients = generateList();
   
   return (
-    <IngredientSelection listIngredient={ingredients}></IngredientSelection>
+    /*<IngredientSelection listIngredient={ingredients}></IngredientSelection>*/
     /*<RecipeSuggestion list={ingredients} diets={die} allergy={all}></RecipeSuggestion>*/
-    /*<RecipeDetails ingredient={ingredient} 
-    ustensils={ustensils} 
-    steps={steps} 
-    title="Chocolat Cake" 
-    number="63"
-    duree="30 minutes"
-    ></RecipeDetails>*/
+    <RecipeDetails id={123}></RecipeDetails>
   );
 }
 
