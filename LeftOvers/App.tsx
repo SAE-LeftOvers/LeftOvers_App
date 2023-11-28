@@ -6,7 +6,8 @@ import ModifyProfile from './screens/ModifyProfile';
 import CreateProfile from './screens/CreateProfile';
 import FiltersSelection from './screens/FiltersSelection';
 import RecipeSuggestion from './screens/RecipeSuggestion';
-import RecipeDetail from './screens/RecipeSuggestion';
+import RecipeDetails from './screens/RecipeDetails';
+import IngredientSelection from './screens/IngredientSelection';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {LinearGradient} from 'expo-linear-gradient';
 
@@ -17,7 +18,8 @@ export default function App(props) {
     //<ModifyProfile/>
     //<CreateProfile/>
     //<FiltersSelection/>
-    <RecipeSuggestion/>
-    //<RecipeDetail/>
+    //<RecipeSuggestion/>
+    //<RecipeDetails/>
+    <IngredientSelection/>
   );
 }

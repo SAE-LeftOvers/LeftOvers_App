@@ -21,7 +21,7 @@ import minus from '../assets/images/minus.png';
 
 
 export default function RecipeSuggestion(props) {
-  const [visible, setVisible] = React.useState(true);
+  const [visible, setVisible] = React.useState(false);
   const [visibleFilters, setVisibleFilters] = React.useState(false);
   const [visibleIngredients, setVisibleIngredients] = React.useState(true);
   const [minCpt, setMinCpt] = useState(0);
@@ -149,8 +149,8 @@ export default function RecipeSuggestion(props) {
                             <View style={{marginTop: "3%"}}/>
                             <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
-                                <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
-                            </View>
+                            <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
+                        </View>
                         <View style={{marginTop: "6%"}}/>
                         <View>
                             <CustomButton title="Save"></CustomButton>
