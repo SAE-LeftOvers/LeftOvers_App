@@ -1,13 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Text, ScrollView, useWindowDimensions} from 'react-native';
-import ProfileModification from '../components/ProfileModification';
+import {LinearGradient} from 'expo-linear-gradient';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
 import ValidateButton from '../components/ValidateButton';
 import TopBar from '../components/TopBar';
 import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ProfileSelection from '../components/ProfileSelection';
-import {LinearGradient} from 'expo-linear-gradient';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function FiltersSelection(props) {
   const profiles = [
@@ -55,7 +55,7 @@ export default function FiltersSelection(props) {
                     <View style={{marginTop: "3%"}}/>
                     <ProfileSelection listProfile={profiles} disableSelection={false}/>
                     <View style={{marginTop: "4%"}}/>
-                    <ValidateButton title="Change Selected Profiles" image="update.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
+                    <ValidateButton title="Change Selected Profiles" image="update.png" colour="#59BDCD" backColour="#E3DEC9" todo={ () => console.log("change selected profile")}></ValidateButton>
                 </View>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.background}>
@@ -76,10 +76,10 @@ export default function FiltersSelection(props) {
                     <View style={{marginTop: "3%"}}/>
                     <ListWithoutSelect title="Allergies" content={allAdd}></ListWithoutSelect>
                     <View style={{marginTop: "3%"}}/>
-                    <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
+                    <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9" todo={() => console.log("add allergy")}></ValidateButton>
                 </View>
                 <View style={{marginTop: "6%"}}/>
-                <ValidateButton title="Save Filters" image="save.png" colour="#ACA279" backColour="#F2F0E4"></ValidateButton>
+                <ValidateButton title="Save Filters" image="save.png" colour="#ACA279" backColour="#F2F0E4" todo={() => console.log("save filters")}></ValidateButton>
                 <View style={{marginTop: "20%"}}/>
             </LinearGradient>
         </ScrollView>

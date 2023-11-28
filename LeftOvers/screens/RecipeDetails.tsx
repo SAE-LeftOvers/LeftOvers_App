@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TopBar from '../components/TopBar';
+
 import RecipeElementReduce from '../components/RecipeElementReduce';
 import AllergiesTab from '../components/ListWithoutSelect';
 import RecipesService from '../Services/Recipes/RecipesServices';
@@ -43,9 +43,6 @@ export default function RecipeDetails(props) {
     return (
       
         <SafeAreaProvider>
-          {response && (
-  <>
-   <TopBar title="Recipe Detail"/>
           <View style={styles.page}>
             <RecipeElementReduce 
                 title={response.name} 
@@ -79,9 +76,6 @@ export default function RecipeDetails(props) {
             </View>
             
           </View>
-        </>
-      )}
-          
         </SafeAreaProvider>
       );
     }

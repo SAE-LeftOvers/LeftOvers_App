@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
 import Separator from '../components/Separator'; 
-
+import ColorContext from '../theme/ColorContext';
 
 
 interface foodElementImageProps {
-  source : string | null
-  title  : string
+    title  : string
 }
 
 const componentHeight = 60; 
@@ -14,50 +13,42 @@ const componentWidth = 280;
 
 
 export default function FoodElementText(props : any) {
-  const isTextOverflowing = props.title.length * 10 > 260;
+    const {colors, toggleColors } = useContext(ColorContext)
 
-  return (
-    <Pressable style={styles.button}>
-      <View style={styles.container}>
-        <View style={styles.view}>
-            <Text style={styles.text}>{props.title}</Text>
-            {!isTextOverflowing && <Separator />}
-        </View>
-      </View>
-    </Pressable>
-  );
+    const styles = StyleSheet.create({
+        button: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: "80%",
+            borderRadius: 5,
+            backgroundColor: colors.carrouselBackground,
+        },
+        text: {
+            fontSize: 10,
+            fontWeight: 'bold',
+            padding : "2%",
+            color: colors.cardDetail,
+        },
+        view: {
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+        },
+        container: {
+            width: "100%",
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: colors.cardDetail,
+            flexDirection: 'column',
+            justifyContent: 'center',
+        },
+    });
+    return (
+        <Pressable style={styles.button}>
+            <View style={styles.container}>
+                <View style={styles.view}>
+                    <Text style={styles.text}>{props.title}</Text>
+                </View>
+            </View>
+        </Pressable>
+    );
 }
-
-const styles = StyleSheet.create({
-
-  
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width : componentWidth,
-    minHeight: componentHeight,
-    borderRadius: 5,
-    backgroundColor: '#E3DEC9',
-  },
-  text: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    padding: 7,
-    color: 'black',
-    width: 250,
-  },
-  view: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  container: {
-    width : componentWidth - 10,
-    minHeight : componentHeight - 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#3F3C42',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-});

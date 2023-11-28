@@ -5,6 +5,7 @@ import TopBar from '../components/TopBar';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
+
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
 import Ingredient from '../Models/Ingredient';

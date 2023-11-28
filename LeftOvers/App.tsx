@@ -1,63 +1,30 @@
 import React from 'react';
-import {StyleSheet, View } from 'react-native';
-import ProfileModification from './components/ProfileModification';
-import ValidateButton from './components/ValidateButton';
-import { LinearGradient } from 'expo-linear-gradient';
-import RecipeSuggestion from './screens/RecipeSuggestion';
-import RecipeDetails from './screens/RecipeDetails';
-import IngredientSelection from './screens/IngredientSelection';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import HomeStackScreen from './navigation/HomeStackScreen';
+import ProfilesStackScreen from './navigation/ProfileStackScreen';
+import CookingStackScreen from './navigation/CookingStackScreen';
+import BottomBar from './navigation/BottomBar';
+import { ThemeProvider } from './theme/ThemeContext';
+import { ColorProvider } from './theme/ColorContext';
+
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const all = [{value: "Mussels"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
-  const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
-  const ingredient = [{value: "Chocolate"}, {value: "Skimmed Milk"}, {value: "Eggs"}, , {value: "Farine"}]
-  const ustensils = [{value: "Bol"}, {value: "Fouet"}, {value: "Casserole"}]
-  const steps = [{value: "Chauffer chocolat"}, 
-  {value: "1. Casser oeuf"}, 
-  {value: "2. Melanger la farine, le lait et les oeufs"},
-  {value: "3. Battre fort"},
-  {value: "4. Voler la montre de Louison"},
-  {value: "5. Melanger avec le chocolat"},
-  {value: "6. Mettre au four"},
-]
-  
-  function generateList() {
-    const list = [];
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Teat");
-    list.push("Meat");
-    list.push("Meat");
-    list.push("Meat");
-    return list;
+    
+    return (
+        <ThemeProvider>
+            <ColorProvider>
+                <NavigationContainer>
+                    <Tab.Navigator initialRouteName='HOME' tabBar={ (props) => <BottomBar {...props}/> }>
+                        <Tab.Screen name='PROFILE' component={ProfilesStackScreen} options={{ headerShown: false, title: 'Profile' }} />
+                        <Tab.Screen name='HOME' component={HomeStackScreen} options={{ headerShown: false, title: 'Home' }}/>
+                        <Tab.Screen name='COOKING' component={CookingStackScreen} options={{ headerShown: false, title: 'Cooking' }}/>
+                    </Tab.Navigator>
+                </NavigationContainer>
+            </ColorProvider>
+        </ThemeProvider>
+    );
 }
-
-const ingredients = generateList();
-  
-  return (
-    /*<IngredientSelection listIngredient={ingredients}></IngredientSelection>*/
-    /*<RecipeSuggestion list={ingredients} diets={die} allergy={all}></RecipeSuggestion>*/
-    <RecipeDetails id={123}></RecipeDetails>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3F3C42',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  linearGradient: {
-    //height: 844,
-    //width: 390,
-    flex: 1,
-    padding: 10,
-    paddingTop: 0,
-    //backgroundColor: "#59BDCD",
-    //alignItems: 'center',
-    //justifyContent: 'flex-start',
-  },
-});

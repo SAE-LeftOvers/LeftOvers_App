@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, Pressable} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Modal, Portal, PaperProvider} from 'react-native-paper';
+
 import TopBar from '../components/TopBar';
 import RecipeElement from '../components/RecipeElement';
 import SelectedIngredient from '../components/SelectedIngredient';
 import FoodElementText from '../components/FoodElementText';
+import CustomButton from '../components/CustomButton';
+import DietsTab from '../components/DietsTab';
+
 import brochette from '../assets/images/brochette.png'; 
 import ParameterTopBar from '../components/ParameterTopBar';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
-import CustomButton from '../components/CustomButton';
-import DietsTab from '../components/ListSelect';
 
 
 export default function RecipeSuggestion(props) {

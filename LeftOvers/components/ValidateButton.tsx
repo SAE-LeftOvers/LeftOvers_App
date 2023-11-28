@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Pressable, Text, View, Image} from 'react-native';
+import {StyleSheet, Pressable, Text, View, Image, GestureResponderEvent} from 'react-native';
 
 
 type ValidateButtonProps = {
@@ -7,6 +7,7 @@ type ValidateButtonProps = {
   image: string
   colour: string
   backColour: string
+  todo: (event: GestureResponderEvent) => void
 }
 
 export default function ValidateButton(props: ValidateButtonProps) {
@@ -52,28 +53,33 @@ export default function ValidateButton(props: ValidateButtonProps) {
   }
 
   return (
-    <Pressable style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 20,}}>
-        <View style={{
-            borderRadius: 30,
-            borderWidth: 2,
-            borderColor: props.colour,
-            backgroundColor: props.backColour,
-            alignItems: 'center',
-            justifyContent: "center",
-            flexDirection: "row",
-            padding: "2%",
-            paddingRight: "3%",}}>
-            <Image source={imageSource} style={{
-                height: "90%",
-                width: "9%",
-                marginLeft: "2%",
-                marginRight: "3%",
-                resizeMode: "contain",
-                tintColor: props.colour,}}>
-            </Image>
+    <Pressable 
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 20,
+        }}
+        onPress={props.todo}>
+        <View 
+            style={{
+                borderRadius: 30,
+                borderWidth: 2,
+                borderColor: props.colour,
+                backgroundColor: props.backColour,
+                alignItems: 'center',
+                justifyContent: "center",
+                flexDirection: "row",
+                padding: "2%",
+                paddingRight: "3%",}}>
+            <Image 
+                source={imageSource}
+                style={{
+                  height: "90%",
+                  width: "9%",
+                  marginLeft: "2%",
+                  marginRight: "3%",
+                  resizeMode: "contain",}}
+                tintColor={props.colour}/>
             <Text style={{
                 fontSize: 15,
                 color: props.colour,
