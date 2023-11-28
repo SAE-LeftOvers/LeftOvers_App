@@ -210,4 +210,4 @@ export default function Profiles({navigation, props}) {
         </ScrollView>
     </SafeAreaProvider>
     );
-}
+    }

@@ -1,12 +1,15 @@
 import React, { useContext } from 'react';
-import { StyleSheet,Pressable, Text, View } from 'react-native';
-
+import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
+import Separator from '../components/Separator'; 
 import ColorContext from '../theme/ColorContext';
 
 
 interface foodElementImageProps {
     title  : string
 }
+
+const componentHeight = 60; 
+const componentWidth = 280;
 
 
 export default function FoodElementText(props : any) {

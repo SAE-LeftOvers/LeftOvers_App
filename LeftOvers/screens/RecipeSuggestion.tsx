@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   horizontalAlignement: {
     display: 'flex',
     height: 30,
-    width: 350,
+    width: '80%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
