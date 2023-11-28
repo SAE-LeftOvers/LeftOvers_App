@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Modal, Pressable, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,36 +6,148 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
+import ColorContext from '../theme/ColorContext';
 
 export default function Profiles({navigation, props}) {
-  const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
-  const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
+    const { colors, toggleColors } = useContext(ColorContext)
 
-  const allJackie = [{value: "Tomato"}, {value: "Relic"}]
-  const dieJackie = [{value: "Porkless"}, {value: "Vegetarian"}]
+    const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
+    const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
 
-  const allGoro = []
-  const dieGoro = [{value: "Pescatarian"}]
+    const allJackie = [{value: "Tomato"}, {value: "Relic"}]
+    const dieJackie = [{value: "Porkless"}, {value: "Vegetarian"}]
 
-  const allViktor = [{value: "Pasta"}, {value: "Fish"}]
-  const dieViktor = [{value: "Dairy free"}, {value: "Vegan"}]
+    const allGoro = []
+    const dieGoro = [{value: "Pescatarian"}]
 
-  const [visible, setVisible] = useState(false);
-  const [opacity, setOpacity] = useState(1);
-  const raisePopUp = () => {
+    const allViktor = [{value: "Pasta"}, {value: "Fish"}]
+    const dieViktor = [{value: "Dairy free"}, {value: "Vegan"}]
+
+    const [visible, setVisible] = useState(false);
+    const [opacity, setOpacity] = useState(1);
+    const raisePopUp = () => {
         setVisible(true)
         setOpacity(0.3)
-  }
-  const erasePopUp = () => {
+    }
+    const erasePopUp = () => {
         setVisible(false)
         setOpacity(1)
-  }
+    }
 
-  return (
+    const styles = StyleSheet.create({
+        container: {
+            height: "100%",
+            width: "100%",
+            flex: 1,
+            backgroundColor: '#3F3C42',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 10,
+        },
+        linearGradient: {
+            height: "100%",
+            width: "100%",
+            flex: 1,
+            padding: 10,
+            paddingTop: 0,
+        },
+        separator: {
+            marginTop: "6%"
+        },
+    
+        modal: {
+            position: 'absolute',
+            top: '8%',
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+        },
+        viewModal: {
+            flexDirection: "column",
+            padding: "3%",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            flex: 1,
+        },
+    
+        profileValidation: {
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "6%",
+            flex: 0.7,
+        },
+        decisionBarVertical: {
+            flexDirection: "column",
+            width: "90%",
+            padding: "3%",
+            borderRadius: 15,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#F2F0E4",
+        },
+        validationQuestion: {
+            fontSize: 20,
+            color: '#ACA279',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 0.3,
+            marginBottom: "2%",
+            marginHorizontal: "2%",
+        },
+        decisionBar: {
+            flexDirection: "row",
+            flex: 0.7,
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+        },
+        yesButton: {
+            flexDirection: "row",
+            flex: 0.5,
+            padding: "2%",
+            marginHorizontal: "5%",
+            width: "90%",
+            borderRadius: 20,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#59BDCD",
+        },
+        yesText: {
+            fontSize: 20,
+            color: '#3F3C42',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 0.7,
+            padding: "4%",
+        },
+        noButton: {
+            flexDirection: "row",
+            flex: 0.5,
+            padding: "2%",
+            marginHorizontal: "5%",
+            width: "90%",
+            borderRadius: 20,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#8A0000",
+        },
+        noText: {
+            fontSize: 20,
+            color: '#F2F0E4',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 0.7,
+            padding: "4%",
+        },
+    });
+
+    return (
     <SafeAreaProvider style={{flex: 1}}>
         <ScrollView>
-            <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1, backgroundColor: '#3F3C42',}}>
-                <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+            <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1}}>
+                <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                     <View style={styles.separator}/>
                     <ProfileDetails 
                         name="Johnny Silverhand" 
@@ -97,114 +209,5 @@ export default function Profiles({navigation, props}) {
             </View>
         </ScrollView>
     </SafeAreaProvider>
-  );
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    width: "100%",
-    flex: 1,
-    backgroundColor: '#3F3C42',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  linearGradient: {
-    height: "100%",
-    width: "100%",
-    flex: 1,
-    padding: 10,
-    paddingTop: 0,
-  },
-  separator: {
-    marginTop: "6%"
-  },
-
-  modal: {
-        position: 'absolute',
-        top: '8%',
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-  },
-  viewModal: {
-        flexDirection: "column",
-        padding: "3%",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        flex: 1,
-  },
-
-  profileValidation: {
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: "6%",
-        flex: 0.7,
-  },
-  decisionBarVertical: {
-          flexDirection: "column",
-          width: "90%",
-          padding: "3%",
-          borderRadius: 15,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#F2F0E4",
-  },
-  validationQuestion: {
-        fontSize: 20,
-        color: '#ACA279',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 0.3,
-        marginBottom: "2%",
-        marginHorizontal: "2%",
-  },
-  decisionBar: {
-          flexDirection: "row",
-          flex: 0.7,
-          width: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-  },
-  yesButton: {
-          flexDirection: "row",
-          flex: 0.5,
-          padding: "2%",
-          marginHorizontal: "5%",
-          width: "90%",
-          borderRadius: 20,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#59BDCD",
-  },
-  yesText: {
-      fontSize: 20,
-      color: '#3F3C42',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 0.7,
-      padding: "4%",
-  },
-  noButton: {
-        flexDirection: "row",
-        flex: 0.5,
-        padding: "2%",
-        marginHorizontal: "5%",
-        width: "90%",
-        borderRadius: 20,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#8A0000",
-  },
-  noText: {
-        fontSize: 20,
-        color: '#F2F0E4',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 0.7,
-        padding: "4%",
-  },
-});

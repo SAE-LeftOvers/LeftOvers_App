@@ -4,7 +4,6 @@ import { StyleSheet,Pressable, Text, View } from 'react-native';
 import ColorContext from '../theme/ColorContext';
 
 
-
 interface foodElementImageProps {
     title  : string
 }
