@@ -13,7 +13,7 @@ import bracketRight from '../assets/images/angle_bracket_right.png';
 
 
 export default function HomePage({ navigation, props }) {
-    const {colors, toggleColors} = useContext(ColorContext);
+    const colors = useContext(ColorContext).colors
 
     const profiles = [
         {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
