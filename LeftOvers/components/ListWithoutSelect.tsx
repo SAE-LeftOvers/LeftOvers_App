@@ -7,7 +7,7 @@ import ColorContext from '../theme/ColorContext';
 
 type ListProps = {
     title: string
-    content: list<string>
+    content: string[]
 }
 
 export default function ListWithoutSelect(props: ListProps) {
@@ -18,7 +18,6 @@ export default function ListWithoutSelect(props: ListProps) {
         titleBar: {
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "stretch",
             backgroundColor: colors.cardElementTitleBackground,
             borderTopRightRadius: 15,
             borderTopLeftRadius: 15,
@@ -47,7 +46,6 @@ export default function ListWithoutSelect(props: ListProps) {
         itemList: {
             flexDirection: "row",
             alignItems: "flex-start",
-            justifyContent: "stretch",
             borderWidth: 0,
             borderTopRightRadius: 0,
             borderTopLeftRadius: 0,
