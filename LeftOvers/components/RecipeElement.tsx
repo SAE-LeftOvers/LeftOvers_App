@@ -1,18 +1,18 @@
 import React from 'react';
-import {StyleSheet,Pressable, Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
+import {StyleSheet, Pressable, Text, View, Image, ScrollView} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import Union_left from '../assets/images/Union_left.png';
 import Union_right from '../assets/images/Union_right.png';
 import background from '../assets/images/Background.png'; 
 
-interface recipeElementProps {
+interface RecipeElementProps {
   number: string
   title: string
   textList: string[]
   description: string
 }
 
-export default function RecipeElement(props: recipeElementProps) {
+export default function RecipeElement(props: RecipeElementProps) {
   return (
     <Pressable style={styles.button}>
       <View style={styles.view}>

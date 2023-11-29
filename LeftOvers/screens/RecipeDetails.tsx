@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, ScrollView, useWindowDimensions} from 'react-na
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import RecipeElementReduce from '../components/RecipeElementReduce';
-import AllergiesTab from '../components/ListWithoutSelect';
 import RecipesService from '../Services/Recipes/RecipesServices';
 import Recipes from '../Models/Recipes';
 import { LinearGradient } from 'expo-linear-gradient';

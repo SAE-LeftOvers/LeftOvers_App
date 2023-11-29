@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
+import {StyleSheet,Pressable, Text, View} from 'react-native';
 import Separator from '../components/Separator'; 
 import ColorContext from '../theme/ColorContext';
 
 
-interface foodElementImageProps {
+interface FoodElementTextProps {
     title  : string
 }
 

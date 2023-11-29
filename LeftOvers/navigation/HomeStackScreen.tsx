@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
-import { Image, Text, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomePage from '../screens/HomePage';
 import Profiles from '../screens/Profiles';
-import CreateProfile from '../screens/CreateProfile';
 import ModifyProfile from '../screens/ModifyProfile';
 import ThemeContext from '../theme/ThemeContext';
 import ColorContext from '../theme/ColorContext';

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import TopBar from '../components/TopBar';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';

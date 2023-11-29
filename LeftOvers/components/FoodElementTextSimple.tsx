@@ -1,15 +1,12 @@
 import React from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
-import Separator from '../components/Separator';
+import {StyleSheet,Pressable, Text, View} from 'react-native';
 
-
-
-interface foodElementTextProps {
+interface FoodElementTextSimpleProps {
   title: string
 }
 
 
-export default function FoodElementTextSimple(props: foodElementTextProps) {
+export default function FoodElementTextSimple(props: FoodElementTextSimpleProps) {
   return (
     <Pressable style={styles.button}>
       <View style={styles.container}>

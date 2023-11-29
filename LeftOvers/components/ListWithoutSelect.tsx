@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
-import {StyleSheet, Text, TextInput, View, Image, FlatList, Pressable} from 'react-native';
-import ValidateButton from './ValidateButton';
-import HeaderFlatList from './HeaderFlatList';
-import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list'
+import {StyleSheet, Image} from 'react-native';
+import {MultipleSelectList} from 'react-native-dropdown-select-list'
 import ColorContext from '../theme/ColorContext';
 
 type ListProps = {

@@ -1,6 +1,5 @@
 import {React, useState} from 'react';
-import {StyleSheet, Text, TextInput, View, Image, Pressable} from 'react-native';
-import ValidateButton from './ValidateButton';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import ListWithoutSelect from './ListWithoutSelect';
 
 type ProfileProps = {

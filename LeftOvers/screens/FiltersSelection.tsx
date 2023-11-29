@@ -32,7 +32,7 @@ export default function FiltersSelection(props) {
   const dieProfiles = [{value: "Porkless"}, {value: "Pescatarian"}]
 
   function isInProfileDiets(element, index, array) {
-       var retType = true
+       let retType = true
        dieProfiles.forEach(function (diets) {
             if(diets.value==element.value){
                 retType = false

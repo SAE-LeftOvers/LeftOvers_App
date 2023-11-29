@@ -1,17 +1,17 @@
 import React from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import background from '../assets/images/Background.png'; 
 
 
-interface recipeElementReduceProps {
+interface RecipeElementReduceProps {
   number : number
   title  : string
   image : string | null
   duration : string
 }
 
-export default function RecipeElementReduce(props: recipeElementReduceProps) {
+export default function RecipeElementReduce(props: RecipeElementReduceProps) {
   return (
     <View style={styles.button}>
       <View style={styles.view}>

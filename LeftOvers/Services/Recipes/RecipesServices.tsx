@@ -17,7 +17,7 @@ export default class RecipesService implements IRecipesService {
     }
 
 
-    async getRecipeById(id: Number): Promise<Recipes | null>{
+    async getRecipeById(id: number): Promise<Recipes | null>{
         try {
             const response = await axios.get(`${this.API_URL}/${id}`);
             console.log(response);

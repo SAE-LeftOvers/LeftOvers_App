@@ -71,7 +71,7 @@ export default function RecipeSuggestion(props) {
     }
     else{
         setMaxCpt(ingredientList.length+ingredientList.length%4)
-        var cpt=ingredientList.length-(ingredientList.length%4)
+        let cpt=ingredientList.length-(ingredientList.length%4)
         setMinCpt(cpt)
     }
   }

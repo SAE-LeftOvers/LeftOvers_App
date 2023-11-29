@@ -17,12 +17,6 @@ export default function Profiles({navigation, props}) {
     const allJackie = [{value: "Tomato"}, {value: "Relic"}]
     const dieJackie = [{value: "Porkless"}, {value: "Vegetarian"}]
 
-    const allGoro = []
-    const dieGoro = [{value: "Pescatarian"}]
-
-    const allViktor = [{value: "Pasta"}, {value: "Fish"}]
-    const dieViktor = [{value: "Dairy free"}, {value: "Vegan"}]
-
     const [visible, setVisible] = useState(false);
     const [opacity, setOpacity] = useState(1);
     const raisePopUp = () => {

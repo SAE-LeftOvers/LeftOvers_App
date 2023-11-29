@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native';
-import { GestureResponderEvent, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Pressable, GestureResponderEvent, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import ThemeContext from '../theme/ThemeContext';
 import ColorContext from '../theme/ColorContext';
