@@ -7,7 +7,7 @@ import background from '../assets/images/Background.png';
 interface recipeElementReduceProps {
   number : number
   title  : string
-  image : string
+  image : string | null
   duration : string
 }
 

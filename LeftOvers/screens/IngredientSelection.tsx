@@ -133,7 +133,7 @@ const loadIngredients = async () => {
                                     borderRadius: 15,
                             }}/>
                     </View>
-                    <View style={{flex: 1}}>
+                    <View style={{flex: 1, maxHeight: 300}}>
                         <FlatList
                             data={response ? response : []}
                             renderItem={({ item }) => (
@@ -153,7 +153,7 @@ const loadIngredients = async () => {
                     <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: "5%"}]}>
                       <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
                     </View>
-                    <View style={{flex: 1}}>
+                    <View style={{flex: 1, maxHeight: 300}}>
                       <FlatList
                               data={selectedIngredients}
                               renderItem={({ item }) => (
