@@ -11,7 +11,7 @@ import ProfileSelection from '../components/ProfileSelection';
 import ColorContext from '../theme/ColorContext';
 
 export default function FiltersSelection(props) {
-  const {colors, toggleColors} = useContext(ColorContext);
+  const {colors} = useContext(ColorContext);
   const profiles = [
         {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
         {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},

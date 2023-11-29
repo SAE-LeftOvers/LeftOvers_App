@@ -22,8 +22,7 @@ function AppIcon() {
 }
 
 export default function HomeStackScreen() {
-    const {theme, toggleTheme} = useContext(ThemeContext)
-    const {colors, toggleColors} = useContext(ColorContext)
+    const {colors} = useContext(ColorContext)
     
     return (
         <HomeStack.Navigator>

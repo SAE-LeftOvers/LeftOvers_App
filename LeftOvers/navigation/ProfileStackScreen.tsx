@@ -15,7 +15,7 @@ import AddIcon from '../assets/images/plus.png'
 const ProfilesStack = createNativeStackNavigator()
 
 export default function ProfilesStackScreen({ navigation }) {
-    const {theme, toggleTheme} = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
 
     const styles = StyleSheet.create({
         headerBarContainer: {

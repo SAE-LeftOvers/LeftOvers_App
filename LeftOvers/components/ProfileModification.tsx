@@ -15,7 +15,7 @@ type ProfileProps = {
 
 export default function ProfileModification(props: ProfileProps) {
     const [name, onChangeName] = useState(props.name);
-    const { colors, toggleColors } = useContext(ColorContext);
+    const { colors } = useContext(ColorContext);
 
     let imageSource
     if (props.avatar == "plus.png"){

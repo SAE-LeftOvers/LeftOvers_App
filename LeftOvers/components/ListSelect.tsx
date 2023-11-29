@@ -9,8 +9,8 @@ type ListProps = {
 }
 
 export default function ListSelect(props: ListProps) {
-    const [selected, setSelected] = React.useState([]);
-    const { colors, toggleColors } = useContext(ColorContext);
+    const [selected, setSelected] = React.useState(["None"]);
+    const {colors} = useContext(ColorContext);
 
     const styles = StyleSheet.create({
         titleBar: {

@@ -13,7 +13,7 @@ const componentWidth = 280;
 
 
 export default function FoodElementText(props : any) {
-    const {colors, toggleColors } = useContext(ColorContext)
+    const {colors} = useContext(ColorContext)
 
     const styles = StyleSheet.create({
         button: {

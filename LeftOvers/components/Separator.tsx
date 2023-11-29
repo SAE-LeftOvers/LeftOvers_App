@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import ColorContext from '../theme/ColorContext';
 
 export default function Separator (){
-    const {colors, toggleColors } = useContext(ColorContext)
+    const {colors } = useContext(ColorContext)
 
     const styles = StyleSheet.create({
         separator: {

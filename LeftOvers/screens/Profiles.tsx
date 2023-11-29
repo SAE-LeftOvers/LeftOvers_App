@@ -9,7 +9,7 @@ import ProfileDelete from '../components/ProfileDelete';
 import ColorContext from '../theme/ColorContext';
 
 export default function Profiles({navigation, props}) {
-    const { colors, toggleColors } = useContext(ColorContext)
+    const { colors } = useContext(ColorContext)
 
     const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
     const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]

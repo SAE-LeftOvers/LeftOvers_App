@@ -5,8 +5,6 @@ import Recipes from "../../Models/Recipes";
 export default class RecipesService implements IRecipesService {
     private readonly API_URL = "http://leftovers.alwaysdata.net/recipes";
 
-    constructor() {}
-
     async getAllRecipes(): Promise<Recipes[]> {
         try {
             const response = await axios.get(this.API_URL);

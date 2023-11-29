@@ -15,11 +15,11 @@ import ColorContext from '../theme/ColorContext';
 export default function IngredientSelection(props) {
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
   const [response, setResponse] = useState<Ingredient[] | undefined>(undefined);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const ingredientService = new IngredientService();
-  const {colors, toggleColors} = useContext(ColorContext);
+  const {colors} = useContext(ColorContext);
 
   const [searchQuery, setSearchQuery] = useState('');
 

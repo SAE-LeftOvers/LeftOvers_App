@@ -5,8 +5,6 @@ import axios from 'axios';
 export default class IngredientService implements IIngredientService {
     private readonly API_URL = "http://leftovers.alwaysdata.net/ingredients";
 
-    constructor() {}
-
     async getAllIngredient(): Promise<Ingredient[]> {
         try {
             const response = await axios.get(this.API_URL);

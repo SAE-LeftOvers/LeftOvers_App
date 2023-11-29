@@ -7,14 +7,9 @@ import TopBar from '../components/TopBar';
 import RecipeElement from '../components/RecipeElement';
 import SelectedIngredient from '../components/SelectedIngredient';
 import FoodElementTextSimple from '../components/FoodElementTextSimple';
-import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
-import DietsTab from '../components/ListSelect';
 import ColorContext from '../theme/ColorContext';
-
-import brochette from '../assets/images/brochette.png'; 
 import ParameterTopBar from '../components/ParameterTopBar';
-import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ValidateButton from '../components/ValidateButton';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
@@ -24,7 +19,7 @@ import minus from '../assets/images/minus.png';
 
 
 export default function RecipeSuggestion(props) {
-  const {colors, toggleColors} = useContext(ColorContext)
+  const {colors} = useContext(ColorContext)
   const [visible, setVisible] = React.useState(false);
   const [visibleFilters, setVisibleFilters] = React.useState(false);
   const [visibleIngredients, setVisibleIngredients] = React.useState(true);

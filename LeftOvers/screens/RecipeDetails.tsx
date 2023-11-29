@@ -11,7 +11,7 @@ import ColorContext from '../theme/ColorContext';
 
 
 export default function RecipeDetails(props) {
-    const {colors, toggleColors} = useContext(ColorContext);
+    const {colors} = useContext(ColorContext);
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState();
