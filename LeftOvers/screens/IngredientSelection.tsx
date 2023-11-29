@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList } from 'react-native';
+import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TopBar from '../components/TopBar';
 import { Searchbar } from 'react-native-paper';
@@ -10,6 +10,7 @@ import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
 import Ingredient from '../Models/Ingredient';
 import IngredientService from '../Services/Ingredients/IngredientsServices';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function IngredientSelection(props) {
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -44,8 +45,7 @@ export default function IngredientSelection(props) {
     filterIngredients(query);
   };
 
-
-  const loadIngredients = async () => {
+const loadIngredients = async () => {
     try {
       const ingredients = await ingredientService.getAllIngredient();
       setResponse(ingredients);
@@ -62,7 +62,7 @@ export default function IngredientSelection(props) {
 
   const AvailableItem = ({ value }: { value: Ingredient }) => (
     <>
-      <View style={styles.horizontalAlignement}>
+      <View style={styles.horizontalAlignment}>
         <FoodElementText title={value.name} />
         <Pressable onPress={() => SelectIngredient(value)}>
           <Image source={plus} style={{ width: 20, height: 20 }} />
@@ -74,7 +74,7 @@ export default function IngredientSelection(props) {
 
   const ChooseItem = ({ value }: { value: Ingredient }) => (
     <>
-      <View style={styles.horizontalAlignement}>
+      <View style={styles.horizontalAlignment}>
         <FoodElementText title={value.name} />
         <Pressable onPress={() => RemoveIngredient(value.id)}>
           <Image source={moins} style={{ width: 20, height: 20 }} />
@@ -109,97 +109,91 @@ export default function IngredientSelection(props) {
   };
 
   return (
-    <SafeAreaProvider>
-      <TopBar title="Ingredient selection" />
-      <View style={styles.page}>
-        <View style={styles.element}>
-
-          <View style={[styles.horizontalAlignement, { margin: 10 }]}>
-            {alphabetArray.map((source, index) => (
-              <Pressable key={index} onPress={() => handleLetterPress(source)}>
-                <Text style={{ color: "blue" }}>{source}</Text>
-              </Pressable>
-            ))}
-          </View>
-
-          <View>
-            <Searchbar
-              placeholder="Rechercher"
-              onChangeText={handleSearch}
-              value={searchQuery}
-              style={{
-                margin: 10,
-                backgroundColor: '#F2F0E4',
-                borderWidth: 1,
-                borderColor: "#ACA279",
-                borderRadius: 15,
-                height: 50,
-              }} />
-          </View>
-          
-          <View style={{ alignItems: 'center', height: 300}}>
-              <FlatList
-                data={response ? response : []}
-                renderItem={({ item }) => (
-                  <AvailableItem value={item} />
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                ListEmptyComponent={() => (
-                  isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
-                )}
-                style={{ flex: 1 }}
-              />
-          </View>
-          <View style={{ height: 20 }}></View>
-        </View>
-
-        <View style={[styles.element, { marginTop: 40 }]}>
-          <View style={[styles.horizontalAlignement, { justifyContent: "flex-start", marginLeft: 10 }]}>
-            <Text style={{ fontSize: 20, color: '#ACA279' }}>Selected</Text>
-          </View>
-          <View style={{ height: 5 }}></View>
-
-          <View style={{ alignItems: 'center', maxHeight: 200}}>
-              <FlatList
-                data={selectedIngredients}
-                renderItem={({ item }) => (
-                  <ChooseItem value={item} />
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                style={{ flex: 1 }}
-              />
-          </View>
-
-          <View style={{ height: 20 }}></View>
-        </View>
-
-        <View style={{ height: 15 }}></View>
-        <CustomButton title="Find a recipe" />
-      </View>
+    <SafeAreaProvider style={{flex: 1}}>
+        <ScrollView>
+            <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+                <View style={{marginTop: "6%"}}/>
+                <View style={styles.element}>
+                  <View style={[styles.horizontalAlignment, { margin: 10 }]}>
+                    {alphabetArray.map((source, index) => (
+                      <Pressable key={index} onPress={() => handleLetterPress(source)}>
+                      <Text style={{ color: "blue" }}>{source}</Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                    <View>
+                        <Searchbar
+                            placeholder="Search"
+                            onChangeText={handleSearch}
+                            value={searchQuery}
+                            style={{margin: "3%",
+                                    backgroundColor: '#F2F0E4',
+                                    borderWidth : 1,
+                                    borderColor: "#ACA279",
+                                    borderRadius: 15,
+                            }}/>
+                    </View>
+                    <View style={{flex: 1}}>
+                        <FlatList
+                            data={response ? response : []}
+                            renderItem={({ item }) => (
+                            <AvailableItem value={item} />
+                              )}
+                            keyExtractor={(item, index) => index.toString()}
+                            ListEmptyComponent={() => (
+                            isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
+                            )}
+                          style={{ flex: 1 }}
+                        />
+                        <View style={{ marginTop: '6%' }}></View>
+                    </View>
+                </View>
+                <View style={{marginTop: "6%"}}/>
+                <View style={styles.element}>
+                    <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: "5%"}]}>
+                      <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
+                    </View>
+                    <View style={{flex: 1}}>
+                      <FlatList
+                              data={selectedIngredients}
+                              renderItem={({ item }) => (
+                                <ChooseItem value={item} />
+                              )}
+                              keyExtractor={(item, index) => index.toString()}
+                              style={{ flex: 1 }}
+                            />
+                        <View style={{ height: 20 }}></View>
+                    </View>
+                </View>
+                <View style={{marginTop: "8%"}}></View>
+                <CustomButton title="Find a recipe"/>
+                <View style={{marginBottom: "20%"}}></View>
+            </LinearGradient>
+        </ScrollView>
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    backgroundColor: '#59BDCD',
-    alignItems: 'center',
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: 20,
+  linearGradient: {
+        width: "100%",
+        flex: 1,
+        padding: "3%",
+        paddingTop: 0,
+        alignItems: "center",
+        justifyContent: "flex-start",
   },
+
   element: {
-    backgroundColor: '#F2F0E4',
+    width: "100%",
+    backgroundColor:'#F2F0E4',
     borderRadius: 30,
   },
-  horizontalAlignement: {
-    display: 'flex',
-    height: 30,
-    width: 350,
+  horizontalAlignment: {
+    width: "100%",
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 15,
+    marginTop: "3%",
   }
 });

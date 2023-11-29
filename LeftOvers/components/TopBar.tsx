@@ -12,13 +12,12 @@ export default function TopBar(props) {
 
     return (
         <Appbar.Header  style={{backgroundColor: '#F2F0E4'}} >
-            <Appbar.Content title={props.title} />
-
-            {props.isVisible && (
-                <>
-                    <Appbar.Action icon="magnify" onPress={_handleSearch} />
-                    <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
-                </>
+            <Appbar.BackAction onPress={_goBack} color={"#3F3C42"}/>
+            <Appbar.Content title={props.title} color={"#3F3C42"}/>
+            {props.isVisible &&(
+              <><Appbar.Action icon="magnify" onPress={_handleSearch} color={"#3F3C42"}/>
+              <Appbar.Action icon="dots-vertical" onPress={_handleMore} color={"#3F3C42"}/>
+              </>
             )}
         </Appbar.Header>
     );

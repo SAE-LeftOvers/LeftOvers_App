@@ -1,58 +1,51 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Pressable, Image, Text } from 'react-native';
+import {View, StyleSheet, Pressable, Image, Text} from 'react-native';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 import parameter from '../assets/images/parameter.png';
 import FoodElementText from './FoodElementText';
 
 interface SelectedIngredientProps {
-  listeIngredient: string[];
-  listeImage: string[];
-  onEvent: (value: string) => void;
+  ingredientList: string[]
+  onEvent: () => void
 }
 
 export default function SelectedIngredient(props: SelectedIngredientProps) {
   const [cpt, setCpt] = useState(0);
 
   const decreaseCounter = () => {
-    if (cpt > 0) {
+    if(cpt > 0){
       setCpt(cpt - 1);
-    } else {
-      setCpt(props.listeIngredient.length - 1);
+    }
+    else{
+      setCpt(props.ingredientList.length - 1);
     }
   };
-
   const increaseCounter = () => {
-    if (cpt < props.listeIngredient.length - 1) {
+    if(cpt < props.ingredientList.length - 1){
       setCpt(cpt + 1);
-    } else {
+    }
+    else{
       setCpt(0);
     }
   };
 
-  const handlePress = () => {
-    // Supposons que vous voulez envoyer la valeur 'Hello' au parent
-    props.onEvent('Hello');
-  };
-
   return (
     <View style={styles.view}>
-      <View id="Top" style={styles.horizontalAlignement}>
+      <View style={styles.horizontalAlignment}>
         <Text style={styles.text}>Selected ingredients</Text>
-        <Pressable onPress={handlePress}>
-          <Image source={parameter} style={{ width: 15, height: 15 }} />
+        <Pressable onPress={props.onEvent}>
+          <Image source={parameter} style={{tintColor: "#3F3C42", resizeMode: "contain", flex: 1, marginRight: "8%"}}/>
         </Pressable>
       </View>
 
-      <View id="IngredientList" style={styles.horizontalAlignement}>
-        <Pressable onPress={decreaseCounter} id="GoLeft" style={{}}>
-          <Image source={bracketLeft} style={{ width: 40, height: 40 }} />
+      <View style={styles.horizontalAlignment}>
+        <Pressable onPress={decreaseCounter}>
+          <Image source={bracketLeft} style={{width: 40, height: 40, tintColor: "#3F3C42", resizeMode: "contain"}}/>
         </Pressable>
-
-        <FoodElementText title={props.listeIngredient[cpt]} />
-
-        <Pressable onPress={increaseCounter} id="GoRight" style={{}}>
-          <Image source={bracketRight} style={{ width: 40, height: 40 }} />
+        <FoodElementText title={props.ingredientList[cpt].title}/>
+        <Pressable onPress={increaseCounter}>
+          <Image source={bracketRight} style={{width: 40, height: 40, tintColor: "#3F3C42", resizeMode: "contain"}}/>
         </Pressable>
       </View>
     </View>
@@ -61,30 +54,26 @@ export default function SelectedIngredient(props: SelectedIngredientProps) {
 
 const styles = StyleSheet.create({
   view: {
-    width: 350,
-    height: 110,
+    width: "90%",
+    paddingBottom: "5%",
     borderRadius: 15,
-    elevation: 3,
-    borderWidth: 1,
-    borderColor: 'black',
-    display: 'flex',
-    flexWrap: 'wrap',
+    borderColor: '#3F3C42',
     backgroundColor: '#E3DEC9',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  horizontalAlignement: {
-    display: 'flex',
-    height: 30,
-    width: 350,
+  horizontalAlignment: {
+    width: "90%",
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: "3%",
   },
   text: {
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 15,
     fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'black',
+    color: '#3F3C42',
+    flex: 1,
+    marginLeft: "8%",
   },
 });

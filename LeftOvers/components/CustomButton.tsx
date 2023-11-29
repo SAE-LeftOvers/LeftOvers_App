@@ -23,25 +23,22 @@ const styles = StyleSheet.create({
     width : 150,
     height: 40,
     borderRadius: 4,
-    elevation: 3,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: '#F2F0E4',
   },
   text: {
     fontSize: 15,
-    lineHeight: 21,
     fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
+    color: '#ACA279',
   },
   view: {
     width : 145,
     height: 35,
     borderRadius: 4,
-    elevation: 3,
     borderWidth: 1,
-    borderColor: 'grey',
-    alignItems: 'center', // Centre le contenu verticalement
-    justifyContent: 'center', // Centre le contenu horizontalement
+    borderColor: '#ACA279',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: "1%",
   },
 });
 
