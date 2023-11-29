@@ -10,7 +10,7 @@ type Profile = {
 }
 
 export default function ProfileElement(props : Profile) {
-    const { colors, toggleColors } = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
 
     const [waiting, setWaiting] = useState("none")
     const [separator, setSeparator] = useState("none")
