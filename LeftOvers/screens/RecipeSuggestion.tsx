@@ -8,7 +8,7 @@ import RecipeElement from '../components/RecipeElement';
 import SelectedIngredient from '../components/SelectedIngredient';
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
-import DietsTab from '../components/DietsTab';
+import DietsTab from '../components/ListSelect';
 
 import brochette from '../assets/images/brochette.png'; 
 import ParameterTopBar from '../components/ParameterTopBar';

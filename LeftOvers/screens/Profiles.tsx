@@ -34,6 +34,23 @@ export default function Profiles({navigation, props}) {
         setOpacity(1)
     }
 
+    const profiles = [
+        {
+          name: "Johnny Silverhand",
+          avatar: "plus_small.png",
+          diets: dieJohnny,
+          allergies: allJohnny,
+        },
+        {
+          name: "Jackie Welles",
+          avatar: "plus_small.png",
+          diets: dieJackie,
+          allergies: allJackie,
+        },
+        // ... Ajoutez d'autres profils ici de la même manière
+      ];
+      
+
     const styles = StyleSheet.create({
         container: {
             height: "100%",
@@ -143,39 +160,26 @@ export default function Profiles({navigation, props}) {
         },
     });
 
+    const profileComponents = profiles.map((profile, index) => (
+        <View key={index}>
+          <ProfileDetails
+            name={profile.name}
+            avatar={profile.avatar}
+            diets={profile.diets}
+            allergies={profile.allergies}
+            onDeleteProfile={raisePopUp}
+          />
+          {index < profiles.length - 1 && <View style={styles.separator} />}
+        </View>
+      ));
+
     return (
     <SafeAreaProvider style={{flex: 1}}>
         <ScrollView>
             <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1}}>
                 <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                     <View style={styles.separator}/>
-                    <ProfileDetails 
-                        name="Johnny Silverhand" 
-                        avatar="plus_small.png" 
-                        diets={dieJohnny} 
-                        allergies={allJohnny} 
-                        onDeleteProfile={raisePopUp}/>
-                    <View style={styles.separator}/>
-                    <ProfileDetails 
-                        name="Jackie Welles" 
-                        avatar="plus_small.png" 
-                        diets={dieJackie} 
-                        allergies={allJackie} 
-                        onDeleteProfile={raisePopUp} />
-                    <View style={styles.separator}/>
-                    <ProfileDetails 
-                        name="Goro Takemura" 
-                        avatar="plus_small.png" 
-                        diets={dieGoro} 
-                        allergies={allGoro} 
-                        onDeleteProfile={raisePopUp} />
-                    <View style={styles.separator}/>
-                    <ProfileDetails 
-                        name="Viktor Vector" 
-                        avatar="plus_small.png" 
-                        diets={dieViktor} 
-                        allergies={allViktor} 
-                        onDeleteProfile={raisePopUp} />
+                    {profileComponents}
                     <View style={styles.modal}>
                         <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>
                             <View style={styles.modal}>
