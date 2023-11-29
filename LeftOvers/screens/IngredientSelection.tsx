@@ -2,124 +2,106 @@ import React from 'react';
 import {View, StyleSheet, Text, Image, Pressable, ScrollView, useWindowDimensions} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import TopBar from '../components/TopBar';
-import {LinearGradient} from 'expo-linear-gradient';
 import {Searchbar} from 'react-native-paper';
+import {LinearGradient} from 'expo-linear-gradient';
 import brochette from '../assets/images/brochette.png';
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
+import plus from '../assets/images/plus_small.png';
+import minus from '../assets/images/minus.png';
+import meat from '../assets/images/meat_icon.png';
+import vegetable from '../assets/images/vegetable_icon.png';
+import fruit from '../assets/images/fruit_icon.png';
 
 
-export default function IngredientSelection() {
+export default function IngredientSelection(props) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = query => setSearchQuery(query);
+  const ingredientList = [{title: "Steak"}, {title: "Sheep Ribs"}, {title: "Rabbit Thigh"}, {title: "Ham"}, {title: "Cream (Liquid)"}, {title: "Pepper Bell"}]
+  const availableList = [{title: "Tomato"}, {title: "Lemon"}, {title: "Strawberry"}, {title: "Rice"}, {title: "Flour"}]
+
+  type ItemProps = {value: string}
+
+  const AvailableItem = ({value}: any) => (
+    <>
+        <View style={styles.horizontalAlignment}>
+            <FoodElementText title={value.title}/>
+            <Pressable>
+                <Image source={plus} style={{width: 20, height: 20, resizeMode: "contain", marginRight: "3%"}}/>
+            </Pressable>
+        </View>
+        <View style={{height: 20}}/>
+    </>
+  )
+
+  const ChooseItem = ({value}: any) => (
+    <>
+        <View style={styles.horizontalAlignment}>
+            <FoodElementText title={value.title}/>
+            <Pressable>
+                <Image source={minus} style={{width: 20, height: 20, resizeMode: "contain", marginRight: "3%"}}/>
+            </Pressable>
+        </View>
+        <View style={{height: 20}}/>
+    </>
+  )
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{flex: 1}}>
         <TopBar title="Ingredient selection"/>
         <ScrollView>
             <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.element}>
-                      <View style={[styles.horizontalAlignement, {justifyContent: 'center'}]}>
-                            <Pressable>
-                                <Image source={brochette} style={{ width: 40, height: 40 }} />
-                            </Pressable>
-                            <Pressable>
-                                <Image source={brochette} style={{ width: 40, height: 40 }} />
-                            </Pressable>
-                            <Pressable>
-                                <Image source={brochette} style={{ width: 40, height: 40 }} />
-                            </Pressable>
-                            <Pressable>
-                                <Image source={brochette} style={{ width: 40, height: 40 }} />
-                            </Pressable>
-                      </View>
-                  <View>
-                  <Searchbar
-                      placeholder="Search"
-                      onChangeText={onChangeSearch}
-                      value={searchQuery}
-                      style={{margin: 10,
-                              backgroundColor: '#F2F0E4',
-                              borderWidth : 1,
-                              borderColor: "#ACA279",
-                              borderRadius: 15,
-                              height: 50,
-                              }}/>
-                  </View>
-                  <View style={{ flex: 1}} >
-                    <ScrollView contentContainerStyle={{ alignItems: 'center', height: 300}}>
-
-                      <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-
-                      <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-
-                      <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-
-                      <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-
-                      <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-
-
-                    </ScrollView>
-                  </View>
-                  <View style={{ height: 20 }}></View>
+                    <View style={[styles.horizontalAlignment, {justifyContent: 'center'}]}>
+                        <Pressable>
+                            <Image source={meat} style={{width: 30, height: 30, resizeMode: "contain"}}/>
+                        </Pressable>
+                        <View style={{marginHorizontal: "1%"}}/>
+                        <Pressable>
+                            <Image source={vegetable} style={{width: 30, height: 30, resizeMode: "contain"}}/>
+                        </Pressable>
+                        <View style={{marginHorizontal: "1%"}}/>
+                        <Pressable>
+                            <Image source={fruit} style={{width: 30, height: 30, resizeMode: "contain"}}/>
+                        </Pressable>
+                    </View>
+                    <View>
+                        <Searchbar
+                            placeholder="Search"
+                            onChangeText={onChangeSearch}
+                            value={searchQuery}
+                            style={{margin: "3%",
+                                    backgroundColor: '#F2F0E4',
+                                    borderWidth : 1,
+                                    borderColor: "#ACA279",
+                                    borderRadius: 15,
+                            }}/>
+                    </View>
+                    <View style={{flex: 1}}>
+                        <ScrollView>
+                            {ingredientList.map((title, index) => (
+                                <AvailableItem key={index} value={title}></AvailableItem>
+                            ))}
+                        </ScrollView>
+                    </View>
                 </View>
-
-                <View style={[styles.element, {marginTop:  40}]}>
-
-                    <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: 10}]}>
+                <View style={{marginTop: "6%"}}/>
+                <View style={styles.element}>
+                    <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: "5%"}]}>
                       <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
                     </View>
-
-                    <View style={{ height: 5 }}></View>
-
-                    <View style={{ flex: 1}} >
-                    <ScrollView contentContainerStyle={{ alignItems: 'center', height: 150}}>
-                    <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-
-                      <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-
-                      <View style={styles.horizontalAlignment}>
-                        <FoodElementText title="test" />
-                        <Image source={brochette} style={{ width: 20, height: 20 }} />
-                      </View>
-                      <View style={{ height: 30 }}></View>
-                    </ScrollView>
-                  </View>
-                  <View style={{ height: 20 }}></View>
+                    <View style={{flex: 1}}>
+                        <ScrollView>
+                            {availableList.map((title, index) => (
+                                <ChooseItem key={index} value={title}></ChooseItem>
+                            ))}
+                        </ScrollView>
+                    </View>
                 </View>
-
-                <View style={{ height: 15 }}></View>
+                <View style={{marginTop: "8%"}}></View>
                 <CustomButton title="Find a recipe"/>
+                <View style={{marginBottom: "20%"}}></View>
             </LinearGradient>
         </ScrollView>
     </SafeAreaProvider>
@@ -127,27 +109,25 @@ export default function IngredientSelection() {
 }
 
 const styles = StyleSheet.create({
-    linearGradient: {
-          width: "100%",
-          flex: 1,
-          padding: "2%",
-          paddingTop: 0,
-          alignItems: "center",
-          justifyContent: "center"
-    },
+  linearGradient: {
+        width: "100%",
+        flex: 1,
+        padding: "3%",
+        paddingTop: 0,
+        alignItems: "center",
+        justifyContent: "flex-start",
+  },
 
   element: {
     width: "100%",
     backgroundColor:'#F2F0E4',
-    borderRadius: 25,
+    borderRadius: 30,
   },
   horizontalAlignment: {
-    display: 'flex',
-    height: 30,
-    width: 350,
+    width: "100%",
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 15,
+    marginTop: "3%",
   }
 });

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: 'bold',
     padding : "3%",
-    color: 'black',
+    color: '#3F3C42',
   },
   view: {
     alignItems: 'flex-start',
