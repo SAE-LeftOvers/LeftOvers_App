@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
-import Separator from '../components/Separator'; 
+import {StyleSheet,Pressable, Text, View} from 'react-native'; 
 import ColorContext from '../theme/ColorContext';
 
 
@@ -12,8 +11,8 @@ const componentHeight = 60;
 const componentWidth = 280;
 
 
-export default function FoodElementText(props : any) {
-    const {colors, toggleColors } = useContext(ColorContext)
+export default function FoodElementText(props : foodElementImageProps) {
+    const colors = useContext(ColorContext).colors
 
     const styles = StyleSheet.create({
         button: {

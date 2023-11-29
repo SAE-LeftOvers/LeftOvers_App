@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
@@ -7,11 +7,14 @@ import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
 import Ingredient from '../Models/Ingredient';
 import IngredientService from '../Services/Ingredients/IngredientsServices';
+import ColorContext from '../theme/ColorContext';
 
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
 
 export default function IngredientSelection(props) {
+  const colors = useContext(ColorContext).colors
+
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
@@ -110,13 +113,13 @@ export default function IngredientSelection(props) {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.page}>
-        <View style={styles.element}>
+      <View style={[styles.page, { backgroundColor: colors.primary }]}>
+        <View style={[styles.element, { backgroundColor: colors.cardBackground}]}>
 
           <View style={[styles.horizontalAlignement, { margin: 10 }]}>
             {alphabetArray.map((source, index) => (
               <Pressable key={index} onPress={() => handleLetterPress(source)}>
-                <Text style={{ color: "blue" }}>{source}</Text>
+                <Text style={{ color: colors.cardDetail }}>{source}</Text>
               </Pressable>
             ))}
           </View>
@@ -128,9 +131,9 @@ export default function IngredientSelection(props) {
               value={searchQuery}
               style={{
                 margin: 10,
-                backgroundColor: '#F2F0E4',
+                backgroundColor: colors.cardBackground,
                 borderWidth: 1,
-                borderColor: "#ACA279",
+                borderColor:colors.cardTitle,
                 borderRadius: 15,
                 height: 50,
               }} />
@@ -152,9 +155,9 @@ export default function IngredientSelection(props) {
           <View style={{ height: 20 }}></View>
         </View>
 
-        <View style={[styles.element, { marginTop: 40 }]}>
+        <View style={[styles.element, { marginTop: 40, backgroundColor: colors.cardBackground }]}>
           <View style={[styles.horizontalAlignement, { justifyContent: "flex-start", marginLeft: 10 }]}>
-            <Text style={{ fontSize: 20, color: '#ACA279' }}>Selected</Text>
+            <Text style={{ fontSize: 20, color: colors.cardTitle }}>Selected</Text>
           </View>
           <View style={{ height: 5 }}></View>
 
@@ -182,14 +185,12 @@ export default function IngredientSelection(props) {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: '#59BDCD',
     alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',
     padding: 20,
   },
   element: {
-    backgroundColor: '#F2F0E4',
     borderRadius: 30,
   },
   horizontalAlignement: {
