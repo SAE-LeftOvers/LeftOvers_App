@@ -42,6 +42,5 @@ export default class IngredientService implements IIngredientService {
         } catch (error) {
             throw new Error('Erreur lors de la récupération des ingrédients : ' + error.message);
         }
-        return;
     }
 }

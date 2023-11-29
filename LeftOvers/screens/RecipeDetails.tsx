@@ -44,6 +44,49 @@ export default function RecipeDetails(props) {
       return `${hoursString}${minutesString}`.trim();
     }
 
+    const styles = StyleSheet.create({
+          linearGradient: {
+                width: "100%",
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "flex-start"
+          },
+          separator: {
+                marginTop: "6%",
+          },
+
+          background: {
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 20,
+                  backgroundColor: '#F2F0E4',
+                  padding: "3%",
+                  marginHorizontal: "3%",
+                  borderWidth: 1,
+                  borderColor: colors.blocBorder,
+          },
+
+          filterBar: {
+                    flexDirection: "row",
+                    width: "85%",
+                    paddingTop: "3%",
+                    paddingBottom: "2%",
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+          },
+          filters: {
+                    fontSize: 20,
+                    color: '#ACA279',
+                    flex: 1,
+          },
+          nbSelected: {
+                    fontSize: 11,
+                    color: "#3F3C42",
+                    textAlign: "right",
+          },
+    });
+
     return (
         <SafeAreaProvider>
           <ScrollView>
@@ -75,47 +118,4 @@ export default function RecipeDetails(props) {
           </ScrollView>
         </SafeAreaProvider>
       );
-
-    const styles = StyleSheet.create({
-      linearGradient: {
-            width: "100%",
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "flex-start"
-      },
-      separator: {
-            marginTop: "6%",
-      },
-
-      background: {
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 20,
-              backgroundColor: '#F2F0E4',
-              padding: "3%",
-              marginHorizontal: "3%",
-              borderWidth: 1,
-              borderColor: colors.blocBorder,
-      },
-
-      filterBar: {
-                flexDirection: "row",
-                width: "85%",
-                paddingTop: "3%",
-                paddingBottom: "2%",
-                alignItems: "flex-end",
-                justifyContent: "center",
-      },
-      filters: {
-                fontSize: 20,
-                color: '#ACA279',
-                flex: 1,
-      },
-      nbSelected: {
-                fontSize: 11,
-                color: "#3F3C42",
-                textAlign: "right",
-      },
-    });
 }
