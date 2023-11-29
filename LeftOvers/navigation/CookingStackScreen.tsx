@@ -8,7 +8,7 @@ import ThemeContext from '../theme/ThemeContext';
 const CookingStack = createNativeStackNavigator()
 
 export default function CookingStackScreen() {
-    const {theme, toggleTheme} = useContext(ThemeContext);
+    const theme = useContext(ThemeContext).theme;
     
     return (
         <CookingStack.Navigator>

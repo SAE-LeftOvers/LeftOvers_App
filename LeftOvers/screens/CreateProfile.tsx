@@ -8,7 +8,7 @@ import ValidateButton from '../components/ValidateButton';
 import ColorContext from '../theme/ColorContext';
 
 export default function CreateProfile(props) {
-    const { colors, toggleColors } = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
     const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
     
