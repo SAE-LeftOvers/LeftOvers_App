@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomePage from '../screens/HomePage';
 import Profiles from '../screens/Profiles';
 import ModifyProfile from '../screens/ModifyProfile';
-import ThemeContext from '../theme/ThemeContext';
 import ColorContext from '../theme/ColorContext';
 import { HeaderTitle } from './Utils';
 
