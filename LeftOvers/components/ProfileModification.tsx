@@ -37,6 +37,8 @@ export default function ProfileModification(props: ProfileProps) {
             backgroundColor: colors.cardBackground,
             padding: "3%",
             marginHorizontal: "3%",
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
     
         pseudoBar: {
@@ -51,7 +53,7 @@ export default function ProfileModification(props: ProfileProps) {
             padding: "5%",
             resizeMode: 'contain',
             borderWidth: 2,
-            borderColor: colors.cardTitle,
+            borderColor: colors.cardElementBorder,
             borderRadius: 45,
             height: "100%",
             flex: 0.04,
@@ -62,7 +64,7 @@ export default function ProfileModification(props: ProfileProps) {
             borderRadius: 10,
             borderWidth: 2,
             borderStyle: 'dashed',
-            borderColor: colors.cardTitle,
+            borderColor: colors.cardElementBorder,
             alignItems: 'center',
             textAlign: 'left',
             flex: 0.8,
@@ -71,7 +73,7 @@ export default function ProfileModification(props: ProfileProps) {
         },
         modify: {
             height: "100%",
-            tintColor: colors.cardTitle,
+            tintColor: colors.cardElementBorder,
             resizeMode: 'contain',
             flex: 0.1,
             marginLeft: "3%",
@@ -87,7 +89,7 @@ export default function ProfileModification(props: ProfileProps) {
         },
         filters: {
             fontSize: 20,
-            color: colors.cardTitle,
+            color: colors.cardElementBorder,
             flex: 1,
         },
         nbSelected: {

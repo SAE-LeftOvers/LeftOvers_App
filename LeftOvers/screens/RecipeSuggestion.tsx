@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {View, StyleSheet, Text, Image, Pressable, useWindowDimensions, ScrollView} from 'react-native';
 import {SafeAreaProvider } from 'react-native-safe-area-context';
 import {Modal, Portal, PaperProvider} from 'react-native-paper';
@@ -10,6 +10,7 @@ import FoodElementTextSimple from '../components/FoodElementTextSimple';
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
 import DietsTab from '../components/ListSelect';
+import ColorContext from '../theme/ColorContext';
 
 import brochette from '../assets/images/brochette.png'; 
 import ParameterTopBar from '../components/ParameterTopBar';
@@ -23,6 +24,7 @@ import minus from '../assets/images/minus.png';
 
 
 export default function RecipeSuggestion(props) {
+  const {colors, toggleColors} = useContext(ColorContext)
   const [visible, setVisible] = React.useState(false);
   const [visibleFilters, setVisibleFilters] = React.useState(false);
   const [visibleIngredients, setVisibleIngredients] = React.useState(true);
@@ -91,6 +93,81 @@ export default function RecipeSuggestion(props) {
         <Image source={minus} style={{width: 20, resizeMode: "contain"}}/>
       </View>
   ));
+
+  const styles = StyleSheet.create({
+    linearGradient: {
+        width: "100%",
+        flex: 1,
+        //padding: "2%",
+        paddingTop: 0,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
+    background: {
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 20,
+          backgroundColor: '#F2F0E4',
+          padding: "3%",
+          marginHorizontal: "3%",
+          borderWidth: 1,
+          borderColor: colors.blocBorder,
+    },
+
+    filterBar: {
+            flexDirection: "row",
+            width: "85%",
+            paddingTop: "3%",
+            paddingBottom: "2%",
+            alignItems: "flex-end",
+            justifyContent: "center",
+    },
+    filters: {
+            fontSize: 20,
+            color: '#ACA279',
+            flex: 1,
+    },
+    nbSelected: {
+            fontSize: 11,
+            color: "#3F3C42",
+            textAlign: "right",
+    },
+
+    page: {
+        flex: 1,
+        backgroundColor: '#59BDCD',
+        alignItems: 'center',
+        paddingHorizontal: "3%",
+    },
+
+    modal :{
+      position: 'absolute',
+      top: '50%',
+      height: "50%",
+      width: "100%",
+      borderWidth: 1,
+      borderColor: "red",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+    },
+    horizontalAlignment: {
+      display: 'flex',
+      height: "10%",
+      width: "100%",
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+
+    recipes: {
+          flexDirection: "row",
+          overflow: "scroll",
+          alignItems: "flex-start",
+          justifyContent: "center",
+    },
+  });
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
@@ -167,76 +244,3 @@ export default function RecipeSuggestion(props) {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  linearGradient: {
-      width: "100%",
-      flex: 1,
-      //padding: "2%",
-      paddingTop: 0,
-      alignItems: "center",
-      justifyContent: "center"
-  },
-
-  background: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 20,
-        backgroundColor: '#F2F0E4',
-        padding: "3%",
-        marginHorizontal: "3%",
-  },
-
-  filterBar: {
-          flexDirection: "row",
-          width: "85%",
-          paddingTop: "3%",
-          paddingBottom: "2%",
-          alignItems: "flex-end",
-          justifyContent: "center",
-  },
-  filters: {
-          fontSize: 20,
-          color: '#ACA279',
-          flex: 1,
-  },
-  nbSelected: {
-          fontSize: 11,
-          color: "#3F3C42",
-          textAlign: "right",
-  },
-
-  page: {
-      flex: 1,
-      backgroundColor: '#59BDCD',
-      alignItems: 'center',
-      paddingHorizontal: "3%",
-  },
-
-  modal :{
-    position: 'absolute',
-    top: '50%',
-    height: "50%",
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "red",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  horizontalAlignment: {
-    display: 'flex',
-    height: "10%",
-    width: "100%",
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  recipes: {
-        flexDirection: "row",
-        overflow: "scroll",
-        alignItems: "flex-start",
-        justifyContent: "center",
-  },
-});

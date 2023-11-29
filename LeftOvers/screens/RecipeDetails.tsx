@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Text, ScrollView, useWindowDimensions} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -8,9 +8,11 @@ import RecipesService from '../Services/Recipes/RecipesServices';
 import Recipes from '../Models/Recipes';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListWithoutSelect from '../components/ListWithoutSelect';
+import ColorContext from '../theme/ColorContext';
 
 
 export default function RecipeDetails(props) {
+    const {colors, toggleColors} = useContext(ColorContext);
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState();
@@ -40,18 +42,17 @@ export default function RecipeDetails(props) {
       const minutesString = minutes > 0 ? ` ${minutes} min` : '';
   
       return `${hoursString}${minutesString}`.trim();
-  }
+    }
 
     return (
-      
         <SafeAreaProvider>
           <ScrollView>
             <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}>
                     <RecipeElementReduce 
-                title={response.name}
-                number={response.id}
-                duration={convertToHoursMinutes(response.time_to_cook)} image={''}/>
+                        title={response.name}
+                        number={response.id}
+                        duration={convertToHoursMinutes(response.time_to_cook)} image={''}/>
                 </View>
                 <View style={styles.separator}/>
                 <View style={styles.background}>
@@ -74,8 +75,7 @@ export default function RecipeDetails(props) {
           </ScrollView>
         </SafeAreaProvider>
       );
-    }
-    
+
     const styles = StyleSheet.create({
       linearGradient: {
             width: "100%",
@@ -95,6 +95,8 @@ export default function RecipeDetails(props) {
               backgroundColor: '#F2F0E4',
               padding: "3%",
               marginHorizontal: "3%",
+              borderWidth: 1,
+              borderColor: colors.blocBorder,
       },
 
       filterBar: {
@@ -116,4 +118,4 @@ export default function RecipeDetails(props) {
                 textAlign: "right",
       },
     });
-    
+}

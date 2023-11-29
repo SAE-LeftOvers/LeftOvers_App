@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, ScrollView, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TopBar from '../components/TopBar';
@@ -11,6 +11,7 @@ import moins from '../assets/images/minus.png';
 import Ingredient from '../Models/Ingredient';
 import IngredientService from '../Services/Ingredients/IngredientsServices';
 import { LinearGradient } from 'expo-linear-gradient';
+import ColorContext from '../theme/ColorContext';
 
 export default function IngredientSelection(props) {
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -19,6 +20,7 @@ export default function IngredientSelection(props) {
   const [response, setResponse] = useState<Ingredient[] | undefined>(undefined);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const ingredientService = new IngredientService();
+  const {colors, toggleColors} = useContext(ColorContext);
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -108,6 +110,32 @@ const loadIngredients = async () => {
     }
   };
 
+  const styles = StyleSheet.create({
+    linearGradient: {
+          width: "100%",
+          flex: 1,
+          padding: "3%",
+          paddingTop: 0,
+          alignItems: "center",
+          justifyContent: "flex-start",
+    },
+
+    element: {
+      width: "100%",
+      backgroundColor:'#F2F0E4',
+      borderRadius: 30,
+      borderWidth: 1,
+      borderColor: colors.blocBorder,
+    },
+    horizontalAlignment: {
+      width: "100%",
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      marginTop: "3%",
+    }
+  });
+
   return (
     <SafeAreaProvider style={{flex: 1}}>
         <ScrollView>
@@ -173,27 +201,3 @@ const loadIngredients = async () => {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  linearGradient: {
-        width: "100%",
-        flex: 1,
-        padding: "3%",
-        paddingTop: 0,
-        alignItems: "center",
-        justifyContent: "flex-start",
-  },
-
-  element: {
-    width: "100%",
-    backgroundColor:'#F2F0E4',
-    borderRadius: 30,
-  },
-  horizontalAlignment: {
-    width: "100%",
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop: "3%",
-  }
-});

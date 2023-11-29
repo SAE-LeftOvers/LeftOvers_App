@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text, ScrollView, useWindowDimensions} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -8,8 +8,10 @@ import TopBar from '../components/TopBar';
 import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ProfileSelection from '../components/ProfileSelection';
+import ColorContext from '../theme/ColorContext';
 
 export default function FiltersSelection(props) {
+  const {colors, toggleColors} = useContext(ColorContext);
   const profiles = [
         {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
         {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
@@ -32,14 +34,74 @@ export default function FiltersSelection(props) {
   function isInProfileDiets(element, index, array) {
        var retType = true
        dieProfiles.forEach(function (diets) {
-          if(diets.value==element.value){
-              retType = false
-          }
+            if(diets.value==element.value){
+                retType = false
+            }
        })
        return retType
     }
   const dieAdd = die.filter(isInProfileDiets);
   const allAdd = []
+
+  const styles = StyleSheet.create({
+    container: {
+      height: "100%",
+      width: "100%",
+      flex: 1,
+      backgroundColor: '#3F3C42',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    linearGradient: {
+      height: "100%",
+      width: "100%",
+      flex: 1,
+      padding: "2%",
+      paddingTop: 0,
+    },
+
+    background: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+        backgroundColor: '#F2F0E4',
+        padding: "3%",
+        marginHorizontal: "3%",
+        borderWidth: 1,
+        borderColor: colors.blocBorder,
+    },
+
+    filterBar: {
+          flexDirection: "row",
+          width: "85%",
+          paddingTop: "3%",
+          paddingBottom: "2%",
+          alignItems: "flex-end",
+          justifyContent: "center",
+    },
+    filters: {
+          fontSize: 20,
+          color: '#ACA279',
+          flex: 1,
+    },
+    nbSelected: {
+          fontSize: 11,
+          color: "#3F3C42",
+          textAlign: "right",
+    },
+
+    profilesSelection: {
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 20,
+          backgroundColor: '#F2F0E4',
+          marginHorizontal: "3%",
+          paddingBottom: "3%",
+          borderWidth: 1,
+          borderColor: colors.blocBorder,
+    },
+  });
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
@@ -86,59 +148,3 @@ export default function FiltersSelection(props) {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    width: "100%",
-    flex: 1,
-    backgroundColor: '#3F3C42',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  linearGradient: {
-    height: "100%",
-    width: "100%",
-    flex: 1,
-    padding: "2%",
-    paddingTop: 0,
-  },
-
-  background: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 20,
-      backgroundColor: '#F2F0E4',
-      padding: "3%",
-      marginHorizontal: "3%",
-  },
-
-  filterBar: {
-        flexDirection: "row",
-        width: "85%",
-        paddingTop: "3%",
-        paddingBottom: "2%",
-        alignItems: "flex-end",
-        justifyContent: "center",
-  },
-  filters: {
-        fontSize: 20,
-        color: '#ACA279',
-        flex: 1,
-  },
-  nbSelected: {
-        fontSize: 11,
-        color: "#3F3C42",
-        textAlign: "right",
-  },
-
-  profilesSelection: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 20,
-        backgroundColor: '#F2F0E4',
-        marginHorizontal: "3%",
-        paddingBottom: "3%",
-  },
-});

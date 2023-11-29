@@ -46,7 +46,7 @@ export default function CreateProfile(props) {
                     <View style={{marginTop: "6%"}}/>
                     <ProfileModification name="" avatar="plus_small.png" diets={die} allergies={all}></ProfileModification>
                     <View style={{marginTop: "3%"}}/>
-                    <ValidateButton title="Create Profile" image="plus.png" colour={colors.cardTitle} backColour={colors.cardBackground} todo={handleCreateProfile}></ValidateButton>
+                    <ValidateButton title="Create Profile" image="plus.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={handleCreateProfile}></ValidateButton>
                     <View style={{marginTop: "20%"}}/>
                 </LinearGradient>
             </ScrollView>

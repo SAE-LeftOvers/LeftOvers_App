@@ -86,6 +86,8 @@ export default function HomePage({ navigation, props }) {
             backgroundColor: colors.cardBackground,
             marginHorizontal: "3%",
             paddingBottom: "3%",
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
       
         welcome: {
@@ -161,7 +163,7 @@ export default function HomePage({ navigation, props }) {
                         <View style={{marginTop: "3%"}}/>
                         <View style={styles.ingredientSelection}>
                             <Text style={{fontSize: 15, color: colors.carrouselText}}>Selected Ingredient</Text>
-                            <View style={{flexDirection: "row", padding: "4%", justifyContent: "center", alignItems: "center"}}>
+                            <View style={{flexDirection: "row", padding: "4%", justifyContent: "center", alignItems: "center", marginLeft: "8%"}}>
                                 <Pressable onPress={decreaseCounter}>
                                     <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText}/>
                                 </Pressable>

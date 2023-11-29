@@ -167,8 +167,7 @@ export default function Profiles({navigation, props}) {
             avatar={profile.avatar}
             diets={profile.diets}
             allergies={profile.allergies}
-            onDeleteProfile={raisePopUp}
-          />
+            onDeleteProfile={raisePopUp}/>
           {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
       ));

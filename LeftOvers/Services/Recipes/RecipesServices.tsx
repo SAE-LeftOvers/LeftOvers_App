@@ -3,7 +3,7 @@ import IRecipesService from "./IRecipesServices";
 import Recipes from "../../Models/Recipes";
 
 export default class RecipesService implements IRecipesService {
-    private readonly API_URL = "http://localhost:3000/recipes";
+    private readonly API_URL = "http://leftovers.alwaysdata.net/recipes";
 
     constructor() {}
 

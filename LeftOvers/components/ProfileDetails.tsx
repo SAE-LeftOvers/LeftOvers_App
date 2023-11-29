@@ -47,6 +47,8 @@ export default function ProfileDetails(props) {
             backgroundColor: colors.cardBackground,
             padding: "3%",
             marginHorizontal: "3%",
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
     
         pseudoBar: {

@@ -3,7 +3,7 @@ import IIngredientService from "./IIngredientService";
 import axios from 'axios';
 
 export default class IngredientService implements IIngredientService {
-    private readonly API_URL = "http://localhost:3000/ingredients";
+    private readonly API_URL = "http://leftovers.alwaysdata.net/ingredients";
 
     constructor() {}
 
