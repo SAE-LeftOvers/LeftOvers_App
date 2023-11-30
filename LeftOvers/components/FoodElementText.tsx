@@ -21,33 +21,39 @@ export default function FoodElementText(props : foodElementImageProps) {
             width: "80%",
             borderRadius: 5,
             backgroundColor: colors.carrouselBackground,
+            marginHorizontal: "3%",
         },
         text: {
-            fontSize: 10,
-            fontWeight: 'bold',
-            padding : "2%",
-            color: colors.cardDetail,
+          fontSize: 15,
+          lineHeight: 20,
+          fontWeight: 'bold',
+          padding : "3%",
+          color: colors.cardDetail,
         },
         view: {
-            alignItems: 'flex-start',
-            justifyContent: 'center',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          marginRight: "3%",
+          width: "100%"
         },
         container: {
-            width: "100%",
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: colors.cardDetail,
-            flexDirection: 'column',
-            justifyContent: 'center',
+          width: "100%",
+          height: 50,
+          borderRadius: 5,
+          borderWidth: 2,
+          borderColor: colors.cardDetail,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         },
     });
     return (
-        <Pressable style={styles.button}>
-            <View style={styles.container}>
-                <View style={styles.view}>
-                    <Text style={styles.text}>{props.title}</Text>
-                </View>
-            </View>
-        </Pressable>
+      <Pressable style={styles.button}>
+        <View style={styles.container}>
+          <View style={styles.view}>
+              <Text style={styles.text}>{props.title}</Text>
+              <Separator/>
+          </View>
+        </View>
+      </Pressable>
     );
 }

@@ -1,176 +1,242 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, Pressable} from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Modal, Portal, PaperProvider} from 'react-native-paper';
-
+import {View, StyleSheet, Text, Image, Pressable, useWindowDimensions, ScrollView} from 'react-native';
+import {SafeAreaProvider } from 'react-native-safe-area-context';
+import {Modal, Portal, PaperProvider} from 'react-native-paper';
+import {LinearGradient} from 'expo-linear-gradient';
 import TopBar from '../components/TopBar';
 import RecipeElement from '../components/RecipeElement';
 import SelectedIngredient from '../components/SelectedIngredient';
+import FoodElementTextSimple from '../components/FoodElementTextSimple';
 import FoodElementText from '../components/FoodElementText';
 import CustomButton from '../components/CustomButton';
-import DietsTab from '../components/DietsTab';
+import DietsTab from '../components/ListSelect';
 
 import brochette from '../assets/images/brochette.png'; 
 import ParameterTopBar from '../components/ParameterTopBar';
+import ListSelect from '../components/ListSelect';
+import ListWithoutSelect from '../components/ListWithoutSelect';
+import ValidateButton from '../components/ValidateButton';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
+import plus from '../assets/images/plus_small.png';
+import minus from '../assets/images/minus.png';
 
 
 export default function RecipeSuggestion(props) {
-
-  const imageList = [];
   const [visible, setVisible] = React.useState(false);
   const [visibleFilters, setVisibleFilters] = React.useState(false);
   const [visibleIngredients, setVisibleIngredients] = React.useState(true);
   const [minCpt, setMinCpt] = useState(0);
   const [maxCpt, setMaxCpt] = useState(4);
-  const listeIngredient = props.list;
-  const limitedList = listeIngredient.slice(minCpt, maxCpt);
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
+  const ingredientList = [{title: "Steak"}, {title: "Sheep Ribs"}, {title: "Rabbit Thigh"}, {title: "Ham"}, {title: "Cream (Liquid)"}, {title: "Pepper Bell"}]
+  const ingredientListV2 = [{title: "Smoked Salmon"}, {title: "Tomato"}, {title: "Carrot"}]
+  const limitedList = ingredientList.slice(minCpt, maxCpt);
+  const [colorIngredients, setColorIngredients] = useState("#59BDCD");
+  const [colorFilters, setColorFilters] = useState("#3F3C42");
+
+  const die = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Gluten free"}, {value: "Porkless"}]
+  const all = []
+
   const containerStyle = {
-    backgroundColor: 'white',
-    height: 450,
-    width: 380,
+    //minHeight: useWindowDimensions().height/2,
+    //width: useWindowDimensions().width,
+    height: "75%",
+    width: "100%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   };
   
-  const handleChildEvent = (value) => {
-   setVisible(!visible)
-  };
-
-  const handleChildEventGoFilters = (value) => {
+  const handleChildEvent = () => {
+    setVisible(!visible)
+  }
+  const handleChildEventGoFilters = () => {
     setVisibleIngredients(false);
     setVisibleFilters(true);
+    setColorFilters("#59BDCD")
+    setColorIngredients("#3F3C42")
   }
-
-  const handleChildEventGoIngredients = (value) => {
+  const handleChildEventGoIngredients = () => {
       setVisibleFilters(false);
       setVisibleIngredients(true);
-      console.log("jai change pour iingredient");
+      setColorFilters("#3F3C42")
+      setColorIngredients("#59BDCD")
   }
 
   const decreaseCounter = () => {
     if (minCpt > 0) {
       setMinCpt(minCpt - 4);
       setMaxCpt(maxCpt - 4)
-    } 
-  };
-
+    }
+    else{
+        setMaxCpt(ingredientList.length+ingredientList.length%4)
+        var cpt=ingredientList.length-(ingredientList.length%4)
+        setMinCpt(cpt)
+    }
+  }
   const increaseCounter = () => {
-    if (maxCpt < listeIngredient.length) {
+    if (maxCpt < ingredientList.length) {
       setMinCpt(minCpt + 4);
       setMaxCpt(maxCpt + 4)
-    } 
-  };
+    }
+    else{
+        setMinCpt(0)
+        setMaxCpt(4)
+    }
+  }
 
   const imageElements = limitedList.map((source, index) => (
-      <View style={[styles.horizontalAlignement, { marginBottom: 10 }]}>
-        <FoodElementText key={index} title={source} />
-        <Image source={brochette} style={{ width: 20, height: 20 }} />
-        <Image source={brochette} style={{ width: 20, height: 20 }} />
+      <View style={[styles.horizontalAlignment, {marginVertical: "3%"}]}>
+        <FoodElementTextSimple title={source.title}/>
+        <Image source={plus} style={{width: 20, resizeMode: "contain"}}/>
+        <Image source={minus} style={{width: 20, resizeMode: "contain"}}/>
       </View>
   ));
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{flex: 1}}>
+    <PaperProvider>
       <TopBar title="Recipes" isVisible="true"/>
-      <View style={styles.page}>
-        <SelectedIngredient 
-          listeIngredient={props.list} 
-          listeImage={imageList} 
-          onEvent={handleChildEvent} 
-        />
-        <View style={{ marginTop: 100 }}>
-          <RecipeElement
-            number="13"
-            title="Pizza with Pineapples"
-            imageList={imageList}
-            textList={props.list}
-            description="delicious plate that will please you"
-            style={styles.element}
-          />
-        </View>
-      </View>
-      <View style={styles.modal}>
-            <PaperProvider>
-                <Portal>
-                    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                        <ParameterTopBar  onEventFilter={handleChildEventGoFilters} onEventIngredient={handleChildEventGoIngredients}></ParameterTopBar>
-
-                        {visibleIngredients && (
-                        <View style={[styles.page, { justifyContent: 'space-between' }]}>   
-                                    {imageElements}
-                                    <View id="IngredientList" style={[styles.horizontalAlignement, {marginTop: 10}]}>
-                                        <Pressable onPress={decreaseCounter} id="GoLeft" >
-                                          <Image source={bracketLeft} style={{ width: 20, height: 20 }} />
-                                        </Pressable>
-
-                                        <Pressable onPress={increaseCounter} id="GoRight">
-                                          <Image source={bracketRight} style={{ width: 20, height: 20 }} />
-                                        </Pressable>
-                                      </View>
-
-                                      <View>
-                                          <CustomButton title="Save"></CustomButton>
-                                      </View>
+      <ScrollView>
+        <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+            <View style={{marginTop: "6%"}}/>
+            <SelectedIngredient
+              ingredientList={ingredientList}
+              onEvent={handleChildEvent}/>
+            <ScrollView style={{marginTop: "6%"}} horizontal={true}>
+              <View style={{marginHorizontal: 10}}/>
+              <RecipeElement
+                    number="63"
+                    title="Meat Stick"
+                    textList={ingredientList}
+                    description="Delicious stick with 4 meats. Accessible for beginners. 20 min or less to cook."/>
+              <View style={{marginHorizontal: 10}}/>
+              <RecipeElement
+                    number="03"
+                    title="Vichyssoise"
+                    textList={ingredientListV2}
+                    description="Cold soup of vegetables. Difficult recipe. Not advised to beginners. 1h or more."/>
+              <View style={{marginHorizontal: 10}}/>
+            </ScrollView>
+            <View style={{marginBottom: "20%"}}/>
+        </LinearGradient>
+      </ScrollView>
+      <Portal>
+            <Modal visible={visible} onDismiss={handleChildEvent} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-end"}}>
+                <ParameterTopBar onEventFilter={handleChildEventGoFilters} onEventIngredient={handleChildEventGoIngredients} colorFilters={colorFilters} colorIngredients={colorIngredients}/>
+                {visibleIngredients &&(
+                    <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {paddingHorizontal: "3%"}]}>
+                        {imageElements}
+                        <View style={[styles.horizontalAlignment, {marginTop: "6%"}]}>
+                             <Pressable onPress={decreaseCounter}>
+                                  <Image source={bracketLeft} style={{width: 30, height: "100%", resizeMode: "contain", tintColor: "#3F3C42"}}/>
+                             </Pressable>
+                             <CustomButton title="Save"></CustomButton>
+                             <Pressable onPress={increaseCounter}>
+                                  <Image source={bracketRight} style={{width: 30, height: "100%", resizeMode: "contain", tintColor: "#3F3C42"}}/>
+                             </Pressable>
                         </View>
-                        )} 
+                    </LinearGradient>
 
-                        {visibleFilters &&(
-                           <View style={[styles.page, { justifyContent: 'space-between', alignContent: 'center'}]}>
-
-                            <View style={{backgroundColor: '#F2F0E4', zIndex: 2}}>
-                              <View style={[styles.horizontalAlignement, {justifyContent: "flex-start", marginLeft: 20}]}>
-                                  <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
-                              </View>
-                              <View style={{alignContent: 'center', justifyContent: 'space-between', margin: 10}}>
-                                <DietsTab title="Diets" content={props.diets}></DietsTab>
-                                <View style={{height: 5}}></View>
-                                <DietsTab title="Allergy" content={props.allergy}></DietsTab>
-                              </View>
-                              
+                )}
+                {visibleFilters &&(
+                    <ScrollView>
+                    <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {paddingHorizontal: "3%"}]}>
+                        <View style={{marginTop: "10%"}}/>
+                        <View style={styles.background}>
+                            <View style={styles.filterBar}>
+                                <Text style={styles.filters}>Additional Filters</Text>
+                                <Text style={styles.nbSelected}>{die.length} selected</Text>
                             </View>
-                              <View style={{zIndex: 1, position: 'absolute', marginTop: 300}} >
-                                  <CustomButton title="Save"></CustomButton>
-                              </View>
-                          </View>
-                        )}
-                    </Modal>
-                </Portal>
-            </PaperProvider>
-        </View>
+                            <ListWithoutSelect title="Diets" content={die}></ListWithoutSelect>
+                            <View style={{marginTop: "3%"}}/>
+                            <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
+                            <View style={{marginTop: "3%"}}/>
+                            <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
+                        </View>
+                        <View style={{marginTop: "6%"}}/>
+                        <View>
+                            <CustomButton title="Save"></CustomButton>
+                        </View>
+                        <View style={{marginTop: "43%"}}/>
+                    </LinearGradient>
+                    </ScrollView>
+                )}
+            </Modal>
+      </Portal>
+    </PaperProvider>
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  linearGradient: {
+      width: "100%",
+      flex: 1,
+      //padding: "2%",
+      paddingTop: 0,
+      alignItems: "center",
+      justifyContent: "center"
+  },
+
+  background: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+        backgroundColor: '#F2F0E4',
+        padding: "3%",
+        marginHorizontal: "3%",
+  },
+
+  filterBar: {
+          flexDirection: "row",
+          width: "85%",
+          paddingTop: "3%",
+          paddingBottom: "2%",
+          alignItems: "flex-end",
+          justifyContent: "center",
+  },
+  filters: {
+          fontSize: 20,
+          color: '#ACA279',
+          flex: 1,
+  },
+  nbSelected: {
+          fontSize: 11,
+          color: "#3F3C42",
+          textAlign: "right",
+  },
+
   page: {
-    flex: 1,
-    backgroundColor: '#59BDCD',
-    alignItems: 'center',
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: 20,
+      flex: 1,
+      backgroundColor: '#59BDCD',
+      alignItems: 'center',
+      paddingHorizontal: "3%",
   },
-  element: {
-    marginTop: 20,
-  },
-  backdrop: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
+
   modal :{
     position: 'absolute',
-    top: '50%', // Centre verticalement
-    left: '50%', // Centre horizontalement
-    transform: [{ translateX: -185 }, { translateY: -90 }], // Ajustez en fonction de la moitié de la hauteur et de la largeur
+    top: '50%',
+    height: "50%",
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "red",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
-  horizontalAlignement: {
+  horizontalAlignment: {
     display: 'flex',
-    height: 30,
-    width: '80%',
+    height: "10%",
+    width: "100%",
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
-  }
+  },
+
+  recipes: {
+        flexDirection: "row",
+        overflow: "scroll",
+        alignItems: "flex-start",
+        justifyContent: "center",
+  },
 });

@@ -15,7 +15,7 @@ type ProfileSelectionProps = {
 type Profile = {
     name: string
     avatar: string
-    isActive: boolean
+    isActive: string
 }
 
 export default function ProfileSelection(props: ProfileSelectionProps) {

@@ -11,6 +11,23 @@ export default function CreateProfile(props) {
     const colors = useContext(ColorContext).colors
     const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
+
+    const handleCreateProfile = () => {
+        const profileData = {
+          name: "Nom du profil", // Remplacez par le nom du profil
+          avatar: "Lien de l'avatar", // Remplacez par le lien de l'avatar
+          diets: die.map(item => item.value), // Liste des régimes
+          allergies: all, // Liste des allergies
+        };
+      
+        localStorage.setItem('profile', JSON.stringify(profileData));
+        console.log("Profil créé :", profileData);
+      
+        // Redirection vers la page précédente avec un message de confirmation
+        props.navigation.goBack();
+        // Affichage d'un message
+        alert("Profil créé !");
+      };
     
     const styles = StyleSheet.create({
         linearGradient: {
@@ -29,7 +46,7 @@ export default function CreateProfile(props) {
                     <View style={{marginTop: "6%"}}/>
                     <ProfileModification name="" avatar="plus_small.png" diets={die} allergies={all}></ProfileModification>
                     <View style={{marginTop: "3%"}}/>
-                    <ValidateButton title="Create Profile" image="plus.png" colour={colors.cardTitle} backColour={colors.cardBackground} todo={() => (console.log("Profile Created"))}></ValidateButton>
+                    <ValidateButton title="Create Profile" image="plus.png" colour={colors.cardTitle} backColour={colors.cardBackground} todo={handleCreateProfile}></ValidateButton>
                     <View style={{marginTop: "20%"}}/>
                 </LinearGradient>
             </ScrollView>
