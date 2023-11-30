@@ -76,7 +76,7 @@ export default function Profiles({navigation, props}) {
     
         modal: {
             position: 'absolute',
-            top: '8%',
+            top: '0%',
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
