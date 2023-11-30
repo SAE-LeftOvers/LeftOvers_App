@@ -9,8 +9,8 @@ import ColorContext from '../theme/ColorContext';
 type ProfileProps = {
     name: string
     avatar: string
-    diets: string[]
-    allergies: string[]
+    diets: {value: string}[]
+    allergies: {value: string}[]
 }
 
 export default function ProfileModification(props: ProfileProps) {
