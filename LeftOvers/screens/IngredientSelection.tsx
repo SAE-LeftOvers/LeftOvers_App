@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
-import CustomButton from '../components/CustomButton';
 
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
