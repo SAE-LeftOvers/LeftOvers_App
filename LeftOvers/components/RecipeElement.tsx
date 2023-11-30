@@ -8,7 +8,7 @@ import background from '../assets/images/Background.png';
 interface RecipeElementProps {
   number: string
   title: string
-  textList: string[]
+  textList: {title: string}[]
   description: string
 }
 

@@ -6,7 +6,7 @@ import parameter from '../assets/images/parameter.png';
 import FoodElementText from './FoodElementText';
 
 interface SelectedIngredientProps {
-  ingredientList: string[]
+  ingredientList: {title: string}[]
   onEvent: () => void
 }
 

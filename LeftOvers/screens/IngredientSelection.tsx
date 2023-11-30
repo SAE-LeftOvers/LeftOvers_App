@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, ScrollView, useWindowDimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, useWindowDimensions, ScrollView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
@@ -11,6 +11,7 @@ import Ingredient from '../Models/Ingredient';
 import IngredientService from '../Services/Ingredients/IngredientsServices';
 import { LinearGradient } from 'expo-linear-gradient';
 import ColorContext from '../theme/ColorContext';
+import ValidateButton from '../components/ValidateButton';
 
 export default function IngredientSelection(props) {
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -121,13 +122,12 @@ const loadIngredients = async () => {
 
     element: {
       width: "100%",
-      backgroundColor:'#F2F0E4',
+      backgroundColor: colors.cardBackground,
       borderRadius: 30,
       borderWidth: 1,
       borderColor: colors.blocBorder,
     },
     horizontalAlignment: {
-      width: "100%",
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
@@ -137,50 +137,49 @@ const loadIngredients = async () => {
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
-        <ScrollView>
-            <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+            <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.element}>
-                  <View style={[styles.horizontalAlignment, { margin: 10 }]}>
+                  <View style={[styles.horizontalAlignment, { margin: "2%" }]}>
                     {alphabetArray.map((source, index) => (
                       <Pressable key={index} onPress={() => handleLetterPress(source)}>
-                      <Text style={{ color: "blue" }}>{source}</Text>
+                        <Text style={{ color: colors.letterFilter }}>{source}</Text>
                       </Pressable>
                     ))}
                   </View>
-                    <View>
+                  <View>
                         <Searchbar
                             placeholder="Search"
                             onChangeText={handleSearch}
                             value={searchQuery}
                             style={{margin: "3%",
-                                    backgroundColor: '#F2F0E4',
+                                    backgroundColor: colors.cardBackground,
                                     borderWidth : 1,
-                                    borderColor: "#ACA279",
+                                    borderColor: colors.cardElementBorder,
                                     borderRadius: 15,
                             }}/>
-                    </View>
-                    <View style={{flex: 1, maxHeight: 300}}>
+                  </View>
+                  <View style={{height: 280}}>
                         <FlatList
                             data={response ? response : []}
                             renderItem={({ item }) => (
-                            <AvailableItem value={item} />
-                              )}
+                              <AvailableItem value={item} />
+                            )}
                             keyExtractor={(item, index) => index.toString()}
                             ListEmptyComponent={() => (
-                            isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
+                              isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
                             )}
                           style={{ flex: 1 }}
                         />
                         <View style={{ marginTop: '6%' }}></View>
-                    </View>
+                  </View>
                 </View>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.element}>
                     <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: "5%"}]}>
-                      <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
+                      <Text style={{fontSize: 20, color: colors.cardElementBorder}}>Available</Text>
                     </View>
-                    <View style={{flex: 1, maxHeight: 300}}>
+                    <View style={{flex: 1, maxHeight: 280}}>
                       <FlatList
                               data={selectedIngredients}
                               renderItem={({ item }) => (
@@ -188,15 +187,14 @@ const loadIngredients = async () => {
                               )}
                               keyExtractor={(item, index) => index.toString()}
                               style={{ flex: 1 }}
-                            />
-                        <View style={{ height: 20 }}></View>
+                      />
+                      <View style={{ height: 20 }}></View>
                     </View>
                 </View>
                 <View style={{marginTop: "8%"}}></View>
-                <CustomButton title="Find a recipe"/>
+                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground}/>
                 <View style={{marginBottom: "20%"}}></View>
             </LinearGradient>
-        </ScrollView>
     </SafeAreaProvider>
   );
 }

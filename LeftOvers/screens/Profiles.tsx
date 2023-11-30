@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View, Modal, Pressable, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, Pressable, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
+
+import {Modal, Portal, PaperProvider} from 'react-native-paper';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -42,8 +44,14 @@ export default function Profiles({navigation, props}) {
           allergies: allJackie,
         },
         // ... Ajoutez d'autres profils ici de la même manière
-      ];
-      
+    ];
+
+    const containerStyle = {
+        //minHeight: useWindowDimensions().height/2,
+        //width: useWindowDimensions().width,
+        height: "75%",
+        width: "100%",
+      };      
 
     const styles = StyleSheet.create({
         container: {
@@ -96,11 +104,13 @@ export default function Profiles({navigation, props}) {
             borderRadius: 15,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#F2F0E4",
+            backgroundColor: colors.cardBackground,
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
         validationQuestion: {
             fontSize: 20,
-            color: '#ACA279',
+            color: colors.cardElementBorder,
             alignItems: 'center',
             justifyContent: 'center',
             flex: 0.3,
@@ -123,7 +133,7 @@ export default function Profiles({navigation, props}) {
             borderRadius: 20,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#59BDCD",
+            backgroundColor: colors.yesButton,
         },
         yesText: {
             fontSize: 20,
@@ -168,43 +178,43 @@ export default function Profiles({navigation, props}) {
 
     return (
     <SafeAreaProvider style={{flex: 1}}>
-        <ScrollView>
-            <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1}}>
+        <PaperProvider>
+            <ScrollView>
                 <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                     <View style={styles.separator}/>
                     {profileComponents}
-                    <View style={styles.modal}>
-                        <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>
-                            <View style={styles.modal}>
-                                <View style={styles.viewModal}>
-                                    <View style={styles.profileValidation}>
-                                        <ProfileDelete name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny}></ProfileDelete>
-                                    </View>
-                                    <View style={styles.decisionBarVertical}>
-                                        <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
-                                        <View style={styles.decisionBar}>
-                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
-                                                <View style={styles.yesButton}>
-                                                    <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
-                                                    <Text style={styles.yesText}>Yes</Text>
-                                                </View>
-                                            </Pressable>
-                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
-                                                <View style={styles.noButton}>
-                                                    <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
-                                                    <Text style={styles.noText}>No</Text>
-                                                </View>
-                                            </Pressable>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
-                    </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
-            </View>
-        </ScrollView>
+            </ScrollView>
+            <Portal>
+                <Modal visible={visible} onDismiss={erasePopUp} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-start"}}>
+                    <View style={styles.modal}>
+                        <View style={styles.viewModal}>
+                            <View style={styles.profileValidation}>
+                                <ProfileDelete name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny}></ProfileDelete>
+                            </View>
+                            <View style={styles.decisionBarVertical}>
+                                <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
+                                <View style={styles.decisionBar}>
+                                    <Pressable onPress={erasePopUp} style={{flex:0.5}}>
+                                        <View style={styles.yesButton}>
+                                            <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                            <Text style={styles.yesText}>Yes</Text>
+                                        </View>
+                                    </Pressable>
+                                    <Pressable onPress={erasePopUp} style={{flex:0.5}}>
+                                        <View style={styles.noButton}>
+                                            <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                            <Text style={styles.noText}>No</Text>
+                                        </View>
+                                    </Pressable>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            </Portal>
+        </PaperProvider>
     </SafeAreaProvider>
     );
     }

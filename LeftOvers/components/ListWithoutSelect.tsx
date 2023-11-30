@@ -5,7 +5,7 @@ import ColorContext from '../theme/ColorContext';
 
 type ListProps = {
     title: string
-    content: string[]
+    content: {title: string}[]
 }
 
 export default function ListWithoutSelect(props: ListProps) {

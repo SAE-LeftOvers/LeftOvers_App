@@ -108,7 +108,7 @@ export default function ProfileModification(props: ProfileProps) {
             </View>
             <View style={styles.filterBar}>
                 <Text style={styles.filters}>Filters</Text>
-                <Text style={styles.nbSelected}>3 selected</Text>
+                <Text style={styles.nbSelected}>0 diets selected</Text>
             </View>
             <ListSelect title="Diets" content={props.diets}></ListSelect>
             <View style={{marginTop: "6%"}}/>

@@ -34,6 +34,8 @@ export interface Theme {
     textBottomBarFocussed: string,
     blocBorder: string,
     buttonMain: string,
+    yesButton: string,
+    letterFilter: string,
 }
 
 export const LightTheme : Theme = {
@@ -60,6 +62,8 @@ export const LightTheme : Theme = {
     textBottomBarFocussed: Moonstone,
     blocBorder: Alabaster,
     buttonMain: Ecru,
+    yesButton: Moonstone,
+    letterFilter: Moonstone,
 }
 
 export const DarkTheme : Theme = {
@@ -86,5 +90,7 @@ export const DarkTheme : Theme = {
     textBottomBarFocussed: SteelBlue,
     blocBorder: EerieBlack,
     buttonMain: CarolinaBlue,
+    yesButton: CarolinaBlue,
+    letterFilter: CarolinaBlue,
 }
 

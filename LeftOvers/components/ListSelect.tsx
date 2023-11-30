@@ -76,6 +76,9 @@ export default function ListSelect(props: ListProps) {
             fontSize: 15,
             color: colors.cardElementText,
         },
+        box: {
+            borderColor: "#3F3C42"
+        }
     });
 
     return (
@@ -92,6 +95,7 @@ export default function ListSelect(props: ListProps) {
             dropdownTextStyles={styles.itemText}
             badgeStyles={styles.badges}
             badgeTextStyles={styles.badgesText}
+            checkBoxStyles={styles.box}
             notFoundText="All Diets Already Selected"
             placeholder={props.title}
             label={props.title}/>
