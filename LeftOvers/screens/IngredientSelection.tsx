@@ -3,8 +3,6 @@ import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
-import CustomButton from '../components/CustomButton';
-
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
 import Ingredient from '../Models/Ingredient';
@@ -28,7 +26,6 @@ export default function IngredientSelection(props) {
     try {
       setIsLoading(true);
       if (query === '') {
-        // Si le query (prompt) est vide, charger tous les ingrédients
         loadIngredients();
       } else {
         const filtered = await ingredientService.getfilteredIngredient(query);
@@ -41,7 +38,6 @@ export default function IngredientSelection(props) {
     }
   };
 
-  // Appelée à chaque changement de la recherche
   const handleSearch = (query) => {
     setSearchQuery(query);
     filterIngredients(query);
@@ -179,7 +175,7 @@ const loadIngredients = async () => {
                     <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: "5%"}]}>
                       <Text style={{fontSize: 20, color: colors.cardElementBorder}}>Available</Text>
                     </View>
-                    <View style={{flex: 1, maxHeight: 280}}>
+                    <View style={{height: 280}}>
                       <FlatList
                               data={selectedIngredients}
                               renderItem={({ item }) => (
@@ -192,7 +188,7 @@ const loadIngredients = async () => {
                     </View>
                 </View>
                 <View style={{marginTop: "8%"}}></View>
-                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground}/>
+                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground} />
                 <View style={{marginBottom: "20%"}}></View>
             </LinearGradient>
     </SafeAreaProvider>
