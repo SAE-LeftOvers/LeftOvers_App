@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, View, Pressable, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
-
-import {Modal, Portal, PaperProvider} from 'react-native-paper';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, View, Modal, Pressable, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -9,17 +7,18 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
 import ColorContext from '../theme/ColorContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profiles({navigation, props}) {
-    const { colors } = useContext(ColorContext)
+    const { colors, toggleColors } = useContext(ColorContext)
 
-    const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
-    const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
-
-    const allJackie = [{value: "Tomato"}, {value: "Relic"}]
-    const dieJackie = [{value: "Porkless"}, {value: "Vegetarian"}]
+    const all = []
+    const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
 
     const [visible, setVisible] = useState(false);
+    const [opacity, setOpacity] = useState(1);
+    const [profiles, setProfiles] = useState([]);
+
     const raisePopUp = () => {
         setVisible(true)
     }
@@ -27,28 +26,35 @@ export default function Profiles({navigation, props}) {
         setVisible(false)
     }
 
-    const profiles = [
-        {
-          name: "Johnny Silverhand",
-          avatar: "plus_small.png",
-          diets: dieJohnny,
-          allergies: allJohnny,
-        },
-        {
-          name: "Jackie Welles",
-          avatar: "plus_small.png",
-          diets: dieJackie,
-          allergies: allJackie,
-        },
-        // ... Ajoutez d'autres profils ici de la même manière
-    ];
+    const handleDeleteProfiles = async () => {
+        try {
+          await AsyncStorage.removeItem('profiles');
+          console.log('Données supprimées avec succès !');
+        } catch (error) {
+          console.error('Erreur lors de la suppression des données :', error);
+        }
+      };
 
-    const containerStyle = {
-        //minHeight: useWindowDimensions().height/2,
-        //width: useWindowDimensions().width,
-        height: "75%",
-        width: "100%",
-      };      
+      const handleGetProfiles = async () => {
+        try {
+            const existingProfiles = await AsyncStorage.getItem('profiles');
+            return JSON.parse(existingProfiles) || [];
+        } catch (error) {
+            console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
+            return [];
+        }
+    }
+    
+    useEffect(() => {
+        const fetchProfiles = async () => {
+            const existingProfiles = await handleGetProfiles();
+            setProfiles(existingProfiles);
+        };
+    
+        fetchProfiles();
+    }, []);
+
+      
 
     const styles = StyleSheet.create({
         container: {
@@ -101,13 +107,11 @@ export default function Profiles({navigation, props}) {
             borderRadius: 15,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: colors.cardBackground,
-            borderWidth: 1,
-            borderColor: colors.blocBorder,
+            backgroundColor: "#F2F0E4",
         },
         validationQuestion: {
             fontSize: 20,
-            color: colors.cardElementBorder,
+            color: '#ACA279',
             alignItems: 'center',
             justifyContent: 'center',
             flex: 0.3,
@@ -130,7 +134,7 @@ export default function Profiles({navigation, props}) {
             borderRadius: 20,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: colors.yesButton,
+            backgroundColor: "#59BDCD",
         },
         yesText: {
             fontSize: 20,
@@ -176,43 +180,43 @@ export default function Profiles({navigation, props}) {
 
     return (
     <SafeAreaProvider style={{flex: 1}}>
-        <PaperProvider>
-            <ScrollView>
+        <ScrollView>
+            <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1}}>
                 <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                     <View style={styles.separator}/>
                     {profileComponents}
-                    <View style={{marginBottom: "20%"}}/>
-                </LinearGradient>
-            </ScrollView>
-            <Portal>
-                <Modal visible={visible} onDismiss={erasePopUp} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-start"}}>
                     <View style={styles.modal}>
-                        <View style={styles.viewModal}>
-                            <View style={styles.profileValidation}>
-                                <ProfileDelete name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny}></ProfileDelete>
-                            </View>
-                            <View style={styles.decisionBarVertical}>
-                                <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
-                                <View style={styles.decisionBar}>
-                                    <Pressable onPress={erasePopUp} style={{flex:0.5}}>
-                                        <View style={styles.yesButton}>
-                                            <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
-                                            <Text style={styles.yesText}>Yes</Text>
+                        <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>
+                            <View style={styles.modal}>
+                                <View style={styles.viewModal}>
+                                    <View style={styles.profileValidation}>
+                                        {/* <ProfileDelete name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny}></ProfileDelete> */}
+                                    </View>
+                                    <View style={styles.decisionBarVertical}>
+                                        <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
+                                        <View style={styles.decisionBar}>
+                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
+                                                <View style={styles.yesButton}>
+                                                    <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                                    <Text style={styles.yesText}>Yes</Text>
+                                                </View>
+                                            </Pressable>
+                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
+                                                <View style={styles.noButton}>
+                                                    <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                                    <Text style={styles.noText}>No</Text>
+                                                </View>
+                                            </Pressable>
                                         </View>
-                                    </Pressable>
-                                    <Pressable onPress={erasePopUp} style={{flex:0.5}}>
-                                        <View style={styles.noButton}>
-                                            <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
-                                            <Text style={styles.noText}>No</Text>
-                                        </View>
-                                    </Pressable>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
+                        </Modal>
                     </View>
-                </Modal>
-            </Portal>
-        </PaperProvider>
+                    <View style={{marginBottom: "20%"}}/>
+                </LinearGradient>
+            </View>
+        </ScrollView>
     </SafeAreaProvider>
     );
     }

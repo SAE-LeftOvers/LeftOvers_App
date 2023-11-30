@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
-
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
 import Ingredient from '../Models/Ingredient';
@@ -20,7 +19,7 @@ export default function IngredientSelection(props) {
   const ingredientService = new IngredientService();
   const {colors} = useContext(ColorContext);
   const [availableSize, setAvailableSize] = useState(0);
-  const [listVisibility, setListVisibility] = useState("none");
+  const [listVisibility, setListVisibility] = useState("flex");
   const [availableVisibility, setAvailableVisibility] = useState("none");
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -28,7 +27,6 @@ export default function IngredientSelection(props) {
     try {
       setIsLoading(true);
       if (query === '') {
-        // Si le query (prompt) est vide, charger tous les ingrédients
         loadIngredients();
       } else {
         const filtered = await ingredientService.getfilteredIngredient(query);
@@ -41,7 +39,6 @@ export default function IngredientSelection(props) {
     }
   };
 
-  // Appelée à chaque changement de la recherche
   const handleSearch = (query) => {
     setSearchQuery(query);
     filterIngredients(query);
