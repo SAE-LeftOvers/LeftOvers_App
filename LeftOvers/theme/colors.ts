@@ -36,6 +36,7 @@ export interface Theme {
     buttonMain: string,
     yesButton: string,
     letterFilter: string,
+    foodElementBorder: string,
 }
 
 export const LightTheme : Theme = {
@@ -64,6 +65,7 @@ export const LightTheme : Theme = {
     buttonMain: Ecru,
     yesButton: Moonstone,
     letterFilter: Moonstone,
+    foodElementBorder: Jet,
 }
 
 export const DarkTheme : Theme = {
@@ -92,5 +94,6 @@ export const DarkTheme : Theme = {
     buttonMain: CarolinaBlue,
     yesButton: CarolinaBlue,
     letterFilter: CarolinaBlue,
+    foodElementBorder: CarolinaBlue,
 }
 

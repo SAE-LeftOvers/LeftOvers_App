@@ -6,6 +6,8 @@ import ColorContext from '../theme/ColorContext';
 
 interface FoodElementTextProps {
     title  : string
+    mainColour: string
+    secondaryColour: string
 }
 
 const componentHeight = 60; 
@@ -21,7 +23,7 @@ export default function FoodElementText(props : any) {
             justifyContent: 'center',
             width: "80%",
             borderRadius: 5,
-            backgroundColor: colors.carrouselBackground,
+            backgroundColor: props.mainColour ? props.mainColour : colors.ingredientBackground,
             marginHorizontal: "3%",
         },
         text: {
@@ -42,7 +44,7 @@ export default function FoodElementText(props : any) {
           height: 50,
           borderRadius: 5,
           borderWidth: 2,
-          borderColor: colors.cardDetail,
+          borderColor: props.secondaryColour ? props.secondaryColour : colors.foodElementBorder,
           flexDirection: 'row',
           justifyContent: 'space-between',
         },
