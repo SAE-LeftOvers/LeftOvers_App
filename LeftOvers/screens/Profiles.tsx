@@ -20,14 +20,11 @@ export default function Profiles({navigation, props}) {
     const dieJackie = [{value: "Porkless"}, {value: "Vegetarian"}]
 
     const [visible, setVisible] = useState(false);
-    const [opacity, setOpacity] = useState(1);
     const raisePopUp = () => {
         setVisible(true)
-        setOpacity(0.3)
     }
     const erasePopUp = () => {
         setVisible(false)
-        setOpacity(1)
     }
 
     const profiles = [

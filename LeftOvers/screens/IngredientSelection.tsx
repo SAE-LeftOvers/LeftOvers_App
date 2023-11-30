@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, useWindowDimensions, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
@@ -16,7 +16,6 @@ import ValidateButton from '../components/ValidateButton';
 export default function IngredientSelection(props) {
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
   const [response, setResponse] = useState<Ingredient[] | undefined>(undefined);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const ingredientService = new IngredientService();
@@ -37,7 +36,7 @@ export default function IngredientSelection(props) {
         setResponse(filtered);
       }
     } catch (error) {
-      setError(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +53,7 @@ const loadIngredients = async () => {
       const ingredients = await ingredientService.getAllIngredient();
       setResponse(ingredients);
     } catch (error) {
-      setError(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +66,7 @@ const loadIngredients = async () => {
   const AvailableItem = ({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignment}>
-        <FoodElementText title={value.name} />
+        <FoodElementText title={value.name}/>
         <Pressable onPress={() => SelectIngredient(value)}>
           <Image source={plus} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
@@ -90,19 +89,15 @@ const loadIngredients = async () => {
 
   const SelectIngredient = (newIngredient: Ingredient) => {
     const exists = selectedIngredients.find((ingredient) => ingredient.id === newIngredient.id);
-    console.log("Test 1: ", selectedIngredients.length)
     if (!exists) {
       setSelectedIngredients([...selectedIngredients, newIngredient]);
+      ChangeAvailableSize(false)
     }
-    console.log("Test 2: ", selectedIngredients.length)
-    ChangeAvailableSize(false)
   };
 
   const RemoveIngredient = (idIngredient: number) => {
-    console.log("Test 1 Remove: ", selectedIngredients.length)
     const updatedIngredients = selectedIngredients.filter((ingredient) => ingredient.id !== idIngredient);
     setSelectedIngredients(updatedIngredients);
-    console.log("Test 2 Remove: ", selectedIngredients.length)
     ChangeAvailableSize(true)
   };
 
@@ -145,7 +140,7 @@ const loadIngredients = async () => {
       const ingredientsByLetter = await ingredientService.getIngredientByLetter(letter);
       setResponse(ingredientsByLetter);
     } catch (error) {
-      setError(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -217,6 +212,9 @@ const loadIngredients = async () => {
                               placeholder="Search"
                               onChangeText={handleSearch}
                               value={searchQuery}
+                              iconColor={colors.cardDetail}
+                              inputStyle={{color: colors.cardDetail}}
+                              rippleColor={colors.letterFilter}
                               style={{margin: "3%",
                                       backgroundColor: colors.cardBackground,
                                       borderWidth : 1,
