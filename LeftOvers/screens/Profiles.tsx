@@ -20,6 +20,7 @@ export default function Profiles({navigation, props}) {
     const [visible, setVisible] = useState(false);
     const [opacity, setOpacity] = useState(1);
     const [profiles, setProfiles] = useState([]);
+    const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
 
     const raisePopUp = () => {
         setVisible(true)
@@ -30,14 +31,20 @@ export default function Profiles({navigation, props}) {
         setOpacity(1)
     }
 
-    const handleDeleteProfiles = async () => {
+    const handleDeleteProfile = async (index) => {
         try {
-          await AsyncStorage.removeItem('profiles');
-          console.log('Données supprimées avec succès !');
+            const updatedProfiles = profiles.filter((profile, i) => i !== index);
+            await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+            setSelectedProfileIndex(index);
+            raisePopUp(); // Afficher la boîte de dialogue de confirmation après la suppression
         } catch (error) {
-          console.error('Erreur lors de la suppression des données :', error);
+            console.error('Erreur lors de la suppression du profil :', error);
         }
-      };
+    };
+
+    const confirmDelete = () => {
+        erasePopUp(); 
+    };
 
       const handleGetProfiles = async () => {
         try {
@@ -59,7 +66,6 @@ export default function Profiles({navigation, props}) {
     });
     
     useEffect(() => {
-        handleDeleteProfiles();
         fetchProfiles();
     }, []);
 
@@ -181,7 +187,7 @@ export default function Profiles({navigation, props}) {
                 avatar={profile.avatar}
                 diets={profile.diets}
                 allergies={profile.allergies}
-                onDeleteProfile={() => raisePopUp()} // <- Modification ici
+                onDeleteProfile={() => handleDeleteProfile(index)}
             />
           {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
@@ -199,14 +205,19 @@ export default function Profiles({navigation, props}) {
                             <View style={styles.modal}>
                                 <View style={styles.viewModal}>
                                     <View style={styles.profileValidation}>
-                                        {/* <ProfileDelete name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny}></ProfileDelete> */}
+                                    <ProfileDelete
+                                    name={profiles[selectedProfileIndex].name}
+                                    avatar={profiles[selectedProfileIndex].avatar}
+                                    diets={profiles[selectedProfileIndex].diets}
+                                    allergies={profiles[selectedProfileIndex].allergies}
+                                />
                                     </View>
                                     <View style={styles.decisionBarVertical}>
                                         <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
                                         <View style={styles.decisionBar}>
-                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
+                                        <Pressable onPress={confirmDelete} style={{ flex: 0.5 }}>
                                                 <View style={styles.yesButton}>
-                                                    <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                                    <Image source={require("../assets/images/validate.png")} style={{ tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain" }} />
                                                     <Text style={styles.yesText}>Yes</Text>
                                                 </View>
                                             </Pressable>
