@@ -8,6 +8,9 @@ import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
 import ColorContext from '../theme/ColorContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import  EventEmitter  from './EventEmitter';
+import Profil from '../Models/Profil';
+import { PaperProvider, Portal } from 'react-native-paper';
 
 export default function Profiles({navigation, props}) {
     const { colors, toggleColors } = useContext(ColorContext)
@@ -20,19 +23,30 @@ export default function Profiles({navigation, props}) {
     const [profiles, setProfiles] = useState([]);
     const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
 
-    const raisePopUp = () => {
+    const raisePopUp = (index) => {
+        setSelectedProfileIndex(index)
         setVisible(true)
     }
     const erasePopUp = () => {
         setVisible(false)
     }
 
+    const handleDeleteProfiles = async () => {
+        try {
+          await AsyncStorage.removeItem('profiles');
+          console.log('Données supprimées avec succès !');
+        } catch (error) {
+          console.error('Erreur lors de la suppression des données :', error);
+        }
+      };
+
     const handleDeleteProfile = async (index) => {
         try {
             const updatedProfiles = profiles.filter((profile, i) => i !== index);
             await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+            fetchProfiles();
             setSelectedProfileIndex(index);
-            raisePopUp(); // Afficher la boîte de dialogue de confirmation après la suppression
+            erasePopUp(); 
         } catch (error) {
             console.error('Erreur lors de la suppression du profil :', error);
         }
@@ -63,11 +77,16 @@ export default function Profiles({navigation, props}) {
     
     useEffect(() => {
         fetchProfiles();
+        console.log(profiles)
     }, []);
 
-      
+    const containerStyle = {
+        height: "75%",
+        width: "100%",
+      };   
 
-    const styles = StyleSheet.create({
+    
+      const styles = StyleSheet.create({
         container: {
             height: "100%",
             width: "100%",
@@ -118,11 +137,13 @@ export default function Profiles({navigation, props}) {
             borderRadius: 15,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#F2F0E4",
+            backgroundColor: colors.cardBackground,
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
         validationQuestion: {
             fontSize: 20,
-            color: '#ACA279',
+            color: colors.cardElementBorder,
             alignItems: 'center',
             justifyContent: 'center',
             flex: 0.3,
@@ -145,7 +166,7 @@ export default function Profiles({navigation, props}) {
             borderRadius: 20,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#59BDCD",
+            backgroundColor: colors.yesButton,
         },
         yesText: {
             fontSize: 20,
@@ -206,33 +227,47 @@ export default function Profiles({navigation, props}) {
                                     avatar={profiles[selectedProfileIndex].avatar}
                                     diets={profiles[selectedProfileIndex].diets}
                                     allergies={profiles[selectedProfileIndex].allergies}
-                                />
-                                    </View>
-                                    <View style={styles.decisionBarVertical}>
-                                        <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
-                                        <View style={styles.decisionBar}>
-                                        <Pressable onPress={confirmDelete} style={{ flex: 0.5 }}>
-                                                <View style={styles.yesButton}>
-                                                    <Image source={require("../assets/images/validate.png")} style={{ tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain" }} />
-                                                    <Text style={styles.yesText}>Yes</Text>
-                                                </View>
-                                            </Pressable>
-                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
-                                                <View style={styles.noButton}>
-                                                    <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
-                                                    <Text style={styles.noText}>No</Text>
-                                                </View>
-                                            </Pressable>
+                                /> */}
+                            </View>
+                            <View style={styles.decisionBarVertical}>
+                                <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
+                                <View style={styles.decisionBar}>
+                                    <Pressable onPress={() => handleDeleteProfile(selectedProfileIndex)} style={{flex:0.5}}>
+                                        <View style={styles.yesButton}>
+                                            <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                            <Text style={styles.yesText}>Yes</Text>
                                         </View>
-                                    </View>
+                                    </Pressable>
+                                    <Pressable onPress={erasePopUp} style={{flex:0.5}}>
+                                        <View style={styles.noButton}>
+                                            <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                            <Text style={styles.noText}>No</Text>
+                                        </View>
+                                    </Pressable>
                                 </View>
                             </View>
-                        </Modal>
+                        </View>
                     </View>
+                </Modal>
+            </Portal>
+          {index < profiles.length - 1 && <View style={styles.separator} />}
+        </View>
+    ));
+
+
+
+    return (
+        <SafeAreaProvider style={{flex: 1}}>
+        <PaperProvider>
+            <ScrollView>
+                <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+                    <View style={styles.separator}/>
+                    {profileComponents}
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
-            </View>
-        </ScrollView>
+            </ScrollView>
+            
+        </PaperProvider>
     </SafeAreaProvider>
     );
     }
