@@ -33,7 +33,6 @@ export default function ProfileElement(props : Profile) {
         else{
             setSeparator("none")
         }
-        console.log(waiting, separator, props.name)
     }
 
     let imageSource

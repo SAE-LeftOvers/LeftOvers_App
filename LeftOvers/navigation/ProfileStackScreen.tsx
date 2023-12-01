@@ -34,7 +34,10 @@ export default function ProfilesStackScreen({ navigation }) {
         }
     })
     
-    const _handleSearch = () => console.log('Searching');
+    const _handleSearch = () => {
+        console.log('Searching');
+        navigation.navigate('ProfileModification')
+    }
     const _handleHeaderAdd = () => navigation.navigate('ProfileCreation');
     
     return (

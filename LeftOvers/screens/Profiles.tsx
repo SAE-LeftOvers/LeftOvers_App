@@ -168,10 +168,11 @@ export default function Profiles({navigation, props}) {
             avatar={profile.avatar}
             diets={profile.diets}
             allergies={profile.allergies}
+            onModification={() => navigation.navigate('ProfileModification')}
             onDeleteProfile={raisePopUp}/>
-          {index < profiles.length - 1 && <View style={styles.separator} />}
+          {index < profiles.length - 1 && <View style={styles.separator}/>}
         </View>
-      ));
+    ));
 
     return (
     <SafeAreaProvider style={{flex: 1}}>
