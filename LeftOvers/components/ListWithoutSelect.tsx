@@ -5,18 +5,13 @@ import ColorContext from '../theme/ColorContext';
 
 type ListProps = {
     title: string
-    content: {value: string}[]
+    content: string[]
 }
 
 export default function ListWithoutSelect(props: ListProps) {
     const [selected, setSelected] = React.useState([]);
     const { colors } = useContext(ColorContext);
 
-    let listContent = []
-
-    props.content.forEach((val) => {
-        listContent.push({value: val.value, disabled: true})
-    })
 
     const styles = StyleSheet.create({
         titleBar: {
@@ -86,7 +81,7 @@ export default function ListWithoutSelect(props: ListProps) {
     return (
         <MultipleSelectList
             setSelected={(val) => setSelected(val)}
-            data={listContent}
+            data={props.content}
             save="value"
             search={false}
             arrowicon={<Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>}
