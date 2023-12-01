@@ -211,13 +211,12 @@ export default function Profiles({navigation, props}) {
                     <View style={styles.modal}>
                         <View style={styles.viewModal}>
                             <View style={styles.profileValidation}>
-                            <ProfileDelete name="Johnny Silverhand" avatar="plus_small.png" diets={die} allergies={all}></ProfileDelete>
-                                {/* <ProfileDelete
+                            {/* <ProfileDelete
                                     name={profiles[selectedProfileIndex].name}
                                     avatar={profiles[selectedProfileIndex].avatar}
                                     diets={profiles[selectedProfileIndex].diets}
                                     allergies={profiles[selectedProfileIndex].allergies}
-                                /> */}
+                            /> */}
                             </View>
                             <View style={styles.decisionBarVertical}>
                                 <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>

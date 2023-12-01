@@ -31,9 +31,9 @@ export default function CreateProfile(props) {
           aspect: [4, 3],
           quality: 1,
         });
-    
+      
         console.log(result);
-    
+      
         if (!result.canceled) {
           setAvatar(result.assets[0].uri);
         }
@@ -42,13 +42,13 @@ export default function CreateProfile(props) {
 
     let imageSource
     if (props.avatar == "plus.png"){
-        imageSource = require('../assets/images/plus.png')
+        imageSource = {uri: avatar}
     }
     else if (props.avatar == "plus_small.png"){
-        imageSource = require('../assets/images/plus_small.png')
+        imageSource = {uri: avatar}
     }
     else{
-        imageSource = require('../assets/images/logo.png')
+        imageSource = {uri: avatar}
     }
 
     const handleCreateProfile = async () => {
@@ -169,7 +169,7 @@ export default function CreateProfile(props) {
                             </View>
                             <View style={styles.filterBar}>
                                 <Text style={styles.filters}>Filters</Text>
-                                <Text style={styles.nbSelected}>0 diets selected</Text>
+                                <Text style={styles.nbSelected}>"0 diets selected</Text>
                             </View>
                             <ListSelect title="Diets" content={die} setSelected={handleSelectedDiets}></ListSelect>
                             <View style={{marginTop: "6%"}}/>
