@@ -19,7 +19,7 @@ export default function CookingStackScreen() {
                 options={{
                     headerStyle: {backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42'},
                     headerTitle: () => (
-                        <HeaderTitle title='Profile Modification'/>
+                        <HeaderTitle title='Ingredient Selection'/>
                     )
                 }}
             />

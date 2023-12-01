@@ -14,7 +14,6 @@ export default function RecipeDetails(props) {
     const {colors} = useContext(ColorContext);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState();
     const [response, setResponse] = useState<Recipes | undefined>(undefined);
     const recipesService = new RecipesService();
 
@@ -23,7 +22,7 @@ export default function RecipeDetails(props) {
         const recipe = await recipesService.getRecipeById(props.id);
         setResponse(recipe);
       } catch (error) {
-        setError(error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }

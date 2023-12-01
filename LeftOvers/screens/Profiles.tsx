@@ -24,11 +24,9 @@ export default function Profiles({navigation, props}) {
 
     const raisePopUp = () => {
         setVisible(true)
-        setOpacity(0.3)
     }
     const erasePopUp = () => {
         setVisible(false)
-        setOpacity(1)
     }
 
     const handleDeleteProfile = async (index) => {
@@ -191,7 +189,7 @@ export default function Profiles({navigation, props}) {
             />
           {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
-      ));
+    ));
 
     return (
     <SafeAreaProvider style={{flex: 1}}>

@@ -70,7 +70,7 @@ export default function HomePage({ navigation, props }) {
         },
         filters: {
             fontSize: 20,
-            color: colors.cardTitle,
+            color: colors.cardElementBorder,
             flex: 1,
         },
         nbSelected: {
@@ -121,6 +121,16 @@ export default function HomePage({ navigation, props }) {
         }
     });
 
+    const nbActiveProfiles = () => {
+        let cpt = 0
+        profiles.forEach((val) => {
+            if(val.isActive == "flex"){
+                cpt += 1
+            }
+        })
+        return cpt
+    }
+
     return (
         <SafeAreaProvider style={{flex: 1}}>
             <ScrollView>
@@ -130,7 +140,7 @@ export default function HomePage({ navigation, props }) {
                         <View style={{flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "100%"}}>
                             <View style={{flexDirection: "row"}}>
                                 <Text style={styles.text}>Welcome </Text>
-                                <Text style={styles.name}>Rayhân</Text>
+                                <Text style={styles.name}>Louison</Text>
                                 <Text style={styles.text}>,</Text>
                             </View>
                             <Text style={styles.text}>Glad to see you again!</Text>
@@ -140,7 +150,7 @@ export default function HomePage({ navigation, props }) {
                     <View style={styles.profilesSelection}>
                         <View style={styles.filterBar}>
                             <Text style={styles.filters}>Profiles</Text>
-                            <Text style={styles.nbSelected}>2 selected</Text>
+                            <Text style={styles.nbSelected}>{nbActiveProfiles()} selected</Text>
                         </View>
                         <View style={{marginTop: "3%"}}/>
                         <ProfileSelection listProfile={profiles} disableSelection={true}/>
