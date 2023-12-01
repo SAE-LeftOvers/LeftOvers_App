@@ -9,6 +9,10 @@ import ColorContext from '../theme/ColorContext';
 import { HeaderTitle } from './Utils';
 
 import appLogo from '../assets/images/logo.png';
+import IngredientSelection from '../screens/IngredientSelection';
+import RecipeSuggestion from '../screens/RecipeSuggestion';
+import FiltersSelection from '../screens/FiltersSelection';
+import RecipeDetails from '../screens/RecipeDetails';
 
 const HomeStack = createNativeStackNavigator()
 
@@ -56,12 +60,42 @@ export default function HomeStackScreen() {
                 }}
             />
             <HomeStack.Screen
-                name='ProfileModification'
-                component={ModifyProfile}
+                name='IngredientSelection'
+                component={IngredientSelection}
                 options={{
                     headerStyle: {backgroundColor: colors.cardBackground},
                     headerTitle: () => (
-                        <HeaderTitle title='Profile Modification'/>
+                        <HeaderTitle title='Ingredient Selection'/>
+                    )
+                }}
+            />
+            <HomeStack.Screen
+                name='RecipeSuggestion'
+                component={RecipeSuggestion}
+                options={{
+                    headerStyle: {backgroundColor: colors.cardBackground},
+                    headerTitle: () => (
+                        <HeaderTitle title='Recipe Suggestion'/>
+                    )
+                }}
+            />
+            <HomeStack.Screen
+                name='FiltersSelection'
+                component={FiltersSelection}
+                options={{
+                    headerStyle: {backgroundColor: colors.cardBackground},
+                    headerTitle: () => (
+                        <HeaderTitle title='Filters Selection'/>
+                    )
+                }}
+            />
+            <HomeStack.Screen
+                name='RecipeDetails'
+                component={RecipeDetails}
+                options={{
+                    headerStyle: {backgroundColor: colors.cardBackground},
+                    headerTitle: () => (
+                        <HeaderTitle title='Recipe Details'/>
                     )
                 }}
             />

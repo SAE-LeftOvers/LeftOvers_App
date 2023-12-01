@@ -258,7 +258,7 @@ const loadIngredients = async () => {
                     </View>
                 </View>
                 <View style={{marginTop: "8%"}}></View>
-                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground}/>
+                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={() => props.navigation.navigate("RecipeSuggestion")}/>
                 <View style={{marginBottom: "20%"}}></View>
             </LinearGradient>
     </SafeAreaProvider>

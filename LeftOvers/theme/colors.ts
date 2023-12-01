@@ -38,6 +38,7 @@ export interface Theme {
     letterFilter: string,
     foodElementBorder: string,
     badgeText: string,
+    recipeElementBackground: string,
 }
 
 export const LightTheme : Theme = {
@@ -68,6 +69,7 @@ export const LightTheme : Theme = {
     letterFilter: Moonstone,
     foodElementBorder: Jet,
     badgeText: Jet,
+    recipeElementBackground: Pearl,
 }
 
 export const DarkTheme : Theme = {
@@ -98,5 +100,6 @@ export const DarkTheme : Theme = {
     letterFilter: CarolinaBlue,
     foodElementBorder: CarolinaBlue,
     badgeText: Alabaster,
+    recipeElementBackground: Ecru,
 }
 
