@@ -6,8 +6,8 @@ import ColorContext from '../theme/ColorContext';
 type ProfileProps = {
   name: string
   avatar: string
-  diets: {title: string}[]
-  allergies: {title: string}[]
+  diets: {value: string}[]
+  allergies: {value: string}[]
 }
 
 export default function ProfileDelete(props: ProfileProps) {
@@ -84,7 +84,7 @@ export default function ProfileDelete(props: ProfileProps) {
     },
     filters: {
         fontSize: 20,
-        color: colors.cardElementBackground,
+        color: colors.cardElementBorder,
         flex: 1,
         padding: "2%",
         paddingLeft: 0,

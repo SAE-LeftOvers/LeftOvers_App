@@ -19,7 +19,9 @@ export default function IngredientSelection(props) {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const ingredientService = new IngredientService();
   const {colors} = useContext(ColorContext);
-
+  const [availableSize, setAvailableSize] = useState(0);
+  const [listVisibility, setListVisibility] = useState("none");
+  const [availableVisibility, setAvailableVisibility] = useState("none");
   const [searchQuery, setSearchQuery] = useState('');
 
   const filterIngredients = async (query) => {
@@ -63,10 +65,10 @@ const loadIngredients = async () => {
       <View style={styles.horizontalAlignment}>
         <FoodElementText title={value.name} />
         <Pressable onPress={() => SelectIngredient(value)}>
-          <Image source={plus} style={{ width: 20, height: 20 }} />
+          <Image source={plus} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
       </View>
-      <View style={{ height: 30 }}></View>
+      <View style={{ height: 20 }}></View>
     </>
   );
 
@@ -75,25 +77,64 @@ const loadIngredients = async () => {
       <View style={styles.horizontalAlignment}>
         <FoodElementText title={value.name} />
         <Pressable onPress={() => RemoveIngredient(value.id)}>
-          <Image source={moins} style={{ width: 20, height: 20 }} />
+          <Image source={moins} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
       </View>
-      <View style={{ height: 30 }}></View>
+      <View style={{ height: 20 }}></View>
     </>
   );
 
   const SelectIngredient = (newIngredient: Ingredient) => {
     const exists = selectedIngredients.find((ingredient) => ingredient.id === newIngredient.id);
-
+    console.log("Test 1: ", selectedIngredients.length)
     if (!exists) {
       setSelectedIngredients([...selectedIngredients, newIngredient]);
     }
+    console.log("Test 2: ", selectedIngredients.length)
+    ChangeAvailableSize(false)
   };
 
   const RemoveIngredient = (idIngredient: number) => {
+    console.log("Test 1 Remove: ", selectedIngredients.length)
     const updatedIngredients = selectedIngredients.filter((ingredient) => ingredient.id !== idIngredient);
     setSelectedIngredients(updatedIngredients);
+    console.log("Test 2 Remove: ", selectedIngredients.length)
+    ChangeAvailableSize(true)
   };
+
+  const ChangeAvailableSize = (remove: boolean) => {
+    if(remove){
+        if (selectedIngredients.length == 1){
+          setAvailableSize(0)
+        }
+        else if (selectedIngredients.length == 2){
+          setAvailableSize(90)
+        }
+        else if (selectedIngredients.length == 3){
+          setAvailableSize(180)
+        }
+        else if (selectedIngredients.length == 4){
+          setAvailableSize(260)
+        }
+        else{
+          setAvailableSize(280)
+        }
+    }
+    else{
+        if (selectedIngredients.length == 0){
+          setAvailableSize(90)
+        }
+        else if (selectedIngredients.length == 1){
+          setAvailableSize(180)
+        }
+        else if (selectedIngredients.length == 2){
+          setAvailableSize(260)
+        }
+        else{
+          setAvailableSize(280)
+        }
+    }
+  }
 
   const handleLetterPress = async (letter: string) => {
     try {
@@ -103,6 +144,24 @@ const loadIngredients = async () => {
       setError(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const changeListVisibility = () => {
+    if(listVisibility == "none"){
+      setListVisibility("flex")
+    }
+    else{
+      setListVisibility("none")
+    }
+  };
+
+  const changeAvailableVisibility = () => {
+    if(availableVisibility == "none"){
+      setAvailableVisibility("flex")
+    }
+    else{
+      setAvailableVisibility("none")
     }
   };
 
@@ -136,46 +195,56 @@ const loadIngredients = async () => {
             <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.element}>
-                  <View style={[styles.horizontalAlignment, { margin: "2%" }]}>
-                    {alphabetArray.map((source, index) => (
-                      <Pressable key={index} onPress={() => handleLetterPress(source)}>
-                        <Text style={{ color: colors.letterFilter }}>{source}</Text>
-                      </Pressable>
-                    ))}
+                  <View style={{justifyContent: "center"}}>
+                    <Pressable onPress={changeListVisibility} style={{alignItems: "center"}}>
+                      <Image source={require("../assets/images/arrow.png")} style={{tintColor: colors.cardDetail}}/>
+                    </Pressable>
                   </View>
-                  <View>
-                        <Searchbar
-                            placeholder="Search"
-                            onChangeText={handleSearch}
-                            value={searchQuery}
-                            style={{margin: "3%",
-                                    backgroundColor: colors.cardBackground,
-                                    borderWidth : 1,
-                                    borderColor: colors.cardElementBorder,
-                                    borderRadius: 15,
-                            }}/>
-                  </View>
-                  <View style={{height: 280}}>
-                        <FlatList
-                            data={response ? response : []}
-                            renderItem={({ item }) => (
-                              <AvailableItem value={item} />
-                            )}
-                            keyExtractor={(item, index) => index.toString()}
-                            ListEmptyComponent={() => (
-                              isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
-                            )}
-                          style={{ flex: 1 }}
-                        />
-                        <View style={{ marginTop: '6%' }}></View>
+                  <View style={{display: listVisibility}}>
+                    <View style={[styles.horizontalAlignment, { margin: "2%" }]}>
+                      {alphabetArray.map((source, index) => (
+                        <Pressable key={index} onPress={() => handleLetterPress(source)}>
+                          <Text style={{ color: colors.letterFilter }}>{source}</Text>
+                        </Pressable>
+                      ))}
+                    </View>
+                    <View>
+                          <Searchbar
+                              placeholder="Search"
+                              onChangeText={handleSearch}
+                              value={searchQuery}
+                              style={{margin: "3%",
+                                      backgroundColor: colors.cardBackground,
+                                      borderWidth : 1,
+                                      borderColor: colors.cardElementBorder,
+                                      borderRadius: 15,
+                              }}/>
+                    </View>
+                    <View style={{height: 280}}>
+                          <FlatList
+                              data={response ? response : []}
+                              renderItem={({ item }) => (
+                                <AvailableItem value={item} />
+                              )}
+                              keyExtractor={(item, index) => index.toString()}
+                              ListEmptyComponent={() => (
+                                isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
+                              )}
+                            style={{ flex: 1 }}
+                          />
+                          <View style={{ marginTop: '6%' }}></View>
+                    </View>
                   </View>
                 </View>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.element}>
-                    <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: "5%"}]}>
-                      <Text style={{fontSize: 20, color: colors.cardElementBorder}}>Available</Text>
-                    </View>
-                    <View style={{height: 280}}>
+                    <Pressable onPress={changeAvailableVisibility}>
+                      <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginHorizontal: "5%", marginBottom: "4%"}]}>
+                        <Text style={{fontSize: 20, color: colors.cardElementBorder, flex: 1}}>Available</Text>
+                        <Image source={require("../assets/images/arrow.png")} style={{tintColor: colors.cardDetail}}/>
+                      </View>
+                    </Pressable>
+                    <View style={{height: availableSize, display: availableVisibility}}>
                       <FlatList
                               data={selectedIngredients}
                               renderItem={({ item }) => (
@@ -188,7 +257,7 @@ const loadIngredients = async () => {
                     </View>
                 </View>
                 <View style={{marginTop: "8%"}}></View>
-                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground} />
+                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground}/>
                 <View style={{marginBottom: "20%"}}></View>
             </LinearGradient>
     </SafeAreaProvider>

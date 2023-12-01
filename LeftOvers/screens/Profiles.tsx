@@ -8,6 +8,8 @@ import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
 import ColorContext from '../theme/ColorContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import  EventEmitter  from './EventEmitter';
+import Profil from '../Models/Profil';
 
 export default function Profiles({navigation, props}) {
     const { colors, toggleColors } = useContext(ColorContext)
@@ -46,13 +48,18 @@ export default function Profiles({navigation, props}) {
             return [];
         }
     }
+
+    const fetchProfiles = async () => {
+        const existingProfiles = await handleGetProfiles();
+        setProfiles(existingProfiles);
+    };
+
+    const subscription = EventEmitter.addListener('profileAdded', async () => {
+        fetchProfiles();
+    });
     
     useEffect(() => {
-        const fetchProfiles = async () => {
-            const existingProfiles = await handleGetProfiles();
-            setProfiles(existingProfiles);
-        };
-    
+        handleDeleteProfiles();
         fetchProfiles();
     }, []);
 
@@ -81,7 +88,7 @@ export default function Profiles({navigation, props}) {
     
         modal: {
             position: 'absolute',
-            top: '8%',
+            top: '0%',
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
@@ -170,12 +177,12 @@ export default function Profiles({navigation, props}) {
     const profileComponents = profiles.map((profile, index) => (
         <View key={index}>
           <ProfileDetails
-            name={profile.name}
-            avatar={profile.avatar}
-            diets={profile.diets}
-            allergies={profile.allergies}
-            onDeleteProfile={raisePopUp}
-          />
+                name={profile.name}
+                avatar={profile.avatar}
+                diets={profile.diets}
+                allergies={profile.allergies}
+                onDeleteProfile={() => raisePopUp()} // <- Modification ici
+            />
           {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
       ));

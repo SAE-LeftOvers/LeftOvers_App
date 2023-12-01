@@ -167,7 +167,7 @@ export default function HomePage({ navigation, props }) {
                                 <Pressable onPress={decreaseCounter}>
                                     <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText}/>
                                 </Pressable>
-                                <FoodElementText title={ingredientList[cpt].title}/>
+                                <FoodElementText title={ingredientList[cpt].title} mainColour={colors.carrouselBackground} secondaryColour={colors.cardDetail}/>
                                 <Pressable onPress={increaseCounter}>
                                     <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText} />
                                 </Pressable>
