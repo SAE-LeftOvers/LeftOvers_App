@@ -227,7 +227,7 @@ export default function Profiles({navigation, props}) {
                                     avatar={profiles[selectedProfileIndex].avatar}
                                     diets={profiles[selectedProfileIndex].diets}
                                     allergies={profiles[selectedProfileIndex].allergies}
-                                /> */}
+                            /> */}
                             </View>
                             <View style={styles.decisionBarVertical}>
                                 <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>

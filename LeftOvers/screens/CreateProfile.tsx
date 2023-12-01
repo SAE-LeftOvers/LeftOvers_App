@@ -44,7 +44,22 @@ export default function CreateProfile(props) {
             <ScrollView>
                 <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                     <View style={{marginTop: "6%"}}/>
-                    <ProfileModification name="" avatar="plus_small.png" diets={die} allergies={all}></ProfileModification>
+                        <View style={styles.background}>
+                            <View style={styles.pseudoBar}>
+                                <Pressable onPress={pickImage}>
+                                    <Image source={imageSource} style={styles.avatar}></Image>
+                                </Pressable>
+                                <TextInput style={styles.textInput} value={name} onChangeText={onChangeName} placeholder="Name"></TextInput>
+                            </View>
+                            <View style={styles.filterBar}>
+                                <Text style={styles.filters}>Filters</Text>
+                                <Text style={styles.nbSelected}>"0 diets selected</Text>
+                            </View>
+                            <ListSelect title="Diets" content={die} setSelected={handleSelectedDiets}></ListSelect>
+                            <View style={{marginTop: "6%"}}/>
+                            <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
+                            <View style={{marginTop: "3%"}}/>
+                        </View>
                     <View style={{marginTop: "3%"}}/>
                     <ValidateButton title="Create Profile" image="plus.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={handleCreateProfile}></ValidateButton>
                     <View style={{marginTop: "20%"}}/>
