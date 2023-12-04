@@ -61,7 +61,7 @@ export default function Profiles({navigation, props}) {
             const existingProfiles = await AsyncStorage.getItem('profiles');
             return JSON.parse(existingProfiles) || [];
         } catch (error) {
-            console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
+            console.log(error);
             return [];
         }
     }

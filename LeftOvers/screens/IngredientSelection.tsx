@@ -56,6 +56,7 @@ const loadIngredients = async () => {
   };
 
   useEffect(() => {
+    console.log("Je passe ici (Ingredient Selection)")
     loadIngredients();
   }, []);
 
