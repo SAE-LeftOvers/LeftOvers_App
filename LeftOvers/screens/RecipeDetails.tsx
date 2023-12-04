@@ -8,13 +8,19 @@ import Recipes from '../Models/Recipes';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ColorContext from '../theme/ColorContext';
+import Ingredient from '../Models/Ingredient';
 
 
 export default function RecipeDetails(props) {
     const {colors} = useContext(ColorContext);
     
     const [isLoading, setIsLoading] = useState(true)
-    const [response, setResponse] = useState<Recipes>();
+
+
+
+    const ingredientList = [new Ingredient(3, "Carrot"), new Ingredient(4, "Potato"), new Ingredient(5, "Peach")]
+
+    const [response, setResponse] = useState<Recipes>(new Recipes (120, "Carrot", "Delicious", 90, ["Fork", "Fish", "Knife"], ingredientList))
     const recipesService = new RecipesService();
 
     const loadRecipe = async () => {
@@ -34,9 +40,6 @@ export default function RecipeDetails(props) {
       console.log("Je passe ici (useEffect)")
       loadRecipe();
     }, []);
-
-    loadRecipe()
-    console.log("Response.name: " + response.name)
 
     function convertToHoursMinutes(totalMinutes: number): string {
       const hours = Math.floor(totalMinutes / 60);

@@ -13,7 +13,7 @@ import Profil from '../Models/Profil';
 import { PaperProvider, Portal } from 'react-native-paper';
 
 export default function Profiles({navigation, props}) {
-    const { colors } = useContext(ColorContext)
+    const { colors, toggleColors } = useContext(ColorContext)
 
     const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
@@ -85,7 +85,8 @@ export default function Profiles({navigation, props}) {
         width: "100%",
       };
 
-    const styles = StyleSheet.create({
+
+      const styles = StyleSheet.create({
         container: {
             height: "100%",
             width: "100%",
@@ -105,7 +106,7 @@ export default function Profiles({navigation, props}) {
         separator: {
             marginTop: "6%"
         },
-    
+
         modal: {
             position: 'absolute',
             top: '0%',
@@ -121,7 +122,7 @@ export default function Profiles({navigation, props}) {
             width: "100%",
             flex: 1,
         },
-    
+
         profileValidation: {
             width: "100%",
             alignItems: "center",
@@ -199,29 +200,18 @@ export default function Profiles({navigation, props}) {
     const profileComponents = profiles.map((profile, index) => (
         <View key={index}>
           <ProfileDetails
-            name={profile.name}
-            avatar={profile.avatar}
-            diets={profile.diets}
-            allergies={profile.allergies}
-            onModification={() => navigation.navigate('ProfileModification')}
-            onDeleteProfile={raisePopUp}/>
-          {index < profiles.length - 1 && <View style={styles.separator}/>}
-        </View>
-    ));
-
-    return (
-    <SafeAreaProvider style={{flex: 1}}>
-        <ScrollView>
-            <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1}}>
-                <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
-                    <View style={styles.separator}/>
-                    {profileComponents}
+                name={profile.name}
+                avatar={profile.avatar}
+                diets={profile.diets}
+                allergies={profile.allergies}
+                onDeleteProfile={() => raisePopUp(index)}
+            />
+            <Portal>
+                <Modal visible={visible} onDismiss={erasePopUp} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-start"}}>
                     <View style={styles.modal}>
-                        <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>
-                            <View style={styles.modal}>
-                                <View style={styles.viewModal}>
-                                    <View style={styles.profileValidation}>
-                                    <ProfileDelete
+                        <View style={styles.viewModal}>
+                            <View style={styles.profileValidation}>
+                            {/* <ProfileDelete
                                     name={profiles[selectedProfileIndex].name}
                                     avatar={profiles[selectedProfileIndex].avatar}
                                     diets={profiles[selectedProfileIndex].diets}
