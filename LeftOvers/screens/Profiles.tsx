@@ -11,9 +11,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import  EventEmitter  from './EventEmitter';
 import Profil from '../Models/Profil';
 import { PaperProvider, Portal } from 'react-native-paper';
+import ProfileService from '../Services/Profiles/ProfileService';
 
 export default function Profiles({navigation, props}) {
     const colors = useContext(ColorContext).colors
+    const profile_service = new ProfileService()
 
     const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
@@ -56,10 +58,9 @@ export default function Profiles({navigation, props}) {
         erasePopUp(); 
     };
 
-      const handleGetProfiles = async () => {
+    const handleGetProfiles = async () => {
         try {
-            const existingProfiles = await AsyncStorage.getItem('profiles');
-            return JSON.parse(existingProfiles) || [];
+            return await profile_service.getProfiles()
         } catch (error) {
             console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
             return [];
