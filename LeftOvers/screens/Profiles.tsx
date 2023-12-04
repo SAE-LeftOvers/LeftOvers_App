@@ -13,7 +13,7 @@ import Profil from '../Models/Profil';
 import { PaperProvider, Portal } from 'react-native-paper';
 
 export default function Profiles({navigation, props}) {
-    const { colors, toggleColors } = useContext(ColorContext)
+    const { colors } = useContext(ColorContext)
 
     const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
@@ -46,14 +46,14 @@ export default function Profiles({navigation, props}) {
             await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
             fetchProfiles();
             setSelectedProfileIndex(index);
-            erasePopUp(); 
+            erasePopUp();
         } catch (error) {
             console.error('Erreur lors de la suppression du profil :', error);
         }
     };
 
     const confirmDelete = () => {
-        erasePopUp(); 
+        erasePopUp();
     };
 
       const handleGetProfiles = async () => {
@@ -61,7 +61,7 @@ export default function Profiles({navigation, props}) {
             const existingProfiles = await AsyncStorage.getItem('profiles');
             return JSON.parse(existingProfiles) || [];
         } catch (error) {
-            console.log(error);
+            console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
             return [];
         }
     }
@@ -74,7 +74,7 @@ export default function Profiles({navigation, props}) {
     const subscription = EventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
     });
-    
+
     useEffect(() => {
         fetchProfiles();
         console.log(profiles)
@@ -83,10 +83,9 @@ export default function Profiles({navigation, props}) {
     const containerStyle = {
         height: "75%",
         width: "100%",
-      };   
+      };
 
-    
-      const styles = StyleSheet.create({
+    const styles = StyleSheet.create({
         container: {
             height: "100%",
             width: "100%",
@@ -266,7 +265,7 @@ export default function Profiles({navigation, props}) {
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
             </ScrollView>
-            
+
         </PaperProvider>
     </SafeAreaProvider>
     );

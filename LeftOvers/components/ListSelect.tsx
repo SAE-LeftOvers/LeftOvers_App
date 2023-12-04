@@ -5,11 +5,13 @@ import ColorContext from '../theme/ColorContext';
 
 type ListProps = {
     title: string
-    content : {value: string}[]
+    content : string[]
+    val : string[]
+    setSelected: any;
 }
 
 export default function ListSelect(props: ListProps) {
-    const [selected, setSelected] = React.useState([]);
+    
     const {colors} = useContext(ColorContext);
 
     const styles = StyleSheet.create({
@@ -83,7 +85,7 @@ export default function ListSelect(props: ListProps) {
 
     return (
         <MultipleSelectList
-            setSelected={(val) => setSelected(val)}
+            setSelected={(val) => props.setSelected(val)}
             data={props.content}
             save="value"
             search={false}
