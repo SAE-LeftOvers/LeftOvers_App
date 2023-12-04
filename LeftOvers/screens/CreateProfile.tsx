@@ -29,16 +29,16 @@ export default function CreateProfile(props) {
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
       
         console.log(result);
       
         if (!result.canceled) {
-          setAvatar(result.assets[0].uri);
+            setAvatar(result.assets[0].uri);
         }
       };
 
@@ -56,18 +56,22 @@ export default function CreateProfile(props) {
 
     const handleCreateProfile = async () => {
         try {
-          // Ton code pour récupérer les profils existants et ajouter un nouveau profil
-          const new_profile = new Profil(name, avatar, selectedAllergies, selectedDiets)
-      
-          // Mettre à jour AsyncStorage avec le nouveau profil
-          await profile_service.addProfile(new_profile)
-          EventEmitter.emit('profileAdded');
-      
-          props.navigation.goBack();
-      
-          alert('Profil créé !');
+            // Ton code pour récupérer les profils existants et ajouter un nouveau profil
+            const new_profile = new Profil(name, avatar, selectedAllergies, selectedDiets)
+        
+            // Mettre à jour AsyncStorage avec le nouveau profil
+            if (await profile_service.addProfile(new_profile)) {
+                EventEmitter.emit('profileAdded');
+                props.navigation.goBack();
+                alert('Profile Created !');
+            }
+            else {
+                props.navigation.goBack()
+                alert('Profile already exists !')
+            }
+  
         } catch (error) {
-          console.error('Erreur lors de la création du profil :', error);
+            console.error('Erreur lors de la création du profil :', error);
         }
       };
     
