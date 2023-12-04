@@ -162,14 +162,6 @@ export default function HomePage({ navigation, props }) {
                     <View style={styles.separator}/>
                     <View style={styles.profilesSelection}>
                         <View style={styles.filterBar}>
-                            <Text style={styles.filters}>Ingredient Stocks</Text>
-                        </View>
-                        <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Manage Stocks" image="warehouse.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => console.log('ManageStocks')}/>
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={styles.profilesSelection}>
-                        <View style={styles.filterBar}>
                             <Text style={styles.filters}>Cooking</Text>
                         </View>
                         <View style={{marginTop: "3%"}}/>

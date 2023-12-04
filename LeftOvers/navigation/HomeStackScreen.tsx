@@ -12,6 +12,7 @@ import IngredientSelection from '../screens/IngredientSelection';
 import RecipeSuggestion from '../screens/RecipeSuggestion';
 import FiltersSelection from '../screens/FiltersSelection';
 import RecipeDetails from '../screens/RecipeDetails';
+import ModifyProfile from '../screens/ModifyProfile';
 
 const HomeStack = createNativeStackNavigator()
 
@@ -95,6 +96,16 @@ export default function HomeStackScreen() {
                     headerStyle: {backgroundColor: colors.cardBackground},
                     headerTitle: () => (
                         <HeaderTitle title='Recipe Details'/>
+                    )
+                }}
+            />
+            <HomeStack.Screen
+                name='ProfileModification'
+                component={ModifyProfile}
+                options={{
+                    headerStyle: {backgroundColor: colors.cardBackground},
+                    headerTitle: () => (
+                        <HeaderTitle title='Profile Modification'/>
                     )
                 }}
             />

@@ -48,14 +48,14 @@ export default function RecipeSuggestion(props) {
   const handleChildEventGoFilters = () => {
     setVisibleIngredients(false);
     setVisibleFilters(true);
-    setColorFilters("#59BDCD")
+    setColorFilters(colors.buttonDetail)
     setColorIngredients(colors.cardDetail)
   }
   const handleChildEventGoIngredients = () => {
       setVisibleFilters(false);
       setVisibleIngredients(true);
       setColorFilters(colors.cardDetail)
-      setColorIngredients("#59BDCD")
+      setColorIngredients(colors.buttonDetail)
   }
 
   const decreaseCounter = () => {
@@ -172,7 +172,8 @@ export default function RecipeSuggestion(props) {
                     title="Vichyssoise"
                     textList={ingredientListV2}
                     description="Cold soup of vegetables. Difficult recipe. Not advised to beginners. 1h or more."
-                    duration="1h and a half"/>
+                    duration="1h and a half"
+                    navigateDetails={goDetails}/>
               <View style={{marginHorizontal: 10}}/>
             </ScrollView>
             <View style={{marginBottom: "20%"}}/>
@@ -209,7 +210,7 @@ export default function RecipeSuggestion(props) {
                             <View style={{marginTop: "3%"}}/>
                             <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
-                            <ValidateButton title="Add Allergy" image="plus.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("IngredientSelection")}></ValidateButton>
+                            <ValidateButton title="Change Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("FiltersSelection")}></ValidateButton>
                         </View>
                         <View style={{marginTop: "6%"}}/>
                         <View>
