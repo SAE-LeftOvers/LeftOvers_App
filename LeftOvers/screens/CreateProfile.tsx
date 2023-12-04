@@ -9,15 +9,18 @@ import ListSelect from '../components/ListSelect';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EventEmitter from './EventEmitter';
 import * as ImagePicker from 'expo-image-picker';
+import ProfileService from '../Services/Profiles/ProfileService';
+import Profil from '../Models/Profil';
 
 
 export default function CreateProfile(props) {
     const colors = useContext(ColorContext).colors
-    const all = []
+    const profile_service = new ProfileService()
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
     const [name, onChangeName] = useState();
     const [avatar, setAvatar] = useState<string>('');
     const [selectedDiets, setSelectedDiets] = useState([]);
+    const [selectedAllergies, setSelectedAllergies] = useState([])
 
     const handleSelectedDiets = (selectedValues) => {
         setSelectedDiets(selectedValues);
@@ -54,21 +57,11 @@ export default function CreateProfile(props) {
     const handleCreateProfile = async () => {
         try {
           // Ton code pour récupérer les profils existants et ajouter un nouveau profil
-          const newProfile = {
-            name: name,
-            avatar: avatar,
-            diets: selectedDiets,
-            allergies: all,
-          };
+          const new_profile = new Profil(name, avatar, selectedAllergies, selectedDiets)
       
           // Mettre à jour AsyncStorage avec le nouveau profil
-          let existingProfiles = await AsyncStorage.getItem('profiles');
-          existingProfiles = existingProfiles ? JSON.parse(existingProfiles) : [];
-          const updatedProfiles = [...existingProfiles, newProfile];
-          await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+          await profile_service.addProfile(new_profile)
           EventEmitter.emit('profileAdded');
-      
-          console.log('Profil créé :', newProfile);
       
           props.navigation.goBack();
       
@@ -173,7 +166,7 @@ export default function CreateProfile(props) {
                             </View>
                             <ListSelect title="Diets" content={die} setSelected={handleSelectedDiets}></ListSelect>
                             <View style={{marginTop: "6%"}}/>
-                            <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
+                            <ListWithoutSelect title="Allergies" content={selectedAllergies}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
                         </View>
                     <View style={{marginTop: "3%"}}/>

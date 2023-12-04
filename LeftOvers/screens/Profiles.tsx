@@ -60,7 +60,8 @@ export default function Profiles({navigation, props}) {
 
     const handleGetProfiles = async () => {
         try {
-            return await profile_service.getProfiles()
+            const results = await profile_service.getProfiles()
+            return results
         } catch (error) {
             console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
             return [];
@@ -78,15 +79,12 @@ export default function Profiles({navigation, props}) {
     
     useEffect(() => {
         fetchProfiles();
-        console.log(profiles)
     }, []);
 
     const containerStyle = {
         height: "75%",
         width: "100%",
-      };   
-
-    
+      };    
       const styles = StyleSheet.create({
         container: {
             height: "100%",
@@ -201,10 +199,10 @@ export default function Profiles({navigation, props}) {
     const profileComponents = profiles.map((profile, index) => (
         <View key={index}>
           <ProfileDetails
-                name={profile.name}
-                avatar={profile.avatar}
-                diets={profile.diets}
-                allergies={profile.allergies}
+                name={profile._name}
+                avatar={profile._avatar}
+                diets={profile._diets}
+                allergies={profile._allergy}
                 onDeleteProfile={() => raisePopUp(index)}
             />
             <Portal>

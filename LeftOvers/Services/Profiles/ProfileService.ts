@@ -7,8 +7,12 @@ export default class ProfileService implements IProfileService {
         const existingProfiles = await AsyncStorage.getItem('profiles');
         return JSON.parse(existingProfiles) || [];
     }
-    addProfile(new_profile : Profil): void {
-        throw new Error("Method not implemented.");
+
+    async addProfile(new_profile : Profil): Promise<void> {
+        const list = [new_profile]
+        const key_exist = ((await AsyncStorage.getAllKeys()).includes('profiles'))
+        if (!key_exist) await AsyncStorage.setItem('profiles', JSON.stringify(list))
+        else await AsyncStorage.mergeItem('profiles', JSON.stringify(list))
     }
 
 }
