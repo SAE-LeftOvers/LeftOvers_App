@@ -8,9 +8,9 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#57BDCD"
+      "image": "./assets/images/splashScreen.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#59BDCD"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
