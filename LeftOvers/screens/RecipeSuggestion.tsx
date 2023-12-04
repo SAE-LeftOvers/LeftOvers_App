@@ -3,7 +3,6 @@ import {View, StyleSheet, Text, Image, Pressable, useWindowDimensions, ScrollVie
 import {SafeAreaProvider } from 'react-native-safe-area-context';
 import {Modal, Portal, PaperProvider} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
-import TopBar from '../components/TopBar';
 import RecipeElement from '../components/RecipeElement';
 import SelectedIngredient from '../components/SelectedIngredient';
 import FoodElementTextSimple from '../components/FoodElementTextSimple';

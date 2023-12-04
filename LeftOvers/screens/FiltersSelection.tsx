@@ -4,7 +4,6 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import ValidateButton from '../components/ValidateButton';
-import TopBar from '../components/TopBar';
 import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ProfileSelection from '../components/ProfileSelection';
