@@ -40,7 +40,7 @@ export default function Profiles({navigation, props}) {
         } catch (error) {
           console.error('Erreur lors de la suppression des données :', error);
         }
-      };
+    };
 
     const handleDeleteProfile = async (index) => {
         try {
