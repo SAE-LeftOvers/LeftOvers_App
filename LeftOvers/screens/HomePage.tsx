@@ -189,6 +189,8 @@ export default function HomePage({ navigation, props }) {
                         <View style={{marginTop: "3%"}}/>
                         <ProfileSelection listProfile={profiles} disableSelection={true}/>
                         <View style={{marginTop: "4%"}}/>
+                        <ValidateButton title="Change Active Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('FiltersSelection')}/>
+                        <View style={{marginTop: "3%"}}/>
                         <ValidateButton title="Modify Profiles" image="parameter.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('Profiles')}/>
                     </View>
                     <View style={styles.separator}/>
