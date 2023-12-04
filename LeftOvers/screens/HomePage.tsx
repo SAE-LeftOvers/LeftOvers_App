@@ -70,7 +70,7 @@ export default function HomePage({ navigation, props }) {
         },
         filters: {
             fontSize: 20,
-            color: colors.cardTitle,
+            color: colors.cardElementBorder,
             flex: 1,
         },
         nbSelected: {
@@ -86,6 +86,8 @@ export default function HomePage({ navigation, props }) {
             backgroundColor: colors.cardBackground,
             marginHorizontal: "3%",
             paddingBottom: "3%",
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
       
         welcome: {
@@ -119,6 +121,16 @@ export default function HomePage({ navigation, props }) {
         }
     });
 
+    const nbActiveProfiles = () => {
+        let cpt = 0
+        profiles.forEach((val) => {
+            if(val.isActive == "flex"){
+                cpt += 1
+            }
+        })
+        return cpt
+    }
+
     return (
         <SafeAreaProvider style={{flex: 1}}>
             <ScrollView>
@@ -128,7 +140,7 @@ export default function HomePage({ navigation, props }) {
                         <View style={{flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: "100%"}}>
                             <View style={{flexDirection: "row"}}>
                                 <Text style={styles.text}>Welcome </Text>
-                                <Text style={styles.name}>Rayhân</Text>
+                                <Text style={styles.name}>Louison</Text>
                                 <Text style={styles.text}>,</Text>
                             </View>
                             <Text style={styles.text}>Glad to see you again!</Text>
@@ -138,20 +150,14 @@ export default function HomePage({ navigation, props }) {
                     <View style={styles.profilesSelection}>
                         <View style={styles.filterBar}>
                             <Text style={styles.filters}>Profiles</Text>
-                            <Text style={styles.nbSelected}>2 selected</Text>
+                            <Text style={styles.nbSelected}>{nbActiveProfiles()} selected</Text>
                         </View>
                         <View style={{marginTop: "3%"}}/>
                         <ProfileSelection listProfile={profiles} disableSelection={true}/>
                         <View style={{marginTop: "4%"}}/>
+                        <ValidateButton title="Change Active Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('FiltersSelection')}/>
+                        <View style={{marginTop: "3%"}}/>
                         <ValidateButton title="Modify Profiles" image="parameter.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('Profiles')}/>
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={styles.profilesSelection}>
-                        <View style={styles.filterBar}>
-                            <Text style={styles.filters}>Ingredient Stocks</Text>
-                        </View>
-                        <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Manage Stocks" image="warehouse.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => console.log('ManageStocks')}/>
                     </View>
                     <View style={styles.separator}/>
                     <View style={styles.profilesSelection}>
@@ -161,20 +167,20 @@ export default function HomePage({ navigation, props }) {
                         <View style={{marginTop: "3%"}}/>
                         <View style={styles.ingredientSelection}>
                             <Text style={{fontSize: 15, color: colors.carrouselText}}>Selected Ingredient</Text>
-                            <View style={{flexDirection: "row", padding: "4%", justifyContent: "center", alignItems: "center"}}>
+                            <View style={{flexDirection: "row", padding: "4%", justifyContent: "center", alignItems: "center", marginLeft: "8%"}}>
                                 <Pressable onPress={decreaseCounter}>
                                     <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText}/>
                                 </Pressable>
-                                <FoodElementText title={ingredientList[cpt].title}/>
+                                <FoodElementText title={ingredientList[cpt].title} mainColour={colors.carrouselBackground} secondaryColour={colors.cardDetail}/>
                                 <Pressable onPress={increaseCounter}>
                                     <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText} />
                                 </Pressable>
                             </View>
                         </View>
                         <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Chnge Selected Ingredient')}/>
+                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('IngredientSelection')}/>
                         <View style={{marginTop: "3%"}}/>
-                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Go and search for recipe')}/>
+                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('RecipeSuggestion')}/>
                     </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>

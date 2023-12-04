@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import ListWithoutSelect from './ListWithoutSelect';
 import ColorContext from '../theme/ColorContext';
@@ -10,6 +9,7 @@ type ProfileProps = {
     avatar: string
     diets: string[]
     allergies: string[]
+    onModification: () => void
     onDeleteProfile: () => void
 }
 
@@ -47,6 +47,8 @@ export default function ProfileDetails(props) {
             backgroundColor: colors.cardBackground,
             padding: "3%",
             marginHorizontal: "3%",
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
     
         pseudoBar: {
@@ -78,10 +80,10 @@ export default function ProfileDetails(props) {
         },
         modify: {
             height: "100%",
+            width: "100%",
             tintColor: colors.cardElementBorder,
             resizeMode: 'contain',
-            flex: 0.1,
-            marginLeft: "3%",
+            flex: 1,
         },
         delete: {
             height: "100%",
@@ -128,7 +130,9 @@ export default function ProfileDetails(props) {
             <View style={styles.pseudoBar}>
                 <Image source={imageSource} style={styles.avatar}></Image>
                 <Text style={styles.text}>{props.name}</Text>
-                <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
+                <Pressable onPress={props.onModification} style={{flex: 0.1, marginRight: "1%",}}>
+                    <Image source={require("../assets/images/modify.png")} style={styles.modify}></Image>
+                </Pressable>
                 <Pressable onPress={props.onDeleteProfile} style={{flex: 0.1, marginLeft: "1%",}}>
                     <Image source={require("../assets/images/delete.png")} style={styles.delete}></Image>
                 </Pressable>
@@ -136,7 +140,7 @@ export default function ProfileDetails(props) {
             <Pressable onPress={changeListVisibility} style={{height: "5%", marginTop: "6%", flex: 1, marginBottom: "3%"}}>
                 <View style={styles.filterBar}>
                     <Text style={styles.filters}>Filters</Text>
-                    <Text style={styles.nbSelected}>{props.diets.length} selected</Text>
+                    <Text style={styles.nbSelected}>{props.diets.length} diets selected</Text>
                     <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
                 </View>
             </Pressable>

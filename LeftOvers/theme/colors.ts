@@ -3,8 +3,6 @@ const Alabaster = '#F2F0E4'
 const Jet = '#3F3C42'
 const Moonstone = '#59BDCD'
 const Cerulean = '#2680AA'
-const Celeste = '#ADF3EA'
-const Tan = '#E0C293'
 const Pearl = '#E3DEC9'
 const EerieBlack = '#222222'
 const CarolinaBlue = '#8DB4D9'
@@ -30,12 +28,20 @@ export interface Theme {
     welcomeName: string,
     carrouselBackground: string,
     carrouselText: string,
-    carrouselDetail: string
+    carrouselDetail: string,
+    textBottomBarFocussed: string,
+    blocBorder: string,
+    buttonMain: string,
+    yesButton: string,
+    letterFilter: string,
+    foodElementBorder: string,
+    badgeText: string,
+    recipeElementBackground: string,
 }
 
 export const LightTheme : Theme = {
     primary: Cerulean,
-    primaryComplement: Moonstone, 
+    primaryComplement: Moonstone,
     cardBackground: Alabaster,
     cardTitle: Ecru,
     cardDetail: Jet,
@@ -53,7 +59,15 @@ export const LightTheme : Theme = {
     welcomeName: Moonstone,
     carrouselBackground: Pearl,
     carrouselText: Ecru,
-    carrouselDetail: Moonstone
+    carrouselDetail: Moonstone,
+    textBottomBarFocussed: Moonstone,
+    blocBorder: Alabaster,
+    buttonMain: Ecru,
+    yesButton: Moonstone,
+    letterFilter: Moonstone,
+    foodElementBorder: Jet,
+    badgeText: Jet,
+    recipeElementBackground: Pearl,
 }
 
 export const DarkTheme : Theme = {
@@ -76,6 +90,14 @@ export const DarkTheme : Theme = {
     welcomeName:Alabaster,
     carrouselBackground: CarolinaBlue,
     carrouselText: SteelBlue,
-    carrouselDetail: Alabaster
+    carrouselDetail: Alabaster,
+    textBottomBarFocussed: SteelBlue,
+    blocBorder: EerieBlack,
+    buttonMain: CarolinaBlue,
+    yesButton: CarolinaBlue,
+    letterFilter: CarolinaBlue,
+    foodElementBorder: CarolinaBlue,
+    badgeText: Alabaster,
+    recipeElementBackground: Ecru,
 }
 

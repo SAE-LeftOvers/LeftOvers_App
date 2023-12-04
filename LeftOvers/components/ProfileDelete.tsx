@@ -1,16 +1,17 @@
-import {React, useState} from 'react';
-import {StyleSheet, Text, TextInput, View, Image, Pressable} from 'react-native';
-import ValidateButton from './ValidateButton';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import ListWithoutSelect from './ListWithoutSelect';
+import ColorContext from '../theme/ColorContext';
 
 type ProfileProps = {
   name: string
   avatar: string
-  diets: list<string>
-  allergies: list<string>
+  diets: {value: string}[]
+  allergies: {value: string}[]
 }
 
 export default function ProfileDelete(props: ProfileProps) {
+  const {colors} = useContext(ColorContext)
   const [display, setDisplay] = useState("flex")
   const changeListVisibility = () => {
     if (display == "none"){
@@ -32,6 +33,71 @@ export default function ProfileDelete(props: ProfileProps) {
      imageSource = require('../assets/images/logo.png')
   }
 
+  const styles = StyleSheet.create({
+    background: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 15,
+      backgroundColor: colors.cardBackground,
+      padding: "3%",
+      marginHorizontal: "3%",
+      height: "100%",
+      borderWidth: 1,
+      borderColor: colors.blocBorder,
+    },
+  
+    pseudoBar: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+      marginHorizontal: "3%",
+      marginBottom: "3%",
+    },
+    avatar: {
+      padding: "5%",
+      resizeMode: 'contain',
+      borderWidth: 2,
+      borderColor: colors.cardElementBorder,
+      borderRadius: 45,
+      height: "100%",
+      flex: 0.03,
+    },
+    text: {
+      flex: 1,
+      fontSize: 20,
+      color: colors.cardElementBorder,
+      alignItems: 'center',
+      textAlign: 'left',
+      marginLeft: "10%",
+      padding: "2%",
+      height: "100%",
+    },
+  
+    filterBar: {
+        flexDirection: "row",
+        width: "90%",
+        paddingTop: "3%",
+        alignItems: "flex-end",
+        justifyContent: "center",
+    },
+    filters: {
+        fontSize: 20,
+        color: colors.cardElementBorder,
+        flex: 1,
+        padding: "2%",
+        paddingLeft: 0,
+        paddingBottom: 0,
+    },
+    arrow: {
+        height: "100%",
+        resizeMode: 'contain',
+        tintColor: colors.cardDetail,
+        flex: 0.1,
+    },
+  });
+
   return (
     <View style={styles.background}>
         <View style={styles.pseudoBar}>
@@ -52,66 +118,3 @@ export default function ProfileDelete(props: ProfileProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  background: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
-    backgroundColor: '#F2F0E4',
-    padding: "3%",
-    marginHorizontal: "3%",
-    height: "100%",
-  },
-
-  pseudoBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    marginHorizontal: "3%",
-    marginBottom: "3%",
-  },
-  avatar: {
-    padding: "5%",
-    resizeMode: 'contain',
-    borderWidth: 2,
-    borderColor: "#ACA279",
-    borderRadius: 45,
-    height: "100%",
-    flex: 0.03,
-  },
-  text: {
-    flex: 1,
-    fontSize: 20,
-    color: '#ACA279',
-    alignItems: 'center',
-    textAlign: 'left',
-    marginLeft: "10%",
-    padding: "2%",
-    height: "100%",
-  },
-
-  filterBar: {
-      flexDirection: "row",
-      width: "90%",
-      paddingTop: "3%",
-      alignItems: "flex-end",
-      justifyContent: "center",
-  },
-  filters: {
-      fontSize: 20,
-      color: '#ACA279',
-      flex: 1,
-      padding: "2%",
-      paddingLeft: 0,
-      paddingBottom: 0,
-  },
-  arrow: {
-      height: "100%",
-      resizeMode: 'contain',
-      tintColor: "#3F3C42",
-      flex: 0.1,
-  },
-});

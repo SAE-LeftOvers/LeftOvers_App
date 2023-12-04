@@ -3,9 +3,7 @@ import IRecipesService from "./IRecipesServices";
 import Recipes from "../../Models/Recipes";
 
 export default class RecipesService implements IRecipesService {
-    private readonly API_URL = "http://localhost:3000/recipes";
-
-    constructor() {}
+    private readonly API_URL = "http://leftovers.alwaysdata.net/recipes";
 
     async getAllRecipes(): Promise<Recipes[]> {
         try {
@@ -17,7 +15,7 @@ export default class RecipesService implements IRecipesService {
     }
 
 
-    async getRecipeById(id: Number): Promise<Recipes | null>{
+    async getRecipeById(id: number): Promise<Recipes | null>{
         try {
             const response = await axios.get(`${this.API_URL}/${id}`);
             console.log(response);

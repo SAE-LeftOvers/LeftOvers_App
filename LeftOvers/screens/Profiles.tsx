@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, Modal, Pressable, Text, Image, ScrollView, useWindowDimensions } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,51 +7,86 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ProfileDetails from '../components/ProfileDetails';
 import ProfileDelete from '../components/ProfileDelete';
 import ColorContext from '../theme/ColorContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import  EventEmitter  from './EventEmitter';
+import Profil from '../Models/Profil';
+import { PaperProvider, Portal } from 'react-native-paper';
 
 export default function Profiles({navigation, props}) {
     const colors = useContext(ColorContext).colors
 
-    const allJohnny = [{value: "Coconut"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
-    const dieJohnny = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Pescatarian"}]
-
-    const allJackie = [{value: "Tomato"}, {value: "Relic"}]
-    const dieJackie = [{value: "Porkless"}, {value: "Vegetarian"}]
-
-    const allGoro = []
-    const dieGoro = [{value: "Pescatarian"}]
-
-    const allViktor = [{value: "Pasta"}, {value: "Fish"}]
-    const dieViktor = [{value: "Dairy free"}, {value: "Vegan"}]
+    const all = []
+    const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
 
     const [visible, setVisible] = useState(false);
     const [opacity, setOpacity] = useState(1);
-    const raisePopUp = () => {
+    const [profiles, setProfiles] = useState([]);
+    const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
+
+    const raisePopUp = (index) => {
+        setSelectedProfileIndex(index)
         setVisible(true)
-        setOpacity(0.3)
     }
     const erasePopUp = () => {
         setVisible(false)
-        setOpacity(1)
     }
 
-    const profiles = [
-        {
-          name: "Johnny Silverhand",
-          avatar: "plus_small.png",
-          diets: dieJohnny,
-          allergies: allJohnny,
-        },
-        {
-          name: "Jackie Welles",
-          avatar: "plus_small.png",
-          diets: dieJackie,
-          allergies: allJackie,
-        },
-        // ... Ajoutez d'autres profils ici de la même manière
-      ];
-      
+    const handleDeleteProfiles = async () => {
+        try {
+          await AsyncStorage.removeItem('profiles');
+          console.log('Données supprimées avec succès !');
+        } catch (error) {
+          console.error('Erreur lors de la suppression des données :', error);
+        }
+      };
 
-    const styles = StyleSheet.create({
+    const handleDeleteProfile = async (index) => {
+        try {
+            const updatedProfiles = profiles.filter((profile, i) => i !== index);
+            await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+            fetchProfiles();
+            setSelectedProfileIndex(index);
+            erasePopUp(); 
+        } catch (error) {
+            console.error('Erreur lors de la suppression du profil :', error);
+        }
+    };
+
+    const confirmDelete = () => {
+        erasePopUp(); 
+    };
+
+      const handleGetProfiles = async () => {
+        try {
+            const existingProfiles = await AsyncStorage.getItem('profiles');
+            return JSON.parse(existingProfiles) || [];
+        } catch (error) {
+            console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
+            return [];
+        }
+    }
+
+    const fetchProfiles = async () => {
+        const existingProfiles = await handleGetProfiles();
+        setProfiles(existingProfiles);
+    };
+
+    const subscription = EventEmitter.addListener('profileAdded', async () => {
+        fetchProfiles();
+    });
+    
+    useEffect(() => {
+        fetchProfiles();
+        console.log(profiles)
+    }, []);
+
+    const containerStyle = {
+        height: "75%",
+        width: "100%",
+      };   
+
+    
+      const styles = StyleSheet.create({
         container: {
             height: "100%",
             width: "100%",
@@ -74,7 +109,7 @@ export default function Profiles({navigation, props}) {
     
         modal: {
             position: 'absolute',
-            top: '8%',
+            top: '0%',
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
@@ -102,11 +137,13 @@ export default function Profiles({navigation, props}) {
             borderRadius: 15,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#F2F0E4",
+            backgroundColor: colors.cardBackground,
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
         validationQuestion: {
             fontSize: 20,
-            color: '#ACA279',
+            color: colors.cardElementBorder,
             alignItems: 'center',
             justifyContent: 'center',
             flex: 0.3,
@@ -129,7 +166,7 @@ export default function Profiles({navigation, props}) {
             borderRadius: 20,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#59BDCD",
+            backgroundColor: colors.yesButton,
         },
         yesText: {
             fontSize: 20,
@@ -163,55 +200,63 @@ export default function Profiles({navigation, props}) {
     const profileComponents = profiles.map((profile, index) => (
         <View key={index}>
           <ProfileDetails
-            name={profile.name}
-            avatar={profile.avatar}
-            diets={profile.diets}
-            allergies={profile.allergies}
-            onDeleteProfile={raisePopUp}
-          />
+                name={profile.name}
+                avatar={profile.avatar}
+                diets={profile.diets}
+                allergies={profile.allergies}
+                onDeleteProfile={() => raisePopUp(index)}
+            />
+            <Portal>
+                <Modal visible={visible} onDismiss={erasePopUp} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-start"}}>
+                    <View style={styles.modal}>
+                        <View style={styles.viewModal}>
+                            <View style={styles.profileValidation}>
+                            {/* <ProfileDelete
+                                    name={profiles[selectedProfileIndex].name}
+                                    avatar={profiles[selectedProfileIndex].avatar}
+                                    diets={profiles[selectedProfileIndex].diets}
+                                    allergies={profiles[selectedProfileIndex].allergies}
+                            /> */}
+                            </View>
+                            <View style={styles.decisionBarVertical}>
+                                <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
+                                <View style={styles.decisionBar}>
+                                    <Pressable onPress={() => handleDeleteProfile(selectedProfileIndex)} style={{flex:0.5}}>
+                                        <View style={styles.yesButton}>
+                                            <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                            <Text style={styles.yesText}>Yes</Text>
+                                        </View>
+                                    </Pressable>
+                                    <Pressable onPress={erasePopUp} style={{flex:0.5}}>
+                                        <View style={styles.noButton}>
+                                            <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
+                                            <Text style={styles.noText}>No</Text>
+                                        </View>
+                                    </Pressable>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            </Portal>
           {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
-      ));
+    ));
+
+
 
     return (
-    <SafeAreaProvider style={{flex: 1}}>
-        <ScrollView>
-            <View style={{opacity: opacity, height: "100%", width: "100%", flex: 1}}>
+        <SafeAreaProvider style={{flex: 1}}>
+        <PaperProvider>
+            <ScrollView>
                 <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                     <View style={styles.separator}/>
                     {profileComponents}
-                    <View style={styles.modal}>
-                        <Modal visible={visible} onRequestClose={erasePopUp} animationType="fade" transparent={true}>
-                            <View style={styles.modal}>
-                                <View style={styles.viewModal}>
-                                    <View style={styles.profileValidation}>
-                                        <ProfileDelete name="Johnny Silverhand" avatar="plus_small.png" diets={dieJohnny} allergies={allJohnny}></ProfileDelete>
-                                    </View>
-                                    <View style={styles.decisionBarVertical}>
-                                        <Text style={styles.validationQuestion}>Do you really want to delete this profile?</Text>
-                                        <View style={styles.decisionBar}>
-                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
-                                                <View style={styles.yesButton}>
-                                                    <Image source={require("../assets/images/validate.png")} style={{tintColor: "#2DE04A", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
-                                                    <Text style={styles.yesText}>Yes</Text>
-                                                </View>
-                                            </Pressable>
-                                            <Pressable onPress={erasePopUp} style={{flex:0.5}}>
-                                                <View style={styles.noButton}>
-                                                    <Image source={require("../assets/images/cross.png")} style={{tintColor: "#E02D2D", height: "100%", flex: 0.2, margin: "5%", resizeMode: "contain"}}/>
-                                                    <Text style={styles.noText}>No</Text>
-                                                </View>
-                                            </Pressable>
-                                        </View>
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
-                    </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
-            </View>
-        </ScrollView>
+            </ScrollView>
+            
+        </PaperProvider>
     </SafeAreaProvider>
     );
     }

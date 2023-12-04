@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native';
-import { GestureResponderEvent, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Pressable, GestureResponderEvent, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import ThemeContext from '../theme/ThemeContext';
 import ColorContext from '../theme/ColorContext';
@@ -41,29 +40,26 @@ export default function BottomBar({ state, descriptors, navigation }) {
             bottom: 0,
             right: 0,
             left: 0,
-            height: 70,
+            height: "8%",
             backgroundColor: theme === 'dark' ? "#3F3C42" : "transparent"
         },
         BottomBarBlurContainer: {
             flexDirection: 'row',
             alignItems: 'center',
             alignContent: 'space-around',
-            padding: 2,
             borderBlockColor: theme === 'light' ? '#F2F0E4' : '#222222', 
-            borderWidth: 3, 
-            borderLeftColor: theme === 'light'? '#F2F0E4' : '#222222', 
-            borderLeftWidth: 3,
+            borderWidth: 2,
+            borderLeftColor: theme === 'light'? '#F2F0E4' : '#222222',
             borderRightColor: theme === 'light'? '#F2F0E4' : '#222222',
-            borderRightWidth: 3
         },
         BottomBarIcon: {
-            width: 35,
-            height: 35
+            width: 25,
+            height: 25,
+            resizeMode: "contain",
         },
         BottomBarElementContainer: {
             flexDirection: 'column',
             alignItems: 'center',
-            margin: 3
         }
     })
 
@@ -73,7 +69,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                 style={[StyleSheet.absoluteFill, styles.BottomBarBlurContainer]}
                 tint='dark'
                 intensity={theme === 'light' ? 50 : 0}
-            >
+                >
                 {state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];
                     const label =
@@ -86,7 +82,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                     let icon;
                     if (route.name === 'HOME') {
                         icon = HomeIcon;
-                    } else if (route.name === 'PROFILE') {
+                    } else if (route.name === 'PROFILES') {
                         icon = ProfileIcon;
                     } else if (route.name === 'COOKING') {
                         icon = CookingIcon;
@@ -115,19 +111,21 @@ export default function BottomBar({ state, descriptors, navigation }) {
                         onPress={onPress}
                         style={[styles.BottomBarElementContainer, { flex: 1 }]}
                         key={route.name}
-                    >
+                        >
                             <Image source={icon} style={[styles.BottomBarIcon, {tintColor: isFocused ? (theme === 'light' ? '#59BDCD': '#8DB4D9'): '#F2F0E4'}]} />
-                            <Text style={{ color: isFocused ? '#59BDCD' : '#F2F0E4' }}>
+                            <Text style={{ color: isFocused ? colors.textBottomBarFocussed : '#F2F0E4' }}>
                                 {label}
                             </Text>
                     </TouchableOpacity>
                     );
                 })}
-                <Pressable onPress={ onThemeButtonPress }>
+                <Pressable onPress={ onThemeButtonPress } style={{paddingHorizontal: "7%"}}>
+                    <View style={{alignItems: "center", justifyContent: "center"}}>
                         <Image source={iconThemeButton} style={[styles.BottomBarIcon, {tintColor: '#F2F0E4'}]} />
                         <Text style={{color: '#F2F0E4'}}>
                             {textThemeButton}
                         </Text>
+                    </View>
                 </Pressable>
             </BlurView>
         </View>

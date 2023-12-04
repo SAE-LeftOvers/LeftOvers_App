@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, ScrollView, useWindowDimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import FoodElementText from '../components/FoodElementText';
-import CustomButton from '../components/CustomButton';
 import Ingredient from '../Models/Ingredient';
 import IngredientService from '../Services/Ingredients/IngredientsServices';
 import ColorContext from '../theme/ColorContext';
+import ValidateButton from '../components/ValidateButton';
 
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
@@ -18,31 +18,30 @@ export default function IngredientSelection(props) {
 
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
   const [response, setResponse] = useState<Ingredient[] | undefined>(undefined);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const ingredientService = new IngredientService();
-
+  const [availableSize, setAvailableSize] = useState(0);
+  const [listVisibility, setListVisibility] = useState("none");
+  const [availableVisibility, setAvailableVisibility] = useState("none");
   const [searchQuery, setSearchQuery] = useState('');
 
   const filterIngredients = async (query) => {
     try {
       setIsLoading(true);
       if (query === '') {
-        // Si le query (prompt) est vide, charger tous les ingrédients
         loadIngredients();
       } else {
         const filtered = await ingredientService.getfilteredIngredient(query);
         setResponse(filtered);
       }
     } catch (error) {
-      setError(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Appelée à chaque changement de la recherche
   const handleSearch = (query) => {
     setSearchQuery(query);
     filterIngredients(query);
@@ -53,7 +52,7 @@ const loadIngredients = async () => {
       const ingredients = await ingredientService.getAllIngredient();
       setResponse(ingredients);
     } catch (error) {
-      setError(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +65,12 @@ const loadIngredients = async () => {
   const AvailableItem = ({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignment}>
-        <FoodElementText title={value.name} />
+        <FoodElementText title={value.name}/>
         <Pressable onPress={() => SelectIngredient(value)}>
-          <Image source={plus} style={{ width: 20, height: 20 }} />
+          <Image source={plus} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
       </View>
-      <View style={{ height: 30 }}></View>
+      <View style={{ height: 20 }}></View>
     </>
   );
 
@@ -80,83 +79,173 @@ const loadIngredients = async () => {
       <View style={styles.horizontalAlignment}>
         <FoodElementText title={value.name} />
         <Pressable onPress={() => RemoveIngredient(value.id)}>
-          <Image source={moins} style={{ width: 20, height: 20 }} />
+          <Image source={moins} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
       </View>
-      <View style={{ height: 30 }}></View>
+      <View style={{ height: 20 }}></View>
     </>
   );
 
   const SelectIngredient = (newIngredient: Ingredient) => {
     const exists = selectedIngredients.find((ingredient) => ingredient.id === newIngredient.id);
-
     if (!exists) {
       setSelectedIngredients([...selectedIngredients, newIngredient]);
+      ChangeAvailableSize(false)
     }
   };
 
   const RemoveIngredient = (idIngredient: number) => {
     const updatedIngredients = selectedIngredients.filter((ingredient) => ingredient.id !== idIngredient);
     setSelectedIngredients(updatedIngredients);
+    ChangeAvailableSize(true)
   };
+
+  const ChangeAvailableSize = (remove: boolean) => {
+    if(remove){
+        if (selectedIngredients.length == 1){
+          setAvailableSize(0)
+        }
+        else if (selectedIngredients.length == 2){
+          setAvailableSize(90)
+        }
+        else if (selectedIngredients.length == 3){
+          setAvailableSize(180)
+        }
+        else if (selectedIngredients.length == 4){
+          setAvailableSize(260)
+        }
+        else{
+          setAvailableSize(280)
+        }
+    }
+    else{
+        if (selectedIngredients.length == 0){
+          setAvailableSize(90)
+        }
+        else if (selectedIngredients.length == 1){
+          setAvailableSize(180)
+        }
+        else if (selectedIngredients.length == 2){
+          setAvailableSize(260)
+        }
+        else{
+          setAvailableSize(280)
+        }
+    }
+  }
 
   const handleLetterPress = async (letter: string) => {
     try {
       const ingredientsByLetter = await ingredientService.getIngredientByLetter(letter);
       setResponse(ingredientsByLetter);
     } catch (error) {
-      setError(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const changeListVisibility = () => {
+    if(listVisibility == "none"){
+      setListVisibility("flex")
+    }
+    else{
+      setListVisibility("none")
+    }
+  };
+
+  const changeAvailableVisibility = () => {
+    if(availableVisibility == "none"){
+      setAvailableVisibility("flex")
+    }
+    else{
+      setAvailableVisibility("none")
+    }
+  };
+
+  const styles = StyleSheet.create({
+    linearGradient: {
+          width: "100%",
+          flex: 1,
+          padding: "3%",
+          paddingTop: 0,
+          alignItems: "center",
+          justifyContent: "flex-start",
+    },
+
+    element: {
+      width: "100%",
+      backgroundColor: colors.cardBackground,
+      borderRadius: 30,
+      borderWidth: 1,
+      borderColor: colors.blocBorder,
+    },
+    horizontalAlignment: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      marginTop: "3%",
+    }
+  });
+
   return (
     <SafeAreaProvider style={{flex: 1}}>
-        <ScrollView>
-            <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+            <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.element}>
-                  <View style={[styles.horizontalAlignment, { margin: 10 }]}>
-                    {alphabetArray.map((source, index) => (
-                      <Pressable key={index} onPress={() => handleLetterPress(source)}>
-                      <Text style={{ color: "blue" }}>{source}</Text>
-                      </Pressable>
-                    ))}
+                  <View style={{justifyContent: "center"}}>
+                    <Pressable onPress={changeListVisibility} style={{alignItems: "center"}}>
+                      <Image source={require("../assets/images/arrow.png")} style={{tintColor: colors.cardDetail}}/>
+                    </Pressable>
                   </View>
+                  <View style={{display: listVisibility}}>
+                    <View style={[styles.horizontalAlignment, { margin: "2%" }]}>
+                      {alphabetArray.map((source, index) => (
+                        <Pressable key={index} onPress={() => handleLetterPress(source)}>
+                          <Text style={{ color: colors.letterFilter }}>{source}</Text>
+                        </Pressable>
+                      ))}
+                    </View>
                     <View>
-                        <Searchbar
-                            placeholder="Search"
-                            onChangeText={handleSearch}
-                            value={searchQuery}
-                            style={{margin: "3%",
-                                    backgroundColor: '#F2F0E4',
-                                    borderWidth : 1,
-                                    borderColor: "#ACA279",
-                                    borderRadius: 15,
-                            }}/>
+                          <Searchbar
+                              placeholder="Search"
+                              onChangeText={handleSearch}
+                              value={searchQuery}
+                              iconColor={colors.cardDetail}
+                              inputStyle={{color: colors.cardDetail}}
+                              rippleColor={colors.letterFilter}
+                              style={{margin: "3%",
+                                      backgroundColor: colors.cardBackground,
+                                      borderWidth : 1,
+                                      borderColor: colors.cardElementBorder,
+                                      borderRadius: 15,
+                              }}/>
                     </View>
-                    <View style={{flex: 1, maxHeight: 300}}>
-                        <FlatList
-                            data={response ? response : []}
-                            renderItem={({ item }) => (
-                            <AvailableItem value={item} />
+                    <View style={{height: 280}}>
+                          <FlatList
+                              data={response ? response : []}
+                              renderItem={({ item }) => (
+                                <AvailableItem value={item} />
                               )}
-                            keyExtractor={(item, index) => index.toString()}
-                            ListEmptyComponent={() => (
-                            isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
-                            )}
-                          style={{ flex: 1 }}
-                        />
-                        <View style={{ marginTop: '6%' }}></View>
+                              keyExtractor={(item, index) => index.toString()}
+                              ListEmptyComponent={() => (
+                                isLoading ? <ActivityIndicator size="large" /> : <Text>Erreur lors du traitement des données</Text>
+                              )}
+                            style={{ flex: 1 }}
+                          />
+                          <View style={{ marginTop: '6%' }}></View>
                     </View>
+                  </View>
                 </View>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.element}>
-                    <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginLeft: "5%"}]}>
-                      <Text style={{fontSize: 20, color: '#ACA279'}}>Available</Text>
-                    </View>
-                    <View style={{flex: 1, maxHeight: 300}}>
+                    <Pressable onPress={changeAvailableVisibility}>
+                      <View style={[styles.horizontalAlignment, {justifyContent: "flex-start", marginHorizontal: "5%", marginBottom: "4%"}]}>
+                        <Text style={{fontSize: 20, color: colors.cardElementBorder, flex: 1}}>Available</Text>
+                        <Image source={require("../assets/images/arrow.png")} style={{tintColor: colors.cardDetail}}/>
+                      </View>
+                    </Pressable>
+                    <View style={{height: availableSize, display: availableVisibility}}>
                       <FlatList
                               data={selectedIngredients}
                               renderItem={({ item }) => (
@@ -164,39 +253,14 @@ const loadIngredients = async () => {
                               )}
                               keyExtractor={(item, index) => index.toString()}
                               style={{ flex: 1 }}
-                            />
-                        <View style={{ height: 20 }}></View>
+                      />
+                      <View style={{ height: 20 }}></View>
                     </View>
                 </View>
                 <View style={{marginTop: "8%"}}></View>
-                <CustomButton title="Find a recipe"/>
+                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={() => props.navigation.navigate("RecipeSuggestion")}/>
                 <View style={{marginBottom: "20%"}}></View>
             </LinearGradient>
-        </ScrollView>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  linearGradient: {
-        width: "100%",
-        flex: 1,
-        padding: "3%",
-        paddingTop: 0,
-        alignItems: "center",
-        justifyContent: "flex-start",
-  },
-
-  element: {
-    width: "100%",
-    backgroundColor:'#F2F0E4',
-    borderRadius: 30,
-  },
-  horizontalAlignment: {
-    width: "100%",
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop: "3%",
-  }
-});

@@ -3,9 +3,7 @@ import IIngredientService from "./IIngredientService";
 import axios from 'axios';
 
 export default class IngredientService implements IIngredientService {
-    private readonly API_URL = "http://localhost:3000/ingredients";
-
-    constructor() {}
+    private readonly API_URL = "http://leftovers.alwaysdata.net/ingredients";
 
     async getAllIngredient(): Promise<Ingredient[]> {
         try {
@@ -17,7 +15,7 @@ export default class IngredientService implements IIngredientService {
     }
 
 
-    async getIngredientById(id: Number): Promise<Ingredient | null>{
+    async getIngredientById(id: number): Promise<Ingredient | null>{
         try {
             const response = await axios.get(`${this.API_URL}/${id}`);
             return response.data as Ingredient;
@@ -26,7 +24,7 @@ export default class IngredientService implements IIngredientService {
         }
     }
     
-    async getIngredientByLetter(letter: String): Promise<any>{
+    async getIngredientByLetter(letter: string): Promise<any>{
         try {
             const response = await axios.get(`${this.API_URL}/letter/${letter}`);
             return response.data as Ingredient[];
@@ -35,13 +33,12 @@ export default class IngredientService implements IIngredientService {
         }
     }
 
-    async getfilteredIngredient(prompt: String): Promise<Ingredient[]> {
+    async getfilteredIngredient(prompt: string): Promise<Ingredient[]> {
         try {
             const response = await axios.get(`${this.API_URL}/filter/${prompt}`);
             return response.data as Ingredient[];
         } catch (error) {
             throw new Error('Erreur lors de la récupération des ingrédients : ' + error.message);
         }
-        return;
     }
 }

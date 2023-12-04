@@ -1,15 +1,42 @@
-import React from 'react';
-import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
-import Separator from '../components/Separator';
+import React, {useContext} from 'react';
+import {StyleSheet,Pressable, Text, View} from 'react-native';
+import ColorContext from '../theme/ColorContext';
 
-
-
-interface foodElementTextProps {
+interface FoodElementTextSimpleProps {
   title: string
 }
 
+export default function FoodElementTextSimple(props: FoodElementTextSimpleProps) {
+  const {colors} = useContext(ColorContext)
 
-export default function FoodElementTextSimple(props: foodElementTextProps) {
+  const styles = StyleSheet.create({
+    button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: "80%",
+      borderRadius: 5,
+      backgroundColor: colors.ingredientBackground,
+    },
+    text: {
+      fontSize: 10,
+      fontWeight: 'bold',
+      padding : "2%",
+      color: colors.cardDetail,
+    },
+    view: {
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+    },
+    container: {
+      width: "100%",
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: colors.foodElementBorder,
+      flexDirection: 'column',
+      justifyContent: 'center',
+    },
+  });
+  
   return (
     <Pressable style={styles.button}>
       <View style={styles.container}>
@@ -20,31 +47,3 @@ export default function FoodElementTextSimple(props: foodElementTextProps) {
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: "80%",
-    borderRadius: 5,
-    backgroundColor: '#E3DEC9',
-  },
-  text: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    padding : "2%",
-    color: 'black',
-  },
-  view: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  container: {
-    width: "100%",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#3F3C42',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-});

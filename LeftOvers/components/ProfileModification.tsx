@@ -9,8 +9,8 @@ import ColorContext from '../theme/ColorContext';
 type ProfileProps = {
     name: string
     avatar: string
-    diets: string[]
-    allergies: string[]
+    diets: {value: string}[]
+    allergies: {value: string}[]
 }
 
 export default function ProfileModification(props: ProfileProps) {
@@ -37,6 +37,8 @@ export default function ProfileModification(props: ProfileProps) {
             backgroundColor: colors.cardBackground,
             padding: "3%",
             marginHorizontal: "3%",
+            borderWidth: 1,
+            borderColor: colors.blocBorder,
         },
     
         pseudoBar: {
@@ -51,18 +53,18 @@ export default function ProfileModification(props: ProfileProps) {
             padding: "5%",
             resizeMode: 'contain',
             borderWidth: 2,
-            borderColor: colors.cardTitle,
+            borderColor: colors.cardElementBorder,
             borderRadius: 45,
             height: "100%",
             flex: 0.04,
         },
         textInput: {
             fontSize: 15,
-            color: colors.cardTitle,
+            color: colors.cardDetail,
             borderRadius: 10,
             borderWidth: 2,
             borderStyle: 'dashed',
-            borderColor: colors.cardTitle,
+            borderColor: colors.cardElementBorder,
             alignItems: 'center',
             textAlign: 'left',
             flex: 0.8,
@@ -71,7 +73,7 @@ export default function ProfileModification(props: ProfileProps) {
         },
         modify: {
             height: "100%",
-            tintColor: colors.cardTitle,
+            tintColor: colors.cardElementBorder,
             resizeMode: 'contain',
             flex: 0.1,
             marginLeft: "3%",
@@ -87,14 +89,9 @@ export default function ProfileModification(props: ProfileProps) {
         },
         filters: {
             fontSize: 20,
-            color: colors.cardTitle,
+            color: colors.cardElementBorder,
             flex: 1,
         },
-        nbSelected: {
-            fontSize: 11,
-            color: colors.cardDetail,
-            textAlign: "right",
-        }
     });
 
     return (
@@ -106,7 +103,6 @@ export default function ProfileModification(props: ProfileProps) {
             </View>
             <View style={styles.filterBar}>
                 <Text style={styles.filters}>Filters</Text>
-                <Text style={styles.nbSelected}>3 selected</Text>
             </View>
             <ListSelect title="Diets" content={props.diets}></ListSelect>
             <View style={{marginTop: "6%"}}/>
