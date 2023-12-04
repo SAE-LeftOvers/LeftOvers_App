@@ -3,7 +3,6 @@ import {View, StyleSheet, Text, Image, Pressable, useWindowDimensions, ScrollVie
 import {SafeAreaProvider } from 'react-native-safe-area-context';
 import {Modal, Portal, PaperProvider} from 'react-native-paper';
 import {LinearGradient} from 'expo-linear-gradient';
-import TopBar from '../components/TopBar';
 import RecipeElement from '../components/RecipeElement';
 import SelectedIngredient from '../components/SelectedIngredient';
 import FoodElementTextSimple from '../components/FoodElementTextSimple';
@@ -29,7 +28,7 @@ export default function RecipeSuggestion(props) {
   const ingredientListV2 = [{title: "Smoked Salmon"}, {title: "Tomato"}, {title: "Carrot"}]
   const limitedList = ingredientList.slice(minCpt, maxCpt);
   const [colorIngredients, setColorIngredients] = useState("#59BDCD");
-  const [colorFilters, setColorFilters] = useState("#3F3C42");
+  const [colorFilters, setColorFilters] = useState(colors.cardDetail);
 
   const die = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Gluten free"}, {value: "Porkless"}]
   const all = []
@@ -49,14 +48,14 @@ export default function RecipeSuggestion(props) {
   const handleChildEventGoFilters = () => {
     setVisibleIngredients(false);
     setVisibleFilters(true);
-    setColorFilters("#59BDCD")
-    setColorIngredients("#3F3C42")
+    setColorFilters(colors.buttonDetail)
+    setColorIngredients(colors.cardDetail)
   }
   const handleChildEventGoIngredients = () => {
       setVisibleFilters(false);
       setVisibleIngredients(true);
-      setColorFilters("#3F3C42")
-      setColorIngredients("#59BDCD")
+      setColorFilters(colors.cardDetail)
+      setColorIngredients(colors.buttonDetail)
   }
 
   const decreaseCounter = () => {
@@ -81,14 +80,6 @@ export default function RecipeSuggestion(props) {
     }
   }
 
-  const imageElements = limitedList.map((source, index) => (
-      <View style={[styles.horizontalAlignment, {marginVertical: "3%"}]}>
-        <FoodElementTextSimple title={source.title}/>
-        <Image source={plus} style={{width: 20, resizeMode: "contain"}}/>
-        <Image source={minus} style={{width: 20, resizeMode: "contain"}}/>
-      </View>
-  ));
-
   const styles = StyleSheet.create({
     linearGradient: {
         width: "100%",
@@ -104,7 +95,7 @@ export default function RecipeSuggestion(props) {
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 20,
-          backgroundColor: '#F2F0E4',
+          backgroundColor: colors.cardBackground,
           padding: "3%",
           marginHorizontal: "3%",
           borderWidth: 1,
@@ -121,32 +112,15 @@ export default function RecipeSuggestion(props) {
     },
     filters: {
             fontSize: 20,
-            color: '#ACA279',
+            color: colors.cardElementBorder,
             flex: 1,
     },
     nbSelected: {
             fontSize: 11,
-            color: "#3F3C42",
+            color: colors.cardDetail,
             textAlign: "right",
     },
 
-    page: {
-        flex: 1,
-        backgroundColor: '#59BDCD',
-        alignItems: 'center',
-        paddingHorizontal: "3%",
-    },
-
-    modal :{
-      position: 'absolute',
-      top: '50%',
-      height: "50%",
-      width: "100%",
-      borderWidth: 1,
-      borderColor: "red",
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-    },
     horizontalAlignment: {
       display: 'flex',
       height: "10%",
@@ -164,12 +138,21 @@ export default function RecipeSuggestion(props) {
     },
   });
 
+  const ingredientElements = limitedList.map((source, index) => (
+    <View style={[styles.horizontalAlignment, {marginVertical: "3%"}]}>
+      <FoodElementTextSimple title={source.title}/>
+      <Image source={plus} style={{width: 20, resizeMode: "contain", tintColor: colors.cardDetail}}/>
+      <Image source={minus} style={{width: 20, resizeMode: "contain", tintColor: colors.cardDetail}}/>
+    </View>
+  ));
+
+  const goDetails = () => props.navigation.navigate("RecipeDetails")
+
   return (
     <SafeAreaProvider style={{flex: 1}}>
     <PaperProvider>
-      <TopBar title="Recipes" isVisible="true"/>
       <ScrollView>
-        <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+        <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
             <View style={{marginTop: "6%"}}/>
             <SelectedIngredient
               ingredientList={ingredientList}
@@ -180,13 +163,17 @@ export default function RecipeSuggestion(props) {
                     number="63"
                     title="Meat Stick"
                     textList={ingredientList}
-                    description="Delicious stick with 4 meats. Accessible for beginners. 20 min or less to cook."/>
+                    description="Delicious stick with 4 meats. Accessible for beginners. 20 min or less to cook."
+                    duration="17 min"
+                    navigateDetails={goDetails}/>
               <View style={{marginHorizontal: 10}}/>
               <RecipeElement
                     number="03"
                     title="Vichyssoise"
                     textList={ingredientListV2}
-                    description="Cold soup of vegetables. Difficult recipe. Not advised to beginners. 1h or more."/>
+                    description="Cold soup of vegetables. Difficult recipe. Not advised to beginners. 1h or more."
+                    duration="1h and a half"
+                    navigateDetails={goDetails}/>
               <View style={{marginHorizontal: 10}}/>
             </ScrollView>
             <View style={{marginBottom: "20%"}}/>
@@ -196,15 +183,15 @@ export default function RecipeSuggestion(props) {
             <Modal visible={visible} onDismiss={handleChildEvent} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-end"}}>
                 <ParameterTopBar onEventFilter={handleChildEventGoFilters} onEventIngredient={handleChildEventGoIngredients} colorFilters={colorFilters} colorIngredients={colorIngredients}/>
                 {visibleIngredients &&(
-                    <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {paddingHorizontal: "3%"}]}>
-                        {imageElements}
-                        <View style={[styles.horizontalAlignment, {marginTop: "6%"}]}>
+                    <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {paddingHorizontal: "3%", justifyContent: "flex-start"}]}>
+                        {ingredientElements}
+                        <View style={[styles.horizontalAlignment, {marginTop: "3%"}]}>
                              <Pressable onPress={decreaseCounter}>
-                                  <Image source={bracketLeft} style={{width: 30, height: "100%", resizeMode: "contain", tintColor: "#3F3C42"}}/>
+                                  <Image source={bracketLeft} style={{width: 30, height: "100%", resizeMode: "contain", tintColor: colors.cardDetail}}/>
                              </Pressable>
                              <CustomButton title="Save"></CustomButton>
                              <Pressable onPress={increaseCounter}>
-                                  <Image source={bracketRight} style={{width: 30, height: "100%", resizeMode: "contain", tintColor: "#3F3C42"}}/>
+                                  <Image source={bracketRight} style={{width: 30, height: "100%", resizeMode: "contain", tintColor: colors.cardDetail}}/>
                              </Pressable>
                         </View>
                     </LinearGradient>
@@ -212,7 +199,7 @@ export default function RecipeSuggestion(props) {
                 )}
                 {visibleFilters &&(
                     <ScrollView>
-                    <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {paddingHorizontal: "3%"}]}>
+                    <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {paddingHorizontal: "3%"}]}>
                         <View style={{marginTop: "10%"}}/>
                         <View style={styles.background}>
                             <View style={styles.filterBar}>
@@ -223,7 +210,7 @@ export default function RecipeSuggestion(props) {
                             <View style={{marginTop: "3%"}}/>
                             <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
-                            <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9"></ValidateButton>
+                            <ValidateButton title="Change Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("FiltersSelection")}></ValidateButton>
                         </View>
                         <View style={{marginTop: "6%"}}/>
                         <View>

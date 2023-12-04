@@ -4,7 +4,6 @@ import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import ValidateButton from '../components/ValidateButton';
-import TopBar from '../components/TopBar';
 import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ProfileSelection from '../components/ProfileSelection';
@@ -65,7 +64,7 @@ export default function FiltersSelection(props) {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
-        backgroundColor: '#F2F0E4',
+        backgroundColor: colors.cardBackground,
         padding: "3%",
         marginHorizontal: "3%",
         borderWidth: 1,
@@ -82,12 +81,12 @@ export default function FiltersSelection(props) {
     },
     filters: {
           fontSize: 20,
-          color: '#ACA279',
+          color: colors.cardElementBorder,
           flex: 1,
     },
     nbSelected: {
           fontSize: 11,
-          color: "#3F3C42",
+          color: colors.cardDetail,
           textAlign: "right",
     },
 
@@ -95,7 +94,7 @@ export default function FiltersSelection(props) {
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 20,
-          backgroundColor: '#F2F0E4',
+          backgroundColor: colors.cardBackground,
           marginHorizontal: "3%",
           paddingBottom: "3%",
           borderWidth: 1,
@@ -103,11 +102,12 @@ export default function FiltersSelection(props) {
     },
   });
 
+  const goBack = () => props.navigation.goBack();
+
   return (
     <SafeAreaProvider style={{flex: 1}}>
-        <TopBar title="Filters Selection" isVisible="true"/>
         <ScrollView>
-            <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+            <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.profilesSelection}>
                     <View style={styles.filterBar}>
@@ -117,7 +117,7 @@ export default function FiltersSelection(props) {
                     <View style={{marginTop: "3%"}}/>
                     <ProfileSelection listProfile={profiles} disableSelection={false}/>
                     <View style={{marginTop: "4%"}}/>
-                    <ValidateButton title="Change Selected Profiles" image="update.png" colour="#59BDCD" backColour="#E3DEC9" todo={ () => console.log("change selected profile")}></ValidateButton>
+                    <ValidateButton title="Validate Selected Profiles" image="validate.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log("change selected profile")}></ValidateButton>
                 </View>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.background}>
@@ -138,10 +138,10 @@ export default function FiltersSelection(props) {
                     <View style={{marginTop: "3%"}}/>
                     <ListWithoutSelect title="Allergies" content={allAdd}></ListWithoutSelect>
                     <View style={{marginTop: "3%"}}/>
-                    <ValidateButton title="Add Allergy" image="plus.png" colour="#59BDCD" backColour="#E3DEC9" todo={() => console.log("add allergy")}></ValidateButton>
+                    <ValidateButton title="Add Allergy" image="plus.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("IngredientSelection")}></ValidateButton>
                 </View>
                 <View style={{marginTop: "6%"}}/>
-                <ValidateButton title="Save Filters" image="save.png" colour="#ACA279" backColour="#F2F0E4" todo={() => console.log("save filters")}></ValidateButton>
+                <ValidateButton title="Save Filters" image="save.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={goBack}></ValidateButton>
                 <View style={{marginTop: "20%"}}/>
             </LinearGradient>
         </ScrollView>

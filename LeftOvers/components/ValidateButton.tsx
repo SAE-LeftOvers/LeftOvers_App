@@ -83,6 +83,7 @@ export default function ValidateButton(props: ValidateButtonProps) {
             <Text style={{
                 fontSize: 15,
                 color: props.colour,
+                fontWeight: "bold",
             }}>{props.title}</Text>
         </View>
     </Pressable>
