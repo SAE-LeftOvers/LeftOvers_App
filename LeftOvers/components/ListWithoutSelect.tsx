@@ -5,11 +5,13 @@ import ColorContext from '../theme/ColorContext';
 
 type ListProps = {
     title: string
-    content: {value: string}[]
+    content: string[]
 }
 
 export default function ListWithoutSelect(props: ListProps) {
+    const [selected, setSelected] = React.useState([]);
     const { colors } = useContext(ColorContext);
+
 
     const styles = StyleSheet.create({
         titleBar: {
@@ -58,6 +60,7 @@ export default function ListWithoutSelect(props: ListProps) {
             width: "100%",
             minWidth: 250,
             maxWidth: 250,
+            backgroundColor: colors.cardElementBackground,
         },
         itemText: {
             fontSize: 13,
@@ -71,11 +74,13 @@ export default function ListWithoutSelect(props: ListProps) {
         box: {
             borderWidth: 0,
             flex: 0,
+            backgroundColor: colors.cardElementBackground,
         }
     });
 
     return (
         <MultipleSelectList
+            setSelected={(val) => setSelected(val)}
             data={props.content}
             save="value"
             search={false}
@@ -84,8 +89,11 @@ export default function ListWithoutSelect(props: ListProps) {
             inputStyles={styles.title}
             dropdownStyles={styles.itemList}
             dropdownItemStyles={styles.itemCell}
+            disabledItemStyles={styles.itemCell}
             dropdownTextStyles={styles.itemText}
+            disabledTextStyles={styles.itemText}
             checkBoxStyles={styles.box}
+            disabledCheckBoxStyles={styles.box}
             notFoundText="None"
             placeholder={props.title}
             label={props.title}/>

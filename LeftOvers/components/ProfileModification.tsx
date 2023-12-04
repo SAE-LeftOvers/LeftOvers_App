@@ -9,8 +9,8 @@ import ColorContext from '../theme/ColorContext';
 type ProfileProps = {
     name: string
     avatar: string
-    diets: string[]
-    allergies: string[]
+    diets: {value: string}[]
+    allergies: {value: string}[]
 }
 
 export default function ProfileModification(props: ProfileProps) {
@@ -60,7 +60,7 @@ export default function ProfileModification(props: ProfileProps) {
         },
         textInput: {
             fontSize: 15,
-            color: colors.cardTitle,
+            color: colors.cardDetail,
             borderRadius: 10,
             borderWidth: 2,
             borderStyle: 'dashed',
@@ -92,11 +92,6 @@ export default function ProfileModification(props: ProfileProps) {
             color: colors.cardElementBorder,
             flex: 1,
         },
-        nbSelected: {
-            fontSize: 11,
-            color: colors.cardDetail,
-            textAlign: "right",
-        }
     });
 
     return (
@@ -108,7 +103,6 @@ export default function ProfileModification(props: ProfileProps) {
             </View>
             <View style={styles.filterBar}>
                 <Text style={styles.filters}>Filters</Text>
-                <Text style={styles.nbSelected}>0 diets selected</Text>
             </View>
             <ListSelect title="Diets" content={props.diets}></ListSelect>
             <View style={{marginTop: "6%"}}/>

@@ -33,18 +33,15 @@ export default function ProfileElement(props : Profile) {
         else{
             setSeparator("none")
         }
-        console.log(waiting, separator, props.name)
     }
 
     let imageSource
-    if (props.avatar == "plus.png"){
-        imageSource = require('../assets/images/plus.png')
-    }
-    else if (props.avatar == "plus_small.png"){
-        imageSource = require('../assets/images/plus_small.png')
+    if(props.avatar == null){
+        console.log("NUUUULLLLLE" + props.avatar)
     }
     else{
-        imageSource = require('../assets/images/logo.png')
+        imageSource = { uri: props.avatar };
+        console.log("MAAARCHHEEE" + props.avatar)
     }
 
     const styles = StyleSheet.create({

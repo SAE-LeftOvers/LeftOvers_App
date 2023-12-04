@@ -6,10 +6,12 @@ import ColorContext from '../theme/ColorContext';
 type ListProps = {
     title: string
     content : string[]
+    val : string[]
+    setSelected: any;
 }
 
 export default function ListSelect(props: ListProps) {
-    const [selected, setSelected] = React.useState([]);
+    
     const {colors} = useContext(ColorContext);
 
     const styles = StyleSheet.create({
@@ -74,7 +76,7 @@ export default function ListSelect(props: ListProps) {
         },
         badgesText: {
             fontSize: 15,
-            color: colors.cardElementText,
+            color: colors.badgeText,
         },
         box: {
             borderColor: "#3F3C42"
@@ -83,7 +85,7 @@ export default function ListSelect(props: ListProps) {
 
     return (
         <MultipleSelectList
-            setSelected={(val) => setSelected(val)}
+            setSelected={(val) => props.setSelected(val)}
             data={props.content}
             save="value"
             search={false}
@@ -98,6 +100,7 @@ export default function ListSelect(props: ListProps) {
             checkBoxStyles={styles.box}
             notFoundText="All Diets Already Selected"
             placeholder={props.title}
+            labelStyles={styles.title}
             label={props.title}/>
     );
 }

@@ -28,7 +28,6 @@ export default function IngredientSelection(props) {
     try {
       setIsLoading(true);
       if (query === '') {
-        // Si le query (prompt) est vide, charger tous les ingrédients
         loadIngredients();
       } else {
         const filtered = await ingredientService.getfilteredIngredient(query);
@@ -41,7 +40,6 @@ export default function IngredientSelection(props) {
     }
   };
 
-  // Appelée à chaque changement de la recherche
   const handleSearch = (query) => {
     setSearchQuery(query);
     filterIngredients(query);
