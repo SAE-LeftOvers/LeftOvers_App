@@ -82,7 +82,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
                     let icon;
                     if (route.name === 'HOME') {
                         icon = HomeIcon;
-                    } else if (route.name === 'PROFILE') {
+                    } else if (route.name === 'PROFILES') {
                         icon = ProfileIcon;
                     } else if (route.name === 'COOKING') {
                         icon = CookingIcon;

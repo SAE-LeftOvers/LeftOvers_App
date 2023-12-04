@@ -155,15 +155,9 @@ export default function HomePage({ navigation, props }) {
                         <View style={{marginTop: "3%"}}/>
                         <ProfileSelection listProfile={profiles} disableSelection={true}/>
                         <View style={{marginTop: "4%"}}/>
+                        <ValidateButton title="Change Active Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('FiltersSelection')}/>
+                        <View style={{marginTop: "3%"}}/>
                         <ValidateButton title="Modify Profiles" image="parameter.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('Profiles')}/>
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={styles.profilesSelection}>
-                        <View style={styles.filterBar}>
-                            <Text style={styles.filters}>Ingredient Stocks</Text>
-                        </View>
-                        <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Manage Stocks" image="warehouse.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => console.log('ManageStocks')}/>
                     </View>
                     <View style={styles.separator}/>
                     <View style={styles.profilesSelection}>
@@ -184,9 +178,9 @@ export default function HomePage({ navigation, props }) {
                             </View>
                         </View>
                         <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Chnge Selected Ingredient')}/>
+                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('IngredientSelection')}/>
                         <View style={{marginTop: "3%"}}/>
-                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Go and search for recipe')}/>
+                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('RecipeSuggestion')}/>
                     </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>

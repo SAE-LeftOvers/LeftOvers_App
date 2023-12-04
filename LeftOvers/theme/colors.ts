@@ -3,8 +3,6 @@ const Alabaster = '#F2F0E4'
 const Jet = '#3F3C42'
 const Moonstone = '#59BDCD'
 const Cerulean = '#2680AA'
-const Celeste = '#ADF3EA'
-const Tan = '#E0C293'
 const Pearl = '#E3DEC9'
 const EerieBlack = '#222222'
 const CarolinaBlue = '#8DB4D9'
@@ -38,11 +36,12 @@ export interface Theme {
     letterFilter: string,
     foodElementBorder: string,
     badgeText: string,
+    recipeElementBackground: string,
 }
 
 export const LightTheme : Theme = {
     primary: Cerulean,
-    primaryComplement: Moonstone, 
+    primaryComplement: Moonstone,
     cardBackground: Alabaster,
     cardTitle: Ecru,
     cardDetail: Jet,
@@ -68,6 +67,7 @@ export const LightTheme : Theme = {
     letterFilter: Moonstone,
     foodElementBorder: Jet,
     badgeText: Jet,
+    recipeElementBackground: Pearl,
 }
 
 export const DarkTheme : Theme = {
@@ -98,5 +98,6 @@ export const DarkTheme : Theme = {
     letterFilter: CarolinaBlue,
     foodElementBorder: CarolinaBlue,
     badgeText: Alabaster,
+    recipeElementBackground: Ecru,
 }
 

@@ -93,12 +93,12 @@ export default function ProfileElement(props : Profile) {
         waiting: {
             borderWidth: 1,
             borderRadius: 20,
-            borderColor: "#ACA279",
+            borderColor: colors.cardElementBorder,
             padding: "1%",
         },
         textWaiting: {
             fontSize: 10,
-            color: "#ACA279",
+            color: colors.cardElementBorder,
         },
     });
 
