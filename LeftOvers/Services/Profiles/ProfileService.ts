@@ -25,4 +25,17 @@ export default class ProfileService implements IProfileService {
         return true
     }
 
+    async delProfile(profile_name_to_del: String): Promise<boolean> {
+        const existing_profiles = await this.getProfiles()
+        let key: number = -1
+        for (let current_profile of existing_profiles) {
+            if (current_profile.name == profile_name_to_del) {
+                let updated_profile = existing_profiles.splice(key, 1)
+                await AsyncStorage.setItem('profiles', JSON.stringify(updated_profile))
+                return true
+            }
+            key ++
+        }
+        return false
+    }
 }

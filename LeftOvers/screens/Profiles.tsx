@@ -44,8 +44,7 @@ export default function Profiles({navigation, props}) {
 
     const handleDeleteProfile = async (index) => {
         try {
-            const updatedProfiles = profiles.filter((profile, i) => i !== index);
-            await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+            await profile_service.delProfile(profiles[index].name)
             fetchProfiles();
             setSelectedProfileIndex(index);
             erasePopUp(); 
