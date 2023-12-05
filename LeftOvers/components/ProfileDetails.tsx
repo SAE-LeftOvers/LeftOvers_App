@@ -14,7 +14,7 @@ type ProfileProps = {
 }
 
 export default function ProfileDetails(props) {
-    const { colors } = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
     const [display, setDisplay] = useState("none")
     const changeListVisibility = () => {
         if (display == "none"){
@@ -26,15 +26,11 @@ export default function ProfileDetails(props) {
     };
 
     let imageSource
-
-    if (props.avatar === "plus.png"){
-        imageSource = require('../assets/images/plus.png')
-    }
-    else if (props.avatar === "plus_small.png"){
-        imageSource = require('../assets/images/plus_small.png')
+    if (props.avatar == ""){
+        imageSource = require("../assets/images/logo.png")
     }
     else{
-        imageSource = require('../assets/images/logo.png')
+        imageSource = {uri: props.avatar}
     }
 
     const styles = StyleSheet.create({
@@ -139,7 +135,7 @@ export default function ProfileDetails(props) {
             <Pressable onPress={changeListVisibility} style={{height: "5%", marginTop: "6%", flex: 1, marginBottom: "3%"}}>
                 <View style={styles.filterBar}>
                     <Text style={styles.filters}>Filters</Text>
-                    <Text style={styles.nbSelected}>{props.diets.length} diets selected</Text>
+                    {/*<Text style={styles.nbSelected}>{props.diets.length} diets selected</Text>*/}
                     <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
                 </View>
             </Pressable>

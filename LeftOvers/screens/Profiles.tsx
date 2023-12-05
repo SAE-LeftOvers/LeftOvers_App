@@ -5,21 +5,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ProfileDetails from '../components/ProfileDetails';
-import ProfileDelete from '../components/ProfileDelete';
 import ColorContext from '../theme/ColorContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import  EventEmitter  from './EventEmitter';
-import Profil from '../Models/Profil';
 import { PaperProvider, Portal } from 'react-native-paper';
 
 export default function Profiles({navigation, props}) {
-    const { colors, toggleColors } = useContext(ColorContext)
-
-    const all = []
-    const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
-
+    const colors = useContext(ColorContext).colors
+    
     const [visible, setVisible] = useState(false);
-    const [opacity, setOpacity] = useState(1);
     const [profiles, setProfiles] = useState([]);
     const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
 
@@ -34,19 +28,11 @@ export default function Profiles({navigation, props}) {
         setVisible(false)
     }
 
-    const handleDeleteProfiles = async () => {
-        try {
-          await AsyncStorage.removeItem('profiles');
-          console.log('Données supprimées avec succès !');
-        } catch (error) {
-          console.error('Erreur lors de la suppression des données :', error);
-        }
-      };
-
     const handleDeleteProfile = async (index) => {
         try {
             const updatedProfiles = profiles.filter((profile, i) => i !== index);
             await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+            EventEmitter.emit('profileDeleted');
             fetchProfiles();
             setSelectedProfileIndex(index);
             erasePopUp();
@@ -55,16 +41,12 @@ export default function Profiles({navigation, props}) {
         }
     };
 
-    const confirmDelete = () => {
-        erasePopUp();
-    };
-
-      const handleGetProfiles = async () => {
+    const handleGetProfiles = async () => {
         try {
             const existingProfiles = await AsyncStorage.getItem('profiles');
             return JSON.parse(existingProfiles) || [];
         } catch (error) {
-            console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
+            console.log("Error occured during GetProfiles", error);
             return [];
         }
     }
@@ -80,16 +62,13 @@ export default function Profiles({navigation, props}) {
 
     useEffect(() => {
         fetchProfiles();
-        console.log(profiles)
     }, []);
 
     const containerStyle = {
         height: "75%",
         width: "100%",
-      };
-
-
-      const styles = StyleSheet.create({
+      };    
+    const styles = StyleSheet.create({
         container: {
             height: "100%",
             width: "100%",
@@ -201,7 +180,7 @@ export default function Profiles({navigation, props}) {
 
     const profileComponents = profiles.map((profile, index) => (
         <View key={index}>
-          <ProfileDetails
+            <ProfileDetails
                 name={profile.name}
                 avatar={profile.avatar}
                 diets={profile.diets}
@@ -242,11 +221,9 @@ export default function Profiles({navigation, props}) {
                     </View>
                 </Modal>
             </Portal>
-          {index < profiles.length - 1 && <View style={styles.separator} />}
+            {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
     ));
-
-
 
     return (
         <SafeAreaProvider style={{flex: 1}}>

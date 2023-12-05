@@ -14,8 +14,8 @@ const componentHeight = 60;
 const componentWidth = 280;
 
 
-export default function FoodElementText(props : any) {
-    const {colors} = useContext(ColorContext)
+export default function FoodElementText(props : FoodElementTextProps) {
+    const colors = useContext(ColorContext).colors
 
     const styles = StyleSheet.create({
         button: {
@@ -37,11 +37,12 @@ export default function FoodElementText(props : any) {
           alignItems: 'flex-start',
           justifyContent: 'center',
           marginRight: "3%",
+          marginBottom: "2%",
           width: "100%"
         },
         container: {
           width: "100%",
-          height: 50,
+          //height: 50,
           borderRadius: 5,
           borderWidth: 2,
           borderColor: props.secondaryColour ? props.secondaryColour : colors.foodElementBorder,

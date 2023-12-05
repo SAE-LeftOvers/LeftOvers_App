@@ -15,7 +15,7 @@ import DarkIcon from '../assets/images/moon.png';
 
 export default function BottomBar({ state, descriptors, navigation }) {
     const {theme, toggleTheme} = useContext(ThemeContext);
-    const {colors, toggleColors} = useContext(ColorContext)
+    const { colors, toggleColors } = useContext(ColorContext);
     const [iconThemeButton, setThemeIconButton] = useState(( theme === 'dark' ) ? LightIcon : DarkIcon)
     const [textThemeButton, setTextThemeButton] = useState(( theme === 'dark' ) ? 'Light' : 'Dark');
     
@@ -47,10 +47,10 @@ export default function BottomBar({ state, descriptors, navigation }) {
             flexDirection: 'row',
             alignItems: 'center',
             alignContent: 'space-around',
-            borderBlockColor: theme === 'light' ? '#F2F0E4' : '#222222', 
+            borderBlockColor: colors.blocBorder, 
             borderWidth: 2,
-            borderLeftColor: theme === 'light'? '#F2F0E4' : '#222222',
-            borderRightColor: theme === 'light'? '#F2F0E4' : '#222222',
+            borderLeftColor: colors.blocBorder,
+            borderRightColor: colors.blocBorder,
         },
         BottomBarIcon: {
             width: 25,

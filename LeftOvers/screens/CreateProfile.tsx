@@ -1,23 +1,24 @@
 import React, { useContext, useState } from 'react';
-import {StyleSheet, View, ScrollView, useWindowDimensions, TextInput, Image, Text, NativeEventEmitter, Pressable} from 'react-native';
+import {StyleSheet, View, ScrollView, useWindowDimensions, TextInput, Image, Text, Pressable} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ValidateButton from '../components/ValidateButton';
 import ColorContext from '../theme/ColorContext';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ListSelect from '../components/ListSelect';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import EventEmitter from './EventEmitter';
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function CreateProfile(props) {
-    const { colors } = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
     const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
     const [name, onChangeName] = useState();
     const [avatar, setAvatar] = useState<string>('');
     const [selectedDiets, setSelectedDiets] = useState([]);
+    const [selectedAllergies] = useState([])
 
     const handleSelectedDiets = (selectedValues) => {
         setSelectedDiets(selectedValues);
@@ -26,26 +27,23 @@ export default function CreateProfile(props) {
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
       
         console.log(result);
       
         if (!result.canceled) {
-          setAvatar(result.assets[0].uri);
+            setAvatar(result.assets[0].uri);
         }
       };
 
 
     let imageSource
-    if (props.avatar == "plus.png"){
-        imageSource = {uri: avatar}
-    }
-    else if (props.avatar == "plus_small.png"){
-        imageSource = {uri: avatar}
+    if (props.avatar == ""){
+        imageSource = require("../assets/images/logo.png")
     }
     else{
         imageSource = {uri: avatar}
@@ -59,6 +57,7 @@ export default function CreateProfile(props) {
             avatar: avatar,
             diets: selectedDiets,
             allergies: all,
+            isActive: "flex",
           };
       
           // Mettre à jour AsyncStorage avec le nouveau profil
@@ -67,14 +66,10 @@ export default function CreateProfile(props) {
           const updatedProfiles = [...existingProfiles, newProfile];
           await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
           EventEmitter.emit('profileAdded');
-      
           console.log('Profil créé :', newProfile);
-      
           props.navigation.goBack();
-      
-          alert('Profil créé !');
         } catch (error) {
-          console.error('Erreur lors de la création du profil :', error);
+            console.error('Erreur lors de la création du profil :', error);
         }
       };
     
@@ -112,6 +107,7 @@ export default function CreateProfile(props) {
             borderColor: colors.cardElementBorder,
             borderRadius: 45,
             height: "100%",
+            minHeight: 35,
             flex: 0.04,
         },
         textInput: {
@@ -169,11 +165,10 @@ export default function CreateProfile(props) {
                             </View>
                             <View style={styles.filterBar}>
                                 <Text style={styles.filters}>Filters</Text>
-                                <Text style={styles.nbSelected}>"0 diets selected</Text>
                             </View>
                             <ListSelect title="Diets" content={die} setSelected={handleSelectedDiets}></ListSelect>
                             <View style={{marginTop: "6%"}}/>
-                            <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
+                            <ListWithoutSelect title="Allergies" content={selectedAllergies}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
                         </View>
                     <View style={{marginTop: "3%"}}/>

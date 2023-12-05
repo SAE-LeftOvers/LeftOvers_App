@@ -4,7 +4,7 @@ import { Text, StyleSheet } from 'react-native';
 import ColorContext from '../theme/ColorContext';
 
 export function HeaderTitle(props) {
-    const {colors} = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
 
     const styles = StyleSheet.create({
         headerTitle: {

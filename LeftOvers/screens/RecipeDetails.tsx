@@ -28,7 +28,6 @@ export default function RecipeDetails({ route }) {
         const recipe = await recipesService.getRecipeById(recipeId);
         console.log("Recipe.name: "+recipe.name)
         setResponse(recipe);
-        console.log("Response.name: "+response.name)
       } catch (error) {
         console.log(error);
       } finally{
@@ -37,7 +36,6 @@ export default function RecipeDetails({ route }) {
     };
 
     useEffect(() => {
-      console.log("Je passe ici (useEffect)")
       loadRecipe();
     }, []);
 

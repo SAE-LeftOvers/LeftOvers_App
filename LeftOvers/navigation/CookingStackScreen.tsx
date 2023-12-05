@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { StyleSheet } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import IngredientSelection from '../screens/IngredientSelection';
@@ -11,7 +10,7 @@ import RecipeDetails from '../screens/RecipeDetails';
 const CookingStack = createNativeStackNavigator()
 
 export default function CookingStackScreen() {
-    const {theme} = useContext(ThemeContext);
+    const theme = useContext(ThemeContext).theme;
     
     return (
         <CookingStack.Navigator>
@@ -48,9 +47,3 @@ export default function CookingStackScreen() {
         </CookingStack.Navigator>
     )
 }
-
-const styles = StyleSheet.create({
-    headerBarContainer: {
-        backgroundColor: '#F2F0E4',
-    },
-})

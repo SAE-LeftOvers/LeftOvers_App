@@ -10,7 +10,7 @@ type Profile = {
 }
 
 export default function ProfileElement(props : Profile) {
-    const { colors } = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
 
     const [waiting, setWaiting] = useState("none")
     const [separator, setSeparator] = useState("none")
@@ -36,12 +36,11 @@ export default function ProfileElement(props : Profile) {
     }
 
     let imageSource
-    if(props.avatar == null){
-        console.log("NUUUULLLLLE" + props.avatar)
+    if(props.avatar == ""){
+        imageSource=require("../assets/images/logo.png")
     }
     else{
         imageSource = { uri: props.avatar };
-        console.log("MAAARCHHEEE" + props.avatar)
     }
 
     const styles = StyleSheet.create({
