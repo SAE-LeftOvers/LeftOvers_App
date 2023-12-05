@@ -22,7 +22,7 @@ export default function IngredientSelection(props) {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const ingredientService = new IngredientService();
   const [availableSize, setAvailableSize] = useState(0);
-  const [listVisibility, setListVisibility] = useState("none");
+  const [listVisibility, setListVisibility] = useState("flex");
   const [availableVisibility, setAvailableVisibility] = useState("none");
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -59,6 +59,7 @@ const loadIngredients = async () => {
   };
 
   useEffect(() => {
+    console.log("Je passe ici (Ingredient Selection)")
     loadIngredients();
   }, []);
 

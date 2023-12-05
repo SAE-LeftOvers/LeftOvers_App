@@ -167,14 +167,6 @@ export default function RecipeSuggestion(props) {
                     duration="17 min"
                     navigateDetails={goDetails}/>
               <View style={{marginHorizontal: 10}}/>
-              <RecipeElement
-                    number="03"
-                    title="Vichyssoise"
-                    textList={ingredientListV2}
-                    description="Cold soup of vegetables. Difficult recipe. Not advised to beginners. 1h or more."
-                    duration="1h and a half"
-                    navigateDetails={goDetails}/>
-              <View style={{marginHorizontal: 10}}/>
             </ScrollView>
             <View style={{marginBottom: "20%"}}/>
         </LinearGradient>

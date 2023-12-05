@@ -47,14 +47,14 @@ export default function Profiles({navigation, props}) {
             await profile_service.delProfile(profiles[index].name)
             fetchProfiles();
             setSelectedProfileIndex(index);
-            erasePopUp(); 
+            erasePopUp();
         } catch (error) {
             console.error('Erreur lors de la suppression du profil :', error);
         }
     };
 
     const confirmDelete = () => {
-        erasePopUp(); 
+        erasePopUp();
     };
 
     const handleGetProfiles = async () => {
@@ -75,7 +75,7 @@ export default function Profiles({navigation, props}) {
     const subscription = EventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
     });
-    
+
     useEffect(() => {
         fetchProfiles();
     }, []);
@@ -104,7 +104,7 @@ export default function Profiles({navigation, props}) {
         separator: {
             marginTop: "6%"
         },
-    
+
         modal: {
             position: 'absolute',
             top: '0%',
@@ -120,7 +120,7 @@ export default function Profiles({navigation, props}) {
             width: "100%",
             flex: 1,
         },
-    
+
         profileValidation: {
             width: "100%",
             alignItems: "center",
@@ -253,7 +253,7 @@ export default function Profiles({navigation, props}) {
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
             </ScrollView>
-            
+
         </PaperProvider>
     </SafeAreaProvider>
     );
