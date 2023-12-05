@@ -36,7 +36,7 @@ export default function ProfileElement(props : Profile) {
     }
 
     let imageSource
-    if(props.avatar == null){
+    if(props.avatar == ""){
         imageSource=require("../assets/images/logo.png")
     }
     else{

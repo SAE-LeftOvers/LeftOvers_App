@@ -18,14 +18,10 @@ export default function HomePage({ navigation, props }) {
     const {colors} = useContext(ColorContext);
 
     const profilesHand = [
-        {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
-        {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
-        {name: "Goro Takemura", avatar: "plus_small.png", isActive: "none"},
-        {name: "David Martinez", avatar: "plus_small.png", isActive: "flex"},
+        {name: "None", avatar: "logo.png", isActive: "none"}
     ]
 
-    const [profiles, setProfiles] = useState([{name: "None", avatar: "plus_small.png", isActive: "none"}]);
-    console.log(profiles, profiles.length)
+    const [profiles, setProfiles] = useState(profilesHand);
 
     const handleGetProfiles = async () => {
         try {
@@ -39,7 +35,13 @@ export default function HomePage({ navigation, props }) {
 
     const fetchProfiles = async () => {
         const existingProfiles = await handleGetProfiles();
-        setProfiles(existingProfiles);
+        console.log("Existing Profiles: ---------------------------------"+existingProfiles, existingProfiles.length)
+        if (existingProfiles.length != 0){
+            setProfiles(existingProfiles);
+        }
+        else{
+            setProfiles(profilesHand)
+        }
     };
 
     const subscription = EventEmitter.addListener('profileAdded', async () => {
@@ -47,17 +49,19 @@ export default function HomePage({ navigation, props }) {
     });
 
     const subscriptionDeleteProfile = EventEmitter.addListener('profileDeleted', async () => {
-        fetchProfiles();
+        if (profiles.length == 1){
+            setProfiles(profilesHand)
+        }
+        else{
+            fetchProfiles();
+        }
     });
 
     useEffect(() => {
         fetchProfiles();
-        console.log(profiles.length)
         if(profiles.length == 0){
             setProfiles([{name: "None", avatar: "plus_small.png", isActive: "none"}])
-            console.log("Je passe ici")
         }
-        console.log(profiles)
     }, []);
 
     const ingredientList = [{title: "Carrot"}, {title: "Potato"}, {title: "Peach"}]

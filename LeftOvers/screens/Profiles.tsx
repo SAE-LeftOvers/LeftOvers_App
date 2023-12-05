@@ -48,7 +48,6 @@ export default function Profiles({navigation, props}) {
             fetchProfiles();
             setSelectedProfileIndex(index);
             erasePopUp();
-            alert('Profile Deleted!');
         } catch (error) {
             console.error('Erreur lors de la suppression du profil :', error);
         }

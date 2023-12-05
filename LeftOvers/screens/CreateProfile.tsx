@@ -41,13 +41,7 @@ export default function CreateProfile(props) {
 
 
     let imageSource
-    if (props.avatar == "plus.png"){
-        imageSource = {uri: avatar}
-    }
-    else if (props.avatar == "plus_small.png"){
-        imageSource = {uri: avatar}
-    }
-    else if (props.avatar == ""){
+    if (props.avatar == ""){
         imageSource = require("../assets/images/logo.png")
     }
     else{
@@ -72,7 +66,6 @@ export default function CreateProfile(props) {
           EventEmitter.emit('profileAdded');
           console.log('Profil créé :', newProfile);
           props.navigation.goBack();
-          alert('Profil créé !');
         } catch (error) {
           console.error('Erreur lors de la création du profil :', error);
         }
