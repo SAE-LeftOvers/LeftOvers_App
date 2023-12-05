@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import FoodElementText from '../components/FoodElementText';
-
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
 import Ingredient from '../Models/Ingredient';
@@ -20,7 +19,7 @@ export default function IngredientSelection(props) {
   const ingredientService = new IngredientService();
   const {colors} = useContext(ColorContext);
   const [availableSize, setAvailableSize] = useState(0);
-  const [listVisibility, setListVisibility] = useState("none");
+  const [listVisibility, setListVisibility] = useState("flex");
   const [availableVisibility, setAvailableVisibility] = useState("none");
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -57,6 +56,7 @@ const loadIngredients = async () => {
   };
 
   useEffect(() => {
+    console.log("Je passe ici (Ingredient Selection)")
     loadIngredients();
   }, []);
 

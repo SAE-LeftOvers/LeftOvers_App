@@ -18,8 +18,8 @@ export default function App() {
         <ThemeProvider>
             <ColorProvider>
                 <NavigationContainer>
-                    <Tab.Navigator initialRouteName='HOME' tabBar={ (props) => <BottomBar {...props}/> }>
-                        <Tab.Screen name='PROFILES' component={ProfilesStackScreen} options={{ headerShown: false, title: 'Profiles' }} />
+                    <Tab.Navigator initialRouteName='HOME' tabBar={ (props) => <BottomBar {...props}/>}>
+                        <Tab.Screen name='PROFILES' component={ProfilesStackScreen} options={{ headerShown: false, title: 'Profiles' }}/>
                         <Tab.Screen name='HOME' component={HomeStackScreen} options={{ headerShown: false, title: 'Home' }}/>
                         <Tab.Screen name='COOKING' component={CookingStackScreen} options={{ headerShown: false, title: 'Cooking' }}/>
                     </Tab.Navigator>

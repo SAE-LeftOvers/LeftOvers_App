@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, ScrollView } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -11,16 +11,50 @@ import ColorContext from '../theme/ColorContext';
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import  EventEmitter  from './EventEmitter';
 
 export default function HomePage({ navigation, props }) {
     const {colors} = useContext(ColorContext);
 
-    const profiles = [
+    const profilesHand = [
         {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
         {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
         {name: "Goro Takemura", avatar: "plus_small.png", isActive: "none"},
         {name: "David Martinez", avatar: "plus_small.png", isActive: "flex"},
     ]
+
+    const [profiles, setProfiles] = useState([{name: "None", avatar: "plus_small.png", isActive: "none"}]);
+    console.log(profiles, profiles.length)
+
+    const handleGetProfiles = async () => {
+        try {
+            const existingProfiles = await AsyncStorage.getItem('profiles');
+            return JSON.parse(existingProfiles) || [];
+        } catch (error) {
+            console.log(error);
+            return [];
+        }
+    }
+
+    const fetchProfiles = async () => {
+        const existingProfiles = await handleGetProfiles();
+        setProfiles(existingProfiles);
+    };
+
+    const subscription = EventEmitter.addListener('profileAdded', async () => {
+        fetchProfiles();
+    });
+
+    useEffect(() => {
+        fetchProfiles();
+        console.log(profiles.length)
+        if(profiles.length == 0){
+            setProfiles([{name: "None", avatar: "plus_small.png", isActive: "none"}])
+            console.log("Je passe ici")
+        }
+        console.log(profiles)
+    }, []);
 
     const ingredientList = [{title: "Carrot"}, {title: "Potato"}, {title: "Peach"}]
 
@@ -178,9 +212,9 @@ export default function HomePage({ navigation, props }) {
                             </View>
                         </View>
                         <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('IngredientSelection')}/>
+                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Chnge Selected Ingredient')}/>
                         <View style={{marginTop: "3%"}}/>
-                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('RecipeSuggestion')}/>
+                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Go and search for recipe')}/>
                     </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>

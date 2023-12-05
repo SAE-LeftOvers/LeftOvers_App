@@ -8,27 +8,36 @@ import Recipes from '../Models/Recipes';
 import { LinearGradient } from 'expo-linear-gradient';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ColorContext from '../theme/ColorContext';
+import Ingredient from '../Models/Ingredient';
 
 
 export default function RecipeDetails(props) {
     const {colors} = useContext(ColorContext);
+    
+    const [isLoading, setIsLoading] = useState(true)
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [response, setResponse] = useState<Recipes | undefined>(undefined);
+
+
+    const ingredientList = [new Ingredient(3, "Carrot"), new Ingredient(4, "Potato"), new Ingredient(5, "Peach")]
+
+    const [response, setResponse] = useState<Recipes>(new Recipes (120, "Carrot", "Delicious", 90, ["Fork", "Fish", "Knife"], ingredientList))
     const recipesService = new RecipesService();
 
     const loadRecipe = async () => {
       try {
-        const recipe = await recipesService.getRecipeById(props.id);
+        const recipe = await recipesService.getRecipeById(120);
+        console.log("Recipe.name: "+recipe.name)
         setResponse(recipe);
+        console.log("Response.name: "+response.name)
       } catch (error) {
         console.log(error);
-      } finally {
-        setIsLoading(false);
+      } finally{
+        setIsLoading(false)
       }
     };
 
     useEffect(() => {
+      console.log("Je passe ici (useEffect)")
       loadRecipe();
     }, []);
 
@@ -58,7 +67,7 @@ export default function RecipeDetails(props) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: 20,
-                  backgroundColor: '#F2F0E4',
+                  backgroundColor: colors.cardBackground,
                   padding: "3%",
                   marginHorizontal: "3%",
                   borderWidth: 1,
@@ -75,12 +84,12 @@ export default function RecipeDetails(props) {
           },
           filters: {
                     fontSize: 20,
-                    color: '#ACA279',
+                    color: colors.cardElementBorder,
                     flex: 1,
           },
           nbSelected: {
                     fontSize: 11,
-                    color: "#3F3C42",
+                    color: colors.cardDetail,
                     textAlign: "right",
           },
     });
@@ -88,7 +97,7 @@ export default function RecipeDetails(props) {
     return (
         <SafeAreaProvider>
           <ScrollView>
-            <LinearGradient colors={['#2680AA', '#59BDCD']} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
+            <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
                 <View style={{marginTop: "6%"}}>
                     <RecipeElementReduce 
                         title={response.name}

@@ -49,14 +49,14 @@ export default function Profiles({navigation, props}) {
             await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
             fetchProfiles();
             setSelectedProfileIndex(index);
-            erasePopUp(); 
+            erasePopUp();
         } catch (error) {
             console.error('Erreur lors de la suppression du profil :', error);
         }
     };
 
     const confirmDelete = () => {
-        erasePopUp(); 
+        erasePopUp();
     };
 
       const handleGetProfiles = async () => {
@@ -77,7 +77,7 @@ export default function Profiles({navigation, props}) {
     const subscription = EventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
     });
-    
+
     useEffect(() => {
         fetchProfiles();
         console.log(profiles)
@@ -86,9 +86,9 @@ export default function Profiles({navigation, props}) {
     const containerStyle = {
         height: "75%",
         width: "100%",
-      };   
+      };
 
-    
+
       const styles = StyleSheet.create({
         container: {
             height: "100%",
@@ -109,7 +109,7 @@ export default function Profiles({navigation, props}) {
         separator: {
             marginTop: "6%"
         },
-    
+
         modal: {
             position: 'absolute',
             top: '0%',
