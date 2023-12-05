@@ -11,7 +11,6 @@ type ListProps = {
 }
 
 export default function ListSelect(props: ListProps) {
-    const [selected, setSelected] = React.useState([]);
     const colors = useContext(ColorContext).colors;
 
     const styles = StyleSheet.create({

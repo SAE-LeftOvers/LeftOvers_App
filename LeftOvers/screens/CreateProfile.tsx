@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function CreateProfile(props) {
     const colors = useContext(ColorContext).colors
     const profile_service = new ProfileService()
+    const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
     const [name, onChangeName] = useState();
     const [avatar, setAvatar] = useState<string>('');

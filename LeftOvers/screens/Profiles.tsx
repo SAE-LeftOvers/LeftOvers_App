@@ -14,10 +14,7 @@ import ProfileService from '../Services/Profiles/ProfileService';
 export default function Profiles({navigation, props}) {
     const colors = useContext(ColorContext).colors
     const profile_service = new ProfileService()
-
-    const all = []
-    const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
-
+    
     const [visible, setVisible] = useState(false);
     const [profiles, setProfiles] = useState([]);
     const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
@@ -45,10 +42,10 @@ export default function Profiles({navigation, props}) {
 
     const handleGetProfiles = async () => {
         try {
-            const results = await profile_service.getProfiles()
-            return results
+            const existingProfiles = await AsyncStorage.getItem('profiles');
+            return JSON.parse(existingProfiles) || [];
         } catch (error) {
-            console.log(error);
+            console.log("Error occured during GetProfiles", error);
             return [];
         }
     }
@@ -70,7 +67,7 @@ export default function Profiles({navigation, props}) {
         height: "75%",
         width: "100%",
       };    
-      const styles = StyleSheet.create({
+    const styles = StyleSheet.create({
         container: {
             height: "100%",
             width: "100%",
@@ -226,8 +223,6 @@ export default function Profiles({navigation, props}) {
             {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
     ));
-
-
 
     return (
         <SafeAreaProvider style={{flex: 1}}>

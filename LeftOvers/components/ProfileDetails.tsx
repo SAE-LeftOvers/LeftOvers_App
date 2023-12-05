@@ -137,7 +137,7 @@ export default function ProfileDetails(props) {
             <Pressable onPress={changeListVisibility} style={{height: "5%", marginTop: "6%", flex: 1, marginBottom: "3%"}}>
                 <View style={styles.filterBar}>
                     <Text style={styles.filters}>Filters</Text>
-                    <Text style={styles.nbSelected}>{props.diets.length} diets selected</Text>
+                    {/*<Text style={styles.nbSelected}>{props.diets.length} diets selected</Text>*/}
                     <Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>
                 </View>
             </Pressable>
