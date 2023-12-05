@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, ScrollView } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -7,6 +7,8 @@ import ValidateButton from '../components/ValidateButton';
 import ProfileSelection from '../components/ProfileSelection';
 import FoodElementText from '../components/FoodElementText';
 import ColorContext from '../theme/ColorContext';
+import ProfileService from '../Services/Profiles/ProfileService';
+import Profil from '../Models/Profil';
 
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
@@ -14,6 +16,7 @@ import bracketRight from '../assets/images/angle_bracket_right.png';
 
 export default function HomePage({ navigation, props }) {
     const colors = useContext(ColorContext).colors
+    const profile_service = new ProfileService()
 
     const profiles = [
         {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
@@ -21,6 +24,22 @@ export default function HomePage({ navigation, props }) {
         {name: "Goro Takemura", avatar: "plus_small.png", isActive: "none"},
         {name: "David Martinez", avatar: "plus_small.png", isActive: "flex"},
     ]
+
+    const [existingProfiles, setExistingProfiles]: [Profil[], React.Dispatch<Profil[]>] = useState([])
+    const [data, setData] = useState([])
+    const loadProfiles = async () => {
+        setExistingProfiles(await profile_service.getProfiles())
+        // for (let current_profile of existingProfiles) {
+        //     let new_data = [{profile=current_profile, isActive="none"}]
+        //     data.push({profile, isActive="none"})
+        // }
+    }
+
+    useEffect(() => {
+        loadProfiles()
+    }, [])
+
+
 
     const ingredientList = [{title: "Carrot"}, {title: "Potato"}, {title: "Peach"}]
 
