@@ -20,13 +20,25 @@ export default function HomePage({ navigation, props }) {
     const profilesHand = [
         {name: "None", avatar: "logo.png", isActive: "none"}
     ]
+    const ingredientListHand = [{name: "None"}]
 
     const [profiles, setProfiles] = useState(profilesHand);
+    const [ingredientList, setIngredientList] = useState(ingredientListHand)
 
     const handleGetProfiles = async () => {
         try {
             const existingProfiles = await AsyncStorage.getItem('profiles');
             return JSON.parse(existingProfiles) || [];
+        } catch (error) {
+            console.log(error);
+            return [];
+        }
+    }
+
+    const handleGetAvailableIngredient = async () => {
+        try {
+            const existingAvailableIngredient = await AsyncStorage.getItem('ingredient');
+            return JSON.parse(existingAvailableIngredient) || [];
         } catch (error) {
             console.log(error);
             return [];
@@ -43,7 +55,17 @@ export default function HomePage({ navigation, props }) {
         }
     };
 
-    const subscription = EventEmitter.addListener('profileAdded', async () => {
+    const fetchAvailableIngredient = async () => {
+        const existingAvailableIngredient = await handleGetAvailableIngredient();
+        if (existingAvailableIngredient.length != 0){
+            setIngredientList(existingAvailableIngredient);
+        }
+        else{
+            setIngredientList(ingredientListHand)
+        }
+    };
+
+    const subscriptionAddProfile = EventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
     });
 
@@ -56,14 +78,27 @@ export default function HomePage({ navigation, props }) {
         }
     });
 
+    const subscriptionAddIngredient = EventEmitter.addListener('ingredientAdded', async () => {
+        fetchAvailableIngredient();
+    });
+
+    const subscriptionDeleteIngredient = EventEmitter.addListener('ingredientDeleted', async () => {
+        if (ingredientList.length == 1){
+            setIngredientList(ingredientListHand)
+        }
+        else{
+            fetchAvailableIngredient();
+        }
+    });
+
     useEffect(() => {
+        //AsyncStorage.clear()
         fetchProfiles();
         if(profiles.length == 0){
             setProfiles([{name: "None", avatar: "plus_small.png", isActive: "none"}])
         }
+        fetchAvailableIngredient();
     }, []);
-
-    const ingredientList = [{title: "Carrot"}, {title: "Potato"}, {title: "Peach"}]
 
     const [cpt, setCpt] = useState(0);
     const decreaseCounter = () => {
@@ -212,16 +247,16 @@ export default function HomePage({ navigation, props }) {
                                 <Pressable onPress={decreaseCounter}>
                                     <Image source={bracketLeft} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText}/>
                                 </Pressable>
-                                <FoodElementText title={ingredientList[cpt].title} mainColour={colors.carrouselBackground} secondaryColour={colors.cardDetail}/>
+                                <FoodElementText title={ingredientList[cpt].name} mainColour={colors.carrouselBackground} secondaryColour={colors.cardDetail}/>
                                 <Pressable onPress={increaseCounter}>
                                     <Image source={bracketRight} style={{width: 40, height: 40, resizeMode: "contain"}} tintColor={colors.carrouselText} />
                                 </Pressable>
                             </View>
                         </View>
                         <View style={{marginTop: "4%"}}/>
-                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Chnge Selected Ingredient')}/>
+                        <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => navigation.navigate("IngredientSelection")}/>
                         <View style={{marginTop: "3%"}}/>
-                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log('Go and search for recipe')}/>
+                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => navigation.navigate("RecipeSuggestion")}/>
                     </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
