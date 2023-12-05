@@ -32,7 +32,7 @@ export default function RecipeSuggestion({ route })  {
   const [colorFilters, setColorFilters] = useState(colors.cardDetail);
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState<Recipes[] | undefined>(undefined);
-  const [selectedRecipes, setSelectedRecipes] = useState([]);
+  const [selectedRecipes, setSelectedRecipes] = useState<Recipes[]>([]);
   console.log(selectedRecipes);
   const recipeService = new RecipesServices();
   const { ingredients } = route.params; 
@@ -102,7 +102,8 @@ export default function RecipeSuggestion({ route })  {
     try {
       const recipes: Recipes[] = await recipeService.getRecipeWithIngredients(ids);
       console.log("Les recettes trouvé : " + recipes)
-      if(recipes === null){
+      console.log(recipes[0].id)
+      if(recipes[0].id != -1 ){
         setSelectedRecipes(recipes);
       }
     
@@ -211,11 +212,21 @@ export default function RecipeSuggestion({ route })  {
             <SelectedIngredient
               ingredientList={ingredients}
               onEvent={handleChildEvent}/>
-                  <ScrollView style={{ marginTop: "6%" }} horizontal={true}>
-                    <View style={{ marginHorizontal: 10 }} />
-                    {recipeElements}
-                    <View style={{ marginHorizontal: 10 }} />
-                  </ScrollView>
+                  <ScrollView style={{ marginTop: "6%" }} horizontal={true} contentContainerStyle={{ flexDirection: 'row' }}>
+                        {Array.isArray(selectedRecipes) && selectedRecipes.length === 0 ? (
+                          <Text>No recipes</Text>
+                        ) : (
+                          selectedRecipes.map((recipe, index) => (
+                            <View style={{ marginRight: 10, marginLeft: 20}} key={recipe.id}> 
+                              <RecipeElement
+                                key={recipe.id}
+                                recipe={recipe}
+                                navigateDetails={goDetails}
+                              />
+                            </View>
+                          ))
+                        )}
+                    </ScrollView>
             <View style={{marginBottom: "20%"}}/>
         </LinearGradient>
       </ScrollView>

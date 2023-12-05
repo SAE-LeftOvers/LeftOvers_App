@@ -30,9 +30,6 @@ export default class RecipesService implements IRecipesService {
         const recipe: Recipes[] = []; 
         try {
             const response = await axios.get(`${this.IA_URL}/${ids}`);
-            if(response == null){
-                return recipe; 
-            }
             return response.data as Recipes[];
         } catch (error) {
             throw new Error('Erreur lors de la récupération des recettes dans getRecipeWithIngredients : ' + error.message);
