@@ -12,7 +12,7 @@ import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import  EventEmitter  from './EventEmitter';
+import EventEmitter  from './EventEmitter';
 
 export default function HomePage({ navigation, props }) {
     const {colors} = useContext(ColorContext);
@@ -199,8 +199,8 @@ export default function HomePage({ navigation, props }) {
 
     const nbActiveProfiles = () => {
         let cpt = 0
-        profiles.forEach((val) => {
-            if(val.isActive == "flex"){
+        profiles.forEach((profile) => {
+            if(profile.isActive == "flex"){
                 cpt += 1
             }
         })

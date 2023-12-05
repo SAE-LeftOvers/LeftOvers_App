@@ -56,6 +56,7 @@ export default function CreateProfile(props) {
             avatar: avatar,
             diets: selectedDiets,
             allergies: all,
+            isActive: "flex",
           };
       
           // Mettre à jour AsyncStorage avec le nouveau profil
@@ -105,6 +106,7 @@ export default function CreateProfile(props) {
             borderColor: colors.cardElementBorder,
             borderRadius: 45,
             height: "100%",
+            minHeight: 35,
             flex: 0.04,
         },
         textInput: {

@@ -6,6 +6,7 @@ import ColorContext from '../theme/ColorContext';
 
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
+import EventEmitter  from '../screens/EventEmitter';
 
 type ProfileSelectionProps = {
     listProfile: Profile[]
