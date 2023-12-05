@@ -37,11 +37,12 @@ export default function FoodElementText(props : any) {
           alignItems: 'flex-start',
           justifyContent: 'center',
           marginRight: "3%",
+          marginBottom: "2%",
           width: "100%"
         },
         container: {
           width: "100%",
-          height: 50,
+          //height: 50,
           borderRadius: 5,
           borderWidth: 2,
           borderColor: props.secondaryColour ? props.secondaryColour : colors.foodElementBorder,
