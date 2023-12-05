@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {View, StyleSheet, Text, Image, Pressable, useWindowDimensions, ScrollView} from 'react-native';
 import {SafeAreaProvider } from 'react-native-safe-area-context';
 import {Modal, Portal, PaperProvider} from 'react-native-paper';
@@ -15,24 +15,35 @@ import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 import plus from '../assets/images/plus_small.png';
 import minus from '../assets/images/minus.png';
+import { useNavigation } from '@react-navigation/native';
+import RecipesServices from '../Services/Recipes/RecipesServices';
+import Recipes from '../Models/Recipes';
+import Ingredient from '../Models/Ingredient';
 
 
-export default function RecipeSuggestion(props) {
+export default function RecipeSuggestion({ route })  {
   const {colors} = useContext(ColorContext)
   const [visible, setVisible] = React.useState(false);
   const [visibleFilters, setVisibleFilters] = React.useState(false);
   const [visibleIngredients, setVisibleIngredients] = React.useState(true);
   const [minCpt, setMinCpt] = useState(0);
   const [maxCpt, setMaxCpt] = useState(4);
-  const ingredientList = [{title: "Steak"}, {title: "Sheep Ribs"}, {title: "Rabbit Thigh"}, {title: "Ham"}, {title: "Cream (Liquid)"}, {title: "Pepper Bell"}]
-  const ingredientListV2 = [{title: "Smoked Salmon"}, {title: "Tomato"}, {title: "Carrot"}]
-  const limitedList = ingredientList.slice(minCpt, maxCpt);
   const [colorIngredients, setColorIngredients] = useState("#59BDCD");
   const [colorFilters, setColorFilters] = useState(colors.cardDetail);
+  const [isLoading, setIsLoading] = useState(true);
+  const [response, setResponse] = useState<Recipes[] | undefined>(undefined);
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
+  console.log(selectedRecipes);
+  const recipeService = new RecipesServices();
+  const { ingredients } = route.params; 
+  const limitedList = ingredients.slice(minCpt, maxCpt);
+  let selectedIngredients: string[]; 
+  const navigation = useNavigation(); 
 
   const die = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Gluten free"}, {value: "Porkless"}]
   const all = []
 
+  
   const containerStyle = {
     //minHeight: useWindowDimensions().height/2,
     //width: useWindowDimensions().width,
@@ -64,13 +75,13 @@ export default function RecipeSuggestion(props) {
       setMaxCpt(maxCpt - 4)
     }
     else{
-        setMaxCpt(ingredientList.length+ingredientList.length%4)
-        let cpt=ingredientList.length-(ingredientList.length%4)
+        setMaxCpt(ingredients.length+ingredients.length%4)
+        let cpt=ingredients.length-(ingredients.length%4)
         setMinCpt(cpt)
     }
   }
   const increaseCounter = () => {
-    if (maxCpt < ingredientList.length) {
+    if (maxCpt < ingredients.length) {
       setMinCpt(minCpt + 4);
       setMaxCpt(maxCpt + 4)
     }
@@ -79,6 +90,33 @@ export default function RecipeSuggestion(props) {
         setMaxCpt(4)
     }
   }
+  const getIngredientsIds = (ingredients) => {
+    console.log("Liste des ingredients : " + ingredients[0].name)
+    selectedIngredients = ingredients.map(ingredient => ingredient.id).join(':');
+    return selectedIngredients;
+  };
+
+  const loadRecipes = async () => {
+    const ids: string[] = getIngredientsIds(ingredients);
+    console.log("Les ids des ingredients : " + ids);
+    try {
+      const recipes: Recipes[] = await recipeService.getRecipeWithIngredients(ids);
+      console.log("Les recettes trouvé : " + recipes)
+      if(recipes === null){
+        setSelectedRecipes(recipes);
+      }
+    
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Je passe ici (Ingredient Selection)")
+    loadRecipes();
+  }, []);
 
   const styles = StyleSheet.create({
     linearGradient: {
@@ -138,15 +176,31 @@ export default function RecipeSuggestion(props) {
     },
   });
 
+  const recipeElements = Array.isArray(selectedRecipes) && selectedRecipes.length === 0 ? (
+    <Text>No recipes</Text>
+  ) : (
+    <View>
+      {selectedRecipes.map((recipe, index) => (
+        <View style={{ marginRight: 10 }} key={recipe.id}> 
+          <RecipeElement
+            key={recipe.id}
+            recipe={recipe}
+            navigateDetails={goDetails}
+          />
+        </View>
+      ))}
+    </View>
+  );
+
   const ingredientElements = limitedList.map((source, index) => (
-    <View style={[styles.horizontalAlignment, {marginVertical: "3%"}]}>
-      <FoodElementTextSimple title={source.title}/>
+    <View style={[styles.horizontalAlignment, {marginVertical: "3%"}]} key={index}>
+      <FoodElementTextSimple title={source.name}/>
       <Image source={plus} style={{width: 20, resizeMode: "contain", tintColor: colors.cardDetail}}/>
       <Image source={minus} style={{width: 20, resizeMode: "contain", tintColor: colors.cardDetail}}/>
     </View>
   ));
 
-  const goDetails = () => props.navigation.navigate("RecipeDetails")
+  const goDetails = () => navigation.navigate("RecipeDetails")
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
@@ -155,19 +209,13 @@ export default function RecipeSuggestion(props) {
         <LinearGradient colors={[colors.primary, colors.primaryComplement]} style={[styles.linearGradient, {minHeight: useWindowDimensions().height}]}>
             <View style={{marginTop: "6%"}}/>
             <SelectedIngredient
-              ingredientList={ingredientList}
+              ingredientList={ingredients}
               onEvent={handleChildEvent}/>
-            <ScrollView style={{marginTop: "6%"}} horizontal={true}>
-              <View style={{marginHorizontal: 10}}/>
-              <RecipeElement
-                    number="63"
-                    title="Meat Stick"
-                    textList={ingredientList}
-                    description="Delicious stick with 4 meats. Accessible for beginners. 20 min or less to cook."
-                    duration="17 min"
-                    navigateDetails={goDetails}/>
-              <View style={{marginHorizontal: 10}}/>
-            </ScrollView>
+                  <ScrollView style={{ marginTop: "6%" }} horizontal={true}>
+                    <View style={{ marginHorizontal: 10 }} />
+                    {recipeElements}
+                    <View style={{ marginHorizontal: 10 }} />
+                  </ScrollView>
             <View style={{marginBottom: "20%"}}/>
         </LinearGradient>
       </ScrollView>
@@ -202,7 +250,7 @@ export default function RecipeSuggestion(props) {
                             <View style={{marginTop: "3%"}}/>
                             <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
-                            <ValidateButton title="Change Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("FiltersSelection")}></ValidateButton>
+                            <ValidateButton title="Change Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate("FiltersSelection")}></ValidateButton>
                         </View>
                         <View style={{marginTop: "6%"}}/>
                         <View>

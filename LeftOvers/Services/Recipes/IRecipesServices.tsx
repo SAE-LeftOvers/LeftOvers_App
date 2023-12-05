@@ -3,4 +3,5 @@ import Recipes from "../../Models/Recipes";
 export default interface IRecipesService {
     getAllRecipes(): Promise<Recipes[]>;
     getRecipeById(id: number): Promise<Recipes | null>;
+    getRecipeWithIngredients(ids: string[]): Promise<Recipes[] | null>;
 }

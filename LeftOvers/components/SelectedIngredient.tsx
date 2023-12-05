@@ -5,9 +5,10 @@ import bracketRight from '../assets/images/angle_bracket_right.png';
 import parameter from '../assets/images/parameter.png';
 import FoodElementText from './FoodElementText';
 import ColorContext from '../theme/ColorContext';
+import Ingredient from '../Models/Ingredient';
 
 interface SelectedIngredientProps {
-  ingredientList: {title: string}[]
+  ingredientList: Ingredient[]
   onEvent: () => void
 }
 
@@ -72,7 +73,7 @@ export default function SelectedIngredient(props: SelectedIngredientProps) {
         <Pressable onPress={decreaseCounter}>
           <Image source={bracketLeft} style={{width: 40, height: 40, tintColor: colors.cardDetail, resizeMode: "contain"}}/>
         </Pressable>
-        <FoodElementText title={props.ingredientList[cpt].title}/>
+        <FoodElementText title={props.ingredientList[cpt].name}/>
         <Pressable onPress={increaseCounter}>
           <Image source={bracketRight} style={{width: 40, height: 40, tintColor: colors.cardDetail, resizeMode: "contain"}}/>
         </Pressable>

@@ -15,7 +15,7 @@ export default function IngredientSelection(props) {
   const alphabetArray: Array<string> = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState<Ingredient[] | undefined>(undefined);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
   const ingredientService = new IngredientService();
   const {colors} = useContext(ColorContext);
   const [availableSize, setAvailableSize] = useState(0);
@@ -63,7 +63,9 @@ const loadIngredients = async () => {
   const AvailableItem = ({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignment}>
-        <FoodElementText title={value.name}/>
+        <Pressable onPress={() => SelectIngredient(value)}>
+          <FoodElementText title={value.name}/>
+        </Pressable>
         <Pressable onPress={() => SelectIngredient(value)}>
           <Image source={plus} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
@@ -75,7 +77,9 @@ const loadIngredients = async () => {
   const ChooseItem = ({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignment}>
-        <FoodElementText title={value.name} />
+        <Pressable onPress={() => RemoveIngredient(value.id)}>
+          <FoodElementText title={value.name} />
+        </Pressable>
         <Pressable onPress={() => RemoveIngredient(value.id)}>
           <Image source={moins} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
@@ -256,7 +260,12 @@ const loadIngredients = async () => {
                     </View>
                 </View>
                 <View style={{marginTop: "8%"}}></View>
-                <ValidateButton title="Find a recipe" image="validate.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={() => props.navigation.navigate("RecipeSuggestion")}/>
+                <ValidateButton title="Find a recipe" image="validate.png" 
+                  colour={colors.buttonMain} 
+                  backColour={colors.cardBackground} 
+                  todo={() => props.navigation.navigate('RecipeSuggestion', 
+                  {ingredients: selectedIngredients })}
+                />
                 <View style={{marginBottom: "20%"}}></View>
             </LinearGradient>
     </SafeAreaProvider>
