@@ -9,11 +9,9 @@ import ColorContext from '../theme/ColorContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import  EventEmitter  from './EventEmitter';
 import { PaperProvider, Portal } from 'react-native-paper';
-import ProfileService from '../Services/Profiles/ProfileService';
 
 export default function Profiles({navigation, props}) {
     const colors = useContext(ColorContext).colors
-    const profile_service = new ProfileService()
     
     const [visible, setVisible] = useState(false);
     const [profiles, setProfiles] = useState([]);

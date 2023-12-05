@@ -8,19 +8,17 @@ import ListWithoutSelect from '../components/ListWithoutSelect';
 import ListSelect from '../components/ListSelect';
 import EventEmitter from './EventEmitter';
 import * as ImagePicker from 'expo-image-picker';
-import ProfileService from '../Services/Profiles/ProfileService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function CreateProfile(props) {
     const colors = useContext(ColorContext).colors
-    const profile_service = new ProfileService()
     const all = []
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
     const [name, onChangeName] = useState();
     const [avatar, setAvatar] = useState<string>('');
     const [selectedDiets, setSelectedDiets] = useState([]);
-    const [selectedAllergies, setSelectedAllergies] = useState([])
+    const [selectedAllergies] = useState([])
 
     const handleSelectedDiets = (selectedValues) => {
         setSelectedDiets(selectedValues);

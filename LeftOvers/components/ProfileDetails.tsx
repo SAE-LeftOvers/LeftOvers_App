@@ -16,7 +16,6 @@ type ProfileProps = {
 
 export default function ProfileDetails(props) {
     const colors = useContext(ColorContext).colors
-    const navigation = useNavigation()
     const [display, setDisplay] = useState("none")
     const changeListVisibility = () => {
         if (display == "none"){
