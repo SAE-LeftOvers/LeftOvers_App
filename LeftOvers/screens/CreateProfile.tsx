@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import {StyleSheet, View, ScrollView, useWindowDimensions, TextInput, Image, Text, NativeEventEmitter, Pressable} from 'react-native';
+import {StyleSheet, View, ScrollView, useWindowDimensions, TextInput, Image, Text, Pressable} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ValidateButton from '../components/ValidateButton';

@@ -5,21 +5,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ProfileDetails from '../components/ProfileDetails';
-import ProfileDelete from '../components/ProfileDelete';
 import ColorContext from '../theme/ColorContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import  EventEmitter  from './EventEmitter';
-import Profil from '../Models/Profil';
 import { PaperProvider, Portal } from 'react-native-paper';
 
 export default function Profiles({navigation, props}) {
-    const { colors, toggleColors } = useContext(ColorContext)
-
-    const all = []
-    const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
-
+    const { colors } = useContext(ColorContext)
     const [visible, setVisible] = useState(false);
-    const [opacity, setOpacity] = useState(1);
     const [profiles, setProfiles] = useState([]);
     const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
 

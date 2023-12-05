@@ -25,7 +25,6 @@ export default function RecipeSuggestion(props) {
   const [minCpt, setMinCpt] = useState(0);
   const [maxCpt, setMaxCpt] = useState(4);
   const ingredientList = [{title: "Steak"}, {title: "Sheep Ribs"}, {title: "Rabbit Thigh"}, {title: "Ham"}, {title: "Cream (Liquid)"}, {title: "Pepper Bell"}]
-  const ingredientListV2 = [{title: "Smoked Salmon"}, {title: "Tomato"}, {title: "Carrot"}]
   const limitedList = ingredientList.slice(minCpt, maxCpt);
   const [colorIngredients, setColorIngredients] = useState("#59BDCD");
   const [colorFilters, setColorFilters] = useState(colors.cardDetail);
