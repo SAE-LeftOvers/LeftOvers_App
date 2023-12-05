@@ -7,7 +7,6 @@ import ValidateButton from '../components/ValidateButton';
 import ProfileSelection from '../components/ProfileSelection';
 import FoodElementText from '../components/FoodElementText';
 import ColorContext from '../theme/ColorContext';
-import ProfileService from '../Services/Profiles/ProfileService';
 
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
