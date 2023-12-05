@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profiles from '../screens/Profiles';
 import CreateProfile from '../screens/CreateProfile';
 import ModifyProfile from '../screens/ModifyProfile';
-import ThemeContext from '../theme/ThemeContext';
+import ColorContext from '../theme/ColorContext';
 
 import { HeaderTitle } from './Utils';
 
@@ -15,11 +15,11 @@ import AddIcon from '../assets/images/plus.png'
 const ProfilesStack = createNativeStackNavigator()
 
 export default function ProfilesStackScreen({ navigation }) {
-    const {theme} = useContext(ThemeContext);
+    const colors = useContext(ColorContext).colors;
 
     const styles = StyleSheet.create({
         headerBarContainer: {
-            backgroundColor: theme === 'light' ? '#F2F0E4' : '#3F3C42',
+            backgroundColor: colors.cardBackground,
         },
         headerBarRightContainer: {
             display: 'flex',
@@ -55,13 +55,13 @@ export default function ProfilesStackScreen({ navigation }) {
                                 <Image 
                                     source={SearchIcon}
                                     style={styles.headerBarIcon}
-                                    tintColor={theme === 'light' ? '#3F3C42' : '#F2F0E4'}/>
+                                    tintColor={colors.cardDetail}/>
                             </Pressable>
                             <Pressable onPress={_handleHeaderAdd}>
                                 <Image
                                     source={AddIcon}
                                     style={styles.headerBarIcon}
-                                    tintColor={theme === 'light' ? '#3F3C42' : '#F2F0E4'}/>
+                                    tintColor={colors.cardDetail}/>
                             </Pressable>
                         </View>
                     )

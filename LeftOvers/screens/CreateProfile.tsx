@@ -6,18 +6,20 @@ import ValidateButton from '../components/ValidateButton';
 import ColorContext from '../theme/ColorContext';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ListSelect from '../components/ListSelect';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import EventEmitter from './EventEmitter';
 import * as ImagePicker from 'expo-image-picker';
+import ProfileService from '../Services/Profiles/ProfileService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function CreateProfile(props) {
-    const { colors } = useContext(ColorContext)
-    const all = []
+    const colors = useContext(ColorContext).colors
+    const profile_service = new ProfileService()
     const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
     const [name, onChangeName] = useState();
     const [avatar, setAvatar] = useState<string>('');
     const [selectedDiets, setSelectedDiets] = useState([]);
+    const [selectedAllergies, setSelectedAllergies] = useState([])
 
     const handleSelectedDiets = (selectedValues) => {
         setSelectedDiets(selectedValues);
@@ -26,16 +28,16 @@ export default function CreateProfile(props) {
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
       
         console.log(result);
       
         if (!result.canceled) {
-          setAvatar(result.assets[0].uri);
+            setAvatar(result.assets[0].uri);
         }
       };
 
@@ -68,7 +70,7 @@ export default function CreateProfile(props) {
           console.log('Profil créé :', newProfile);
           props.navigation.goBack();
         } catch (error) {
-          console.error('Erreur lors de la création du profil :', error);
+            console.error('Erreur lors de la création du profil :', error);
         }
       };
     
@@ -167,7 +169,7 @@ export default function CreateProfile(props) {
                             </View>
                             <ListSelect title="Diets" content={die} setSelected={handleSelectedDiets}></ListSelect>
                             <View style={{marginTop: "6%"}}/>
-                            <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
+                            <ListWithoutSelect title="Allergies" content={selectedAllergies}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
                         </View>
                     <View style={{marginTop: "3%"}}/>

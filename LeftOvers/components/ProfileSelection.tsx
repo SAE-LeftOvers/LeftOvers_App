@@ -20,7 +20,7 @@ type Profile = {
 }
 
 export default function ProfileSelection(props: ProfileSelectionProps) {
-    const { colors } = useContext(ColorContext);
+    const colors = useContext(ColorContext).colors;
 
     const [cpt, setCpt] = useState(0);
     const decreaseCounter = () => {

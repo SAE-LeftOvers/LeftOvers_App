@@ -14,8 +14,8 @@ const componentHeight = 60;
 const componentWidth = 280;
 
 
-export default function FoodElementText(props : any) {
-    const {colors} = useContext(ColorContext)
+export default function FoodElementText(props : foodElementImageProps) {
+    const colors = useContext(ColorContext).colors
 
     const styles = StyleSheet.create({
         button: {

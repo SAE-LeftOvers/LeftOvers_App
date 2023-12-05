@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import {StyleSheet, Image} from 'react-native';
-import {MultipleSelectList} from 'react-native-dropdown-select-list'
+import { StyleSheet, Image } from 'react-native';
+import { MultipleSelectList } from 'react-native-dropdown-select-list'
 import ColorContext from '../theme/ColorContext';
 
 type ListProps = {
@@ -11,8 +11,8 @@ type ListProps = {
 }
 
 export default function ListSelect(props: ListProps) {
-    
-    const {colors} = useContext(ColorContext);
+    const [selected, setSelected] = React.useState([]);
+    const colors = useContext(ColorContext).colors;
 
     const styles = StyleSheet.create({
         titleBar: {

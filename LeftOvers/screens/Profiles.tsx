@@ -9,9 +9,15 @@ import ColorContext from '../theme/ColorContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import  EventEmitter  from './EventEmitter';
 import { PaperProvider, Portal } from 'react-native-paper';
+import ProfileService from '../Services/Profiles/ProfileService';
 
 export default function Profiles({navigation, props}) {
-    const { colors } = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
+    const profile_service = new ProfileService()
+
+    const all = []
+    const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
+
     const [visible, setVisible] = useState(false);
     const [profiles, setProfiles] = useState([]);
     const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
@@ -37,10 +43,10 @@ export default function Profiles({navigation, props}) {
         }
     };
 
-      const handleGetProfiles = async () => {
+    const handleGetProfiles = async () => {
         try {
-            const existingProfiles = await AsyncStorage.getItem('profiles');
-            return JSON.parse(existingProfiles) || [];
+            const results = await profile_service.getProfiles()
+            return results
         } catch (error) {
             console.log(error);
             return [];
@@ -63,9 +69,7 @@ export default function Profiles({navigation, props}) {
     const containerStyle = {
         height: "75%",
         width: "100%",
-      };
-
-
+      };    
       const styles = StyleSheet.create({
         container: {
             height: "100%",

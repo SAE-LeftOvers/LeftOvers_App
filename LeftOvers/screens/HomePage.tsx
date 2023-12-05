@@ -7,6 +7,8 @@ import ValidateButton from '../components/ValidateButton';
 import ProfileSelection from '../components/ProfileSelection';
 import FoodElementText from '../components/FoodElementText';
 import ColorContext from '../theme/ColorContext';
+import ProfileService from '../Services/Profiles/ProfileService';
+import Profil from '../Models/Profil';
 
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
@@ -15,7 +17,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import EventEmitter  from './EventEmitter';
 
 export default function HomePage({ navigation, props }) {
-    const {colors} = useContext(ColorContext);
+    const colors = useContext(ColorContext).colors
+    const profile_service = new ProfileService()
 
     const profilesHand = [
         {name: "None", avatar: "logo.png", isActive: "none"}

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import ListWithoutSelect from './ListWithoutSelect';
 import ColorContext from '../theme/ColorContext';
@@ -14,7 +15,8 @@ type ProfileProps = {
 }
 
 export default function ProfileDetails(props) {
-    const { colors } = useContext(ColorContext)
+    const colors = useContext(ColorContext).colors
+    const navigation = useNavigation()
     const [display, setDisplay] = useState("none")
     const changeListVisibility = () => {
         if (display == "none"){
