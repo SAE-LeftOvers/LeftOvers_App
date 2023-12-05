@@ -37,11 +37,10 @@ export default function ProfileElement(props : Profile) {
 
     let imageSource
     if(props.avatar == null){
-        console.log("NUUUULLLLLE" + props.avatar)
+        imageSource=require("../assets/images/logo.png")
     }
     else{
         imageSource = { uri: props.avatar };
-        console.log("MAAARCHHEEE" + props.avatar)
     }
 
     const styles = StyleSheet.create({

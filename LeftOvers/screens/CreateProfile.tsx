@@ -47,6 +47,9 @@ export default function CreateProfile(props) {
     else if (props.avatar == "plus_small.png"){
         imageSource = {uri: avatar}
     }
+    else if (props.avatar == ""){
+        imageSource = require("../assets/images/logo.png")
+    }
     else{
         imageSource = {uri: avatar}
     }
@@ -67,11 +70,8 @@ export default function CreateProfile(props) {
           const updatedProfiles = [...existingProfiles, newProfile];
           await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
           EventEmitter.emit('profileAdded');
-      
           console.log('Profil créé :', newProfile);
-      
           props.navigation.goBack();
-      
           alert('Profil créé !');
         } catch (error) {
           console.error('Erreur lors de la création du profil :', error);
@@ -169,7 +169,7 @@ export default function CreateProfile(props) {
                             </View>
                             <View style={styles.filterBar}>
                                 <Text style={styles.filters}>Filters</Text>
-                                <Text style={styles.nbSelected}>"0 diets selected</Text>
+                                <Text style={styles.nbSelected}>0 diets selected</Text>
                             </View>
                             <ListSelect title="Diets" content={die} setSelected={handleSelectedDiets}></ListSelect>
                             <View style={{marginTop: "6%"}}/>

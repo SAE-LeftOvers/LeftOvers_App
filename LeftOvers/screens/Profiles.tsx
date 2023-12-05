@@ -44,16 +44,14 @@ export default function Profiles({navigation, props}) {
         try {
             const updatedProfiles = profiles.filter((profile, i) => i !== index);
             await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+            EventEmitter.emit('profileDeleted');
             fetchProfiles();
             setSelectedProfileIndex(index);
             erasePopUp();
+            alert('Profile Deleted!');
         } catch (error) {
             console.error('Erreur lors de la suppression du profil :', error);
         }
-    };
-
-    const confirmDelete = () => {
-        erasePopUp();
     };
 
       const handleGetProfiles = async () => {
@@ -61,7 +59,7 @@ export default function Profiles({navigation, props}) {
             const existingProfiles = await AsyncStorage.getItem('profiles');
             return JSON.parse(existingProfiles) || [];
         } catch (error) {
-            console.log("ça maaaaaaaaarche poaaaaaaaaaaaas");
+            console.log(error);
             return [];
         }
     }
@@ -199,13 +197,13 @@ export default function Profiles({navigation, props}) {
 
     const profileComponents = profiles.map((profile, index) => (
         <View key={index}>
-          <ProfileDetails
+            <ProfileDetails
                 name={profile.name}
                 avatar={profile.avatar}
                 diets={profile.diets}
                 allergies={profile.allergies}
-                onDeleteProfile={() => raisePopUp(index)}
-            />
+                onModification={() => navigation.navigate("ProfileModification")}
+                onDeleteProfile={() => raisePopUp(index)}/>
             <Portal>
                 <Modal visible={visible} onDismiss={erasePopUp} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-start"}}>
                     <View style={styles.modal}>
@@ -239,7 +237,7 @@ export default function Profiles({navigation, props}) {
                     </View>
                 </Modal>
             </Portal>
-          {index < profiles.length - 1 && <View style={styles.separator} />}
+            {index < profiles.length - 1 && <View style={styles.separator} />}
         </View>
     ));
 
@@ -255,7 +253,6 @@ export default function Profiles({navigation, props}) {
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
             </ScrollView>
-
         </PaperProvider>
     </SafeAreaProvider>
     );

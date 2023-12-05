@@ -46,6 +46,10 @@ export default function HomePage({ navigation, props }) {
         fetchProfiles();
     });
 
+    const subscriptionDeleteProfile = EventEmitter.addListener('profileDeleted', async () => {
+        fetchProfiles();
+    });
+
     useEffect(() => {
         fetchProfiles();
         console.log(profiles.length)

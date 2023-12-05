@@ -18,7 +18,6 @@ export default class RecipesService implements IRecipesService {
     async getRecipeById(id: number): Promise<Recipes | null>{
         try {
             const response = await axios.get(`${this.API_URL}/${id}`);
-            //console.log(response.name);
             return response.data as Recipes;
         } catch (error) {
             throw new Error('Erreur lors de la récupération des ingrédients : ' + error.message);
