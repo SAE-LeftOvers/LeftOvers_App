@@ -21,7 +21,7 @@ import Recipes from '../Models/Recipes';
 import Ingredient from '../Models/Ingredient';
 
 
-export default function RecipeSuggestion({ route })  {
+export default function RecipeSuggestion({ route, navigation })  {
   const {colors} = useContext(ColorContext)
   const [visible, setVisible] = React.useState(false);
   const [visibleFilters, setVisibleFilters] = React.useState(false);
@@ -33,12 +33,11 @@ export default function RecipeSuggestion({ route })  {
   const [isLoading, setIsLoading] = useState(true);
   const [response, setResponse] = useState<Recipes[] | undefined>(undefined);
   const [selectedRecipes, setSelectedRecipes] = useState<Recipes[]>([]);
-  console.log(selectedRecipes);
   const recipeService = new RecipesServices();
   const { ingredients } = route.params; 
   const limitedList = ingredients.slice(minCpt, maxCpt);
   let selectedIngredients: string[]; 
-  const navigation = useNavigation(); 
+  
 
   const die = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Gluten free"}, {value: "Porkless"}]
   const all = []
@@ -91,31 +90,25 @@ export default function RecipeSuggestion({ route })  {
     }
   }
   const getIngredientsIds = (ingredients) => {
-    console.log("Liste des ingredients : " + ingredients[0].name)
     selectedIngredients = ingredients.map(ingredient => ingredient.id).join(':');
     return selectedIngredients;
   };
 
   const loadRecipes = async () => {
     const ids: string[] = getIngredientsIds(ingredients);
-    console.log("Les ids des ingredients : " + ids);
     try {
       const recipes: Recipes[] = await recipeService.getRecipeWithIngredients(ids);
-      console.log("Les recettes trouvé : " + recipes)
-      console.log(recipes[0].id)
       if(recipes[0].id != -1 ){
         setSelectedRecipes(recipes);
       }
     
     } catch (error) {
-      console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    console.log("Je passe ici (Ingredient Selection)")
     loadRecipes();
   }, []);
 
@@ -177,21 +170,6 @@ export default function RecipeSuggestion({ route })  {
     },
   });
 
-  const recipeElements = Array.isArray(selectedRecipes) && selectedRecipes.length === 0 ? (
-    <Text>No recipes</Text>
-  ) : (
-    <View>
-      {selectedRecipes.map((recipe, index) => (
-        <View style={{ marginRight: 10 }} key={recipe.id}> 
-          <RecipeElement
-            key={recipe.id}
-            recipe={recipe}
-            navigateDetails={goDetails}
-          />
-        </View>
-      ))}
-    </View>
-  );
 
   const ingredientElements = limitedList.map((source, index) => (
     <View style={[styles.horizontalAlignment, {marginVertical: "3%"}]} key={index}>
@@ -201,7 +179,7 @@ export default function RecipeSuggestion({ route })  {
     </View>
   ));
 
-  const goDetails = () => navigation.navigate("RecipeDetails")
+  const goDetails = (recipeId: number) => navigation.navigate('RecipeDetails', { recipeId });
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
@@ -221,7 +199,7 @@ export default function RecipeSuggestion({ route })  {
                               <RecipeElement
                                 key={recipe.id}
                                 recipe={recipe}
-                                navigateDetails={goDetails}
+                                navigateDetails={() => goDetails(Number(recipe.id))}
                               />
                             </View>
                           ))

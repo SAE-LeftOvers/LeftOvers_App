@@ -9,7 +9,7 @@ import Recipes from '../Models/Recipes';
 
 interface RecipeElementProps {
   recipe: Recipes
-  navigateDetails: () => void
+  navigateDetails: any
 }
 
 function convertToHoursMinutes(totalMinutes: number): string {

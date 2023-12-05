@@ -11,21 +11,21 @@ import ColorContext from '../theme/ColorContext';
 import Ingredient from '../Models/Ingredient';
 
 
-export default function RecipeDetails(props) {
+export default function RecipeDetails({ route }) {
     const {colors} = useContext(ColorContext);
     
     const [isLoading, setIsLoading] = useState(true)
-
-
 
     const ingredientList = [new Ingredient(3, "Carrot"), new Ingredient(4, "Potato"), new Ingredient(5, "Peach")]
 
     const [response, setResponse] = useState<Recipes>(new Recipes (120, "Carrot", "Delicious", 90, ["Fork", "Fish", "Knife"], ingredientList))
     const recipesService = new RecipesService();
 
+    const { recipeId } = route.params; 
+
     const loadRecipe = async () => {
       try {
-        const recipe = await recipesService.getRecipeById(120);
+        const recipe = await recipesService.getRecipeById(recipeId);
         console.log("Recipe.name: "+recipe.name)
         setResponse(recipe);
         console.log("Response.name: "+response.name)
