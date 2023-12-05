@@ -31,15 +31,6 @@ export default function Profiles({navigation, props}) {
         setVisible(false)
     }
 
-    const handleDeleteProfiles = async () => {
-        try {
-          await AsyncStorage.removeItem('profiles');
-          console.log('Données supprimées avec succès !');
-        } catch (error) {
-          console.error('Erreur lors de la suppression des données :', error);
-        }
-      };
-
     const handleDeleteProfile = async (index) => {
         try {
             const updatedProfiles = profiles.filter((profile, i) => i !== index);
@@ -74,7 +65,6 @@ export default function Profiles({navigation, props}) {
 
     useEffect(() => {
         fetchProfiles();
-        console.log(profiles)
     }, []);
 
     const containerStyle = {

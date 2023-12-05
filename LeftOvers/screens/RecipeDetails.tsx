@@ -26,9 +26,7 @@ export default function RecipeDetails(props) {
     const loadRecipe = async () => {
       try {
         const recipe = await recipesService.getRecipeById(120);
-        console.log("Recipe.name: "+recipe.name)
         setResponse(recipe);
-        console.log("Response.name: "+response.name)
       } catch (error) {
         console.log(error);
       } finally{
@@ -37,7 +35,6 @@ export default function RecipeDetails(props) {
     };
 
     useEffect(() => {
-      console.log("Je passe ici (useEffect)")
       loadRecipe();
     }, []);
 

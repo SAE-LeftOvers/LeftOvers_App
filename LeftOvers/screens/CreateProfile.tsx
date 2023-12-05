@@ -162,7 +162,6 @@ export default function CreateProfile(props) {
                             </View>
                             <View style={styles.filterBar}>
                                 <Text style={styles.filters}>Filters</Text>
-                                <Text style={styles.nbSelected}>0 diets selected</Text>
                             </View>
                             <ListSelect title="Diets" content={die} setSelected={handleSelectedDiets}></ListSelect>
                             <View style={{marginTop: "6%"}}/>

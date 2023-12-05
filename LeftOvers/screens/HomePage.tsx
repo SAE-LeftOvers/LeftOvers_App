@@ -35,7 +35,6 @@ export default function HomePage({ navigation, props }) {
 
     const fetchProfiles = async () => {
         const existingProfiles = await handleGetProfiles();
-        console.log("Existing Profiles: ---------------------------------"+existingProfiles, existingProfiles.length)
         if (existingProfiles.length != 0){
             setProfiles(existingProfiles);
         }
