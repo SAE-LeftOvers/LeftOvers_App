@@ -23,6 +23,9 @@ export default function Profiles({navigation, props}) {
     const [profiles, setProfiles] = useState([]);
     const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
 
+    const goDetails = (name: string) => navigation.navigate('ProfileCreation', name);
+
+
     const raisePopUp = (index) => {
         setSelectedProfileIndex(index)
         setVisible(true)
@@ -122,7 +125,6 @@ export default function Profiles({navigation, props}) {
             width: "100%",
             flex: 1,
         },
-    
         profileValidation: {
             width: "100%",
             alignItems: "center",
@@ -205,6 +207,7 @@ export default function Profiles({navigation, props}) {
                 diets={profile.diets}
                 allergies={profile.allergies}
                 onDeleteProfile={() => raisePopUp(index)}
+                onModification={() => goDetails(profile.name)}
             />
             <Portal>
                 <Modal visible={visible} onDismiss={erasePopUp} contentContainerStyle={containerStyle} style={{marginTop: 0, justifyContent: "flex-start"}}>
@@ -255,7 +258,6 @@ export default function Profiles({navigation, props}) {
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>
             </ScrollView>
-            
         </PaperProvider>
     </SafeAreaProvider>
     );
