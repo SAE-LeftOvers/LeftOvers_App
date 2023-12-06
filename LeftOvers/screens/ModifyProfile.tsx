@@ -12,8 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ModifyProfile(props) {
   const {colors} = useContext(ColorContext);
-  const all = [{value: "Mussels"}, {value: "Skimmed Milk"}, {value: "Nuts"}]
-  const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
   const [profile, setProfile] = useState(null);
   const route = useRoute();
 

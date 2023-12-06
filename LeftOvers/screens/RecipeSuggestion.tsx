@@ -15,10 +15,8 @@ import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
 import plus from '../assets/images/plus_small.png';
 import minus from '../assets/images/minus.png';
-import { useNavigation } from '@react-navigation/native';
 import RecipesServices from '../Services/Recipes/RecipesServices';
 import Recipes from '../Models/Recipes';
-import Ingredient from '../Models/Ingredient';
 
 
 export default function RecipeSuggestion({ route, navigation })  {
@@ -30,14 +28,12 @@ export default function RecipeSuggestion({ route, navigation })  {
   const [maxCpt, setMaxCpt] = useState(4);
   const [colorIngredients, setColorIngredients] = useState("#59BDCD");
   const [colorFilters, setColorFilters] = useState(colors.cardDetail);
-  const [isLoading, setIsLoading] = useState(true);
-  const [response, setResponse] = useState<Recipes[] | undefined>(undefined);
   const [selectedRecipes, setSelectedRecipes] = useState<Recipes[]>([]);
   const recipeService = new RecipesServices();
   const { ingredients } = route.params; 
   const limitedList = ingredients.slice(minCpt, maxCpt);
+
   let selectedIngredients: string[]; 
-  
 
   const die = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Gluten free"}, {value: "Porkless"}]
   const all = []
@@ -103,8 +99,7 @@ export default function RecipeSuggestion({ route, navigation })  {
       }
     
     } catch (error) {
-    } finally {
-      setIsLoading(false);
+      console.log(error)
     }
   };
 
