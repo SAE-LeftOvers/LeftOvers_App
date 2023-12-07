@@ -1,11 +1,31 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Pressable, Text, View, Image, ScrollView} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, Pressable, Text, View, Image, ScrollView, ImageSourcePropType} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import Union_left from '../assets/images/Union_left.png';
 import Union_right from '../assets/images/Union_right.png';
 import background from '../assets/images/Background.png';
+import cake from '../assets/images/cake.png';
+import Carrot_Cake from '../assets/images/Carrot_Cake.png';
+import inconnu from '../assets/images/inconnu.png';
+import fish from '../assets/images/fish.png';
+import fish_meat from '../assets/images/fish_meat.png';
+import vegan from '../assets/images/vegan.png';
+import egg  from '../assets/images/egg.png';
+import pizza from '../assets/images/pizza.png';
+import soupVeggie  from '../assets/images/soupVeggie.png';
+import soupFish from '../assets/images/soupfish.png'
+import soupMeat from '../assets/images/soupMeat.png'
+import meat_with_vegetable from '../assets/images/meat_with_vegetables.png';
+import riceVegetable from '../assets/images/rice_vegetables.png';
+import riceMeat from '../assets/images/Meat_and_Rice.png';
+import riceFish from '../assets/images/rice_fish.png'; 
+import riceEgg from '../assets/images/riceEgg.png';
+import pasta from '../assets/images/pasta.png';
 import ColorContext from '../theme/ColorContext';
 import Recipes from '../Models/Recipes';
+
+
+
 
 interface RecipeElementProps {
   recipe: Recipes
@@ -24,6 +44,143 @@ function convertToHoursMinutes(totalMinutes: number): string {
 
 export default function RecipeElement(props: RecipeElementProps) {
   const {colors} = useContext(ColorContext)
+  const meatDictionary: string[] =  ["beef", "chicken", "turkey", "steak", "rabbit", "duck"]
+  const porkDictionary: string[] = ["pork", "lardon", "bacon", "ham"]
+  const fishDictionary: string[] = ["tuna", "whiting", "mullet", "sardine", "mackerel", "salmon", "monkfish", "conger", "bass", "cod", "hake"]
+  const vegetablesDictionary: string[] = ["vegan", "vegetarian", "lentil", "artichoke", "aubergine", "beet", "chard", "broccoli", "carrot", "celery", "cabbage", "cauliflower", "zucchini", "spinach", "fennel", "curly", "bean", "lettuce", "apple", "corn", "onion", "parsnips", "leek", "pepper", "potato", "pumpkin", "radish", "scarole", "tomato"]
+  const riceDictionary: string[] =  ["ric", "quinoa"]
+  const eggDictionary: string[] = ["egg", "omelette"];
+  const soupDictionary: string[] = ["soup"];
+  const pizzaDictionary: string[] = ["pizza"];
+  const dessertDictionary: string[] = ['cake', 'cupcake', 'muffin', 'cookie', 'brownie', 'pie', 'tart', 'macaron', 'doughnut', 'eclair', 'pancake', 'waffle', 'crepe', 'pudding', 'gelato', 'sorbet', 'ice cream', 'cheesecake', 'sugar'];
+  const pastaDictionary: string[] = [
+    'pasta',
+    'spaghetti',
+    'penne',
+    'fettuccine',
+    'macaroni',
+    'rigatoni',
+    'farfalle',
+    'linguine',
+    'lasagne',
+    'ravioli',
+    'tortellini',
+    'gnocchi',
+    'spaetzle',
+    'noodles',
+    'spatzle',
+    'spatzen',
+  ];
+
+  const imagesDictionary = {
+    meat: meatDictionary,
+    pork: porkDictionary,
+    fish: fishDictionary,
+    egg: eggDictionary,
+    vegetables: vegetablesDictionary,
+    rice: riceDictionary,
+    pizza : pizzaDictionary,
+    soup : soupDictionary,
+    dessert : dessertDictionary,
+    pasta : pastaDictionary,
+    unknown: [],
+  };
+
+  function getCategoryFromList(categories: string[]) {
+    const categoryMappings = {
+      MeatAndVegetables: ['meat', 'vegetables'],
+      FishAndMeat: ['fish', 'meat'],
+      dessertDictionary: ['dessert'],
+      fruitCake: ['vegetables', 'dessert'],
+      riceEgg: ['rice', 'egg'],
+      riceMeat: ['rice', 'meat'],
+      riceFish: ['rice', 'fish'],
+      riceVegetable: ['rice', 'vegetables'],
+      soupMeat: ['soup', 'meat'],
+      soupVeggie: ['soup', 'vegetables'],
+      soupFish: ['soup', 'fish'],
+    };
+
+    if(categories.length == 1){
+      return categories[0];
+    }
+  
+    console.log("LA LISTE DES CATEGORY : " + categories)
+    let bestMatch = { category: '', similarity: 0 };
+
+      for (const [name, categoriesList] of Object.entries(categoryMappings)) {
+        const matchingCategories = categories.filter(category => categoriesList.includes(category));
+        const similarity = matchingCategories.length;
+
+        if (similarity > bestMatch.similarity) {
+          bestMatch = { category: name, similarity };
+        }
+  }
+
+  return bestMatch.category;
+  }
+
+  function getImageForRecipe(recipeName: string) {
+    const categories = [];
+    console.log("NAAAAAME : " + recipeName)
+  
+    for (const [category, words] of Object.entries(imagesDictionary)) {
+      const matchedWords = words.filter((word) => recipeName.toLowerCase().includes(word));
+      console.log("Matched Word : " + matchedWords)
+      if (matchedWords.length > 0) {
+        categories.push(category);
+        console.log(category)
+      }
+    }
+  
+    console.log("ON ENTRE DANS LA 2EME FONCTION"); 
+    const categoryName = getCategoryFromList(categories);
+    console.log("CategoryName à la fin : " + categoryName);
+  
+    switch (categoryName) {
+      case 'meat':
+        return brochette;
+      case 'pork':
+        return brochette;
+      case 'fish':
+        return fish;
+      case 'vegetables':
+        return vegan;
+      case 'pasta':
+        return pasta;
+      case 'MeatAndVegetables':
+        return meat_with_vegetable;
+      case 'FishAndMeat':
+        return fish_meat;
+      case 'egg':
+        return egg;
+      case 'dessert':
+        return cake;
+      case 'fruitCake':
+        return Carrot_Cake;
+      case 'riceEgg':
+        return riceEgg;
+      case 'riceMeat':
+        return riceMeat;
+      case 'riceFish':
+        return riceFish;
+      case 'riceVegetable':
+        return riceVegetable;
+      case 'pizza':
+        return pizza;
+      case 'soupVeggie':
+        return soupVeggie;
+      case 'soupMeat':
+        return soupMeat;
+      case 'soupFish':
+        return soupFish;
+      default:
+        return inconnu;
+    }
+  }
+  
+  
+
 
   const styles = StyleSheet.create({
     button: {
@@ -87,7 +244,7 @@ export default function RecipeElement(props: RecipeElementProps) {
       <View style={styles.view}>
         <Text style={styles.text}>{props.recipe.id}</Text>
         <Text style={styles.title}>{props.recipe.name}</Text>
-        <Image source={brochette} style={{width: 100, resizeMode: "contain"}}/>
+        <Image source={getImageForRecipe(props.recipe.name)} style={{width: 100, maxHeight: 90,resizeMode: "contain"}}/>
         <View style={styles.horizontalAlignment}>
             <Image source={Union_left} style={{width: "25%", marginRight: "3%", resizeMode: "contain"}} />
             <Text style={styles.text}>Ingredients</Text>

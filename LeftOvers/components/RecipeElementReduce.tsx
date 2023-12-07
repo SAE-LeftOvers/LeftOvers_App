@@ -10,6 +10,7 @@ interface RecipeElementReduceProps {
   title  : string
   image : string | null
   duration : string
+  imageRecipe: any
 }
 
 export default function RecipeElementReduce(props: RecipeElementReduceProps) {
@@ -65,7 +66,7 @@ export default function RecipeElementReduce(props: RecipeElementReduceProps) {
       <View style={styles.view}>
         <Text style={styles.text}>{props.number}</Text>
         <Text style={styles.title}>{props.title}</Text>
-        <Image source={props.image ? props.image : brochette} style={{ width: 100, height: 100, resizeMode: "contain", zIndex: 2}}/>
+        <Image source={props.imageRecipe} style={{ width: 100, height: 100, resizeMode: "contain", zIndex: 2}}/>
         <View style={{marginBottom: "20%"}}/>
         <Image source={background} style={{width: "80%", resizeMode: "contain", position: "absolute", zIndex: 1, top: "90%"}}></Image>
         <Text style={styles.smallText}>{props.duration}</Text>
