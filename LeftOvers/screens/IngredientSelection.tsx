@@ -120,6 +120,7 @@ const fetchAvailableIngredient = async () => {
         const updatedAvailableIngredient = [...existingAvailableIngredient, newIngredient];
         await AsyncStorage.setItem('ingredient', JSON.stringify(updatedAvailableIngredient));
         EventEmitter.emit('ingredientAdded');
+        fetchAvailableIngredient();
         console.log('Ingredient Added:', newIngredient);
         ChangeAvailableSize(false)
       }
@@ -133,7 +134,6 @@ const fetchAvailableIngredient = async () => {
     try{
       const updatedIngredients = selectedIngredients.filter((ingredient) => ingredient.id !== idIngredient);
       await AsyncStorage.setItem('ingredient', JSON.stringify(updatedIngredients));
-      EventEmitter.emit('ingredientDeleted');
       fetchAvailableIngredient();
       setSelectedIngredients(updatedIngredients);
       ChangeAvailableSize(true)
@@ -142,18 +142,6 @@ const fetchAvailableIngredient = async () => {
       console.log("Error occured during the suppression of Ingredient:", error)
     }
   };
-
-  const subscriptionAddIngredient = EventEmitter.addListener('ingredientAdded', async () => {
-    fetchAvailableIngredient();
-  });
-  const subscriptionDeleteIngredient = EventEmitter.addListener('ingredientDeleted', async () => {
-    if (selectedIngredients.length == 1){
-        setSelectedIngredients([{title: "None"}])
-    }
-    else{
-        fetchAvailableIngredient();
-    }
-  });
 
   const ChangeAvailableSize = (remove: boolean) => {
     if(remove){

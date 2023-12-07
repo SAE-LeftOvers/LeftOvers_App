@@ -96,7 +96,7 @@ export default function HomePage({ navigation, props }) {
     });
 
     useEffect(() => {
-        //AsyncStorage.clear()
+        AsyncStorage.clear()
         fetchProfiles();
         if(profiles.length == 0){
             setProfiles(profilesHand)
