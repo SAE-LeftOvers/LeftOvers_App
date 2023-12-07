@@ -46,85 +46,117 @@ export default function RecipeElement(props: RecipeElementProps) {
   const meatDictionary: string[] =  ["beef", "chicken", "turkey", "steak", "rabbit", "duck"]
   const porkDictionary: string[] = ["pork", "lardon", "bacon", "ham"]
   const fishDictionary: string[] = ["tuna", "whiting", "mullet", "sardine", "mackerel", "salmon", "monkfish", "conger", "bass", "cod", "hake"]
-  const vegetablesDictionary: string[] = ["artichoke", "aubergine", "beet", "chard", "broccoli", "carrot", "celery", "cabbage", "cauliflower", "zucchini", "spinach", "fennel", "curly", "bean", "lettuce", "apple", "lettuce", "corn", "onion", "parsnips", "leek", "pepper", "potato", "pumpkin", "radish", "scarole", "tomato"]
-  const riceDictionary: string[] =  ['rice', 'quinoa', 'barley']
-  const eggDictionary: string[] = ['egg', 'omelette'];
-  const soupDictionary: string[] = ['soup'];
-  const pizzaDictionary: string[] = ['pizza'];
-
+  const vegetablesDictionary: string[] = ["vegan", "vegetarian", "lentil", "artichoke", "aubergine", "beet", "chard", "broccoli", "carrot", "celery", "cabbage", "cauliflower", "zucchini", "spinach", "fennel", "curly", "bean", "lettuce", "apple", "corn", "onion", "parsnips", "leek", "pepper", "potato", "pumpkin", "radish", "scarole", "tomato"]
+  const riceDictionary: string[] =  ["ric", "quinoa"]
+  const eggDictionary: string[] = ["egg", "omelette"];
+  const soupDictionary: string[] = ["soup"];
+  const pizzaDictionary: string[] = ["pizza"];
   const dessertDictionary: string[] = ['cake', 'cupcake', 'muffin', 'cookie', 'brownie', 'pie', 'tart', 'macaron', 'doughnut', 'eclair', 'pancake', 'waffle', 'crepe', 'pudding', 'gelato', 'sorbet', 'ice cream', 'cheesecake'];
 
   const imagesDictionary = {
     meat: meatDictionary,
     pork: porkDictionary,
     fish: fishDictionary,
+    egg: eggDictionary,
     vegetables: vegetablesDictionary,
     rice: riceDictionary,
-    MeatAndVegetables: [...meatDictionary, ...vegetablesDictionary],
-    FishAndMeat: [...fishDictionary, ...meatDictionary],
-    egg: eggDictionary,
-    dessertDictionary: dessertDictionary,
-    fruitCake : [...vegetablesDictionary, ...dessertDictionary],
-    riceEgg : [...riceDictionary, ...eggDictionary],
-    riceMeat : [...riceDictionary, ...meatDictionary],
-    riceFish : [...riceDictionary, ...fishDictionary],
-    riceVegetable : [...riceDictionary, ...vegetablesDictionary],
-    // pizzaMeat : [...pizzaDictionary, ...meatDictionary],
-    // pizzaVeggie : [...riceDictionary, ...vegetablesDictionary],
-    // pizzaFish : [...riceDictionary, ...fishDictionary],
     pizza : pizzaDictionary,
-    soupMeat : [...soupDictionary, ...meatDictionary],
-    soupVeggie : [...soupDictionary, ...vegetablesDictionary],
-    soupFish : [...soupDictionary, ...fishDictionary],
+    soup : soupDictionary,
+    dessert : dessertDictionary,
     unknown: [],
   };
 
+  function getCategoryFromList(categories: string[]) {
+    const categoryMappings = {
+      MeatAndVegetables: ['meat', 'vegetables'],
+      FishAndMeat: ['fish', 'meat'],
+      dessertDictionary: ['dessert'],
+      fruitCake: ['vegetables', 'dessert'],
+      riceEgg: ['rice', 'egg'],
+      riceMeat: ['rice', 'meat'],
+      riceFish: ['rice', 'fish'],
+      riceVegetable: ['rice', 'vegetables'],
+      soupMeat: ['soup', 'meat'],
+      soupVeggie: ['soup', 'vegetables'],
+      soupFish: ['soup', 'fish'],
+    };
+
+    if(categories.length == 1){
+      return categories[0];
+    }
+  
+    console.log("LA LISTE DES CATEGORY : " + categories)
+    let bestMatch = { category: '', similarity: 0 };
+
+      for (const [name, categoriesList] of Object.entries(categoryMappings)) {
+        const matchingCategories = categories.filter(category => categoriesList.includes(category));
+        const similarity = matchingCategories.length;
+
+        if (similarity > bestMatch.similarity) {
+          bestMatch = { category: name, similarity };
+        }
+  }
+
+  return bestMatch.category;
+  }
+
   function getImageForRecipe(recipeName: string) {
+    const categories = [];
+    console.log("NAAAAAME : " + recipeName)
+  
     for (const [category, words] of Object.entries(imagesDictionary)) {
       const matchedWords = words.filter((word) => recipeName.toLowerCase().includes(word));
+      console.log("Matched Word : " + matchedWords)
       if (matchedWords.length > 0) {
-        switch (category) {
-          case 'meat':
-            return meat_with_vegetable;
-          case 'pork':
-            return brochette;
-          case 'fish':
-            return fish;
-          case 'vegetables':
-            return vegan;
-          case 'MeatAndVegetables':
-            return meat_with_vegetable; // Choisis l'image appropriée
-          case 'FishAndMeat':
-            return fish_meat; // Choisis l'image appropriée
-          case 'egg':
-            return egg; // Choisis l'image appropriée
-          case 'dessert':
-            return cake; // Choisis l'image appropriée
-          case 'fruitCake':
-            return Carrot_Cake; // Choisis l'image appropriée
-          case 'riceEgg':
-            return riceEgg; // Choisis l'image appropriée
-          case 'riceMeat':
-            return riceMeat; // Choisis l'image appropriée
-          case 'riceFish':
-            return riceFish; // Choisis l'image appropriée
-          case 'riceVegetable':
-            return riceVegetable; // Choisis l'image appropriée
-          case 'pizza':
-            return pizza;
-          case 'soupVeggie':
-            return soupVeggie;
-          case 'soupMeat':
-              return soupMeat;
-          case 'soupFish':
-                return soupFish;
-          default:
-            return inconnu;
-        }
+        categories.push(category);
+        console.log(category)
       }
     }
-    return inconnu;
+  
+    console.log("ON ENTRE DANS LA 2EME FONCTION"); 
+    const categoryName = getCategoryFromList(categories);
+    console.log("CategoryName à la fin : " + categoryName);
+  
+    switch (categoryName) {
+      case 'meat':
+        return brochette;
+      case 'pork':
+        return brochette;
+      case 'fish':
+        return fish;
+      case 'vegetables':
+        return vegan;
+      case 'MeatAndVegetables':
+        return meat_with_vegetable;
+      case 'FishAndMeat':
+        return fish_meat;
+      case 'egg':
+        return egg;
+      case 'dessert':
+        return cake;
+      case 'fruitCake':
+        return Carrot_Cake;
+      case 'riceEgg':
+        return riceEgg;
+      case 'riceMeat':
+        return riceMeat;
+      case 'riceFish':
+        return riceFish;
+      case 'riceVegetable':
+        return riceVegetable;
+      case 'pizza':
+        return pizza;
+      case 'soupVeggie':
+        return soupVeggie;
+      case 'soupMeat':
+        return soupMeat;
+      case 'soupFish':
+        return soupFish;
+      default:
+        return inconnu;
+    }
   }
+  
   
 
 

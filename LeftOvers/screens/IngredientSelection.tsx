@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, Image, Pressable, ActivityIndicator, FlatList, 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-
 import FoodElementText from '../components/FoodElementText';
 import Ingredient from '../Models/Ingredient';
 import IngredientService from '../Services/Ingredients/IngredientsServices';
@@ -14,7 +13,6 @@ import EventEmitter from './EventEmitter';
 
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
-import { ScrollView } from 'react-native-virtualized-view';
 
 export default function IngredientSelection(props) {
   const colors = useContext(ColorContext).colors
@@ -67,33 +65,29 @@ const loadIngredients = async () => {
     ChangeAvailableSize(true)
   }, []);
 
-  const AvailableItem = ({ value }: { value: Ingredient }) => (
+  const AvailableItem = React.memo(({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignment}>
-        <Pressable onPress={() => SelectIngredient(value)}>
-          <FoodElementText title={value.name}/>
-        </Pressable>
+        <FoodElementText title={value.name}/>
         <Pressable onPress={() => SelectIngredient(value)}>
           <Image source={plus} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
       </View>
       <View style={{ height: 20 }}></View>
     </>
-  );
+  ));
 
-  const ChooseItem = ({ value }: { value: Ingredient }) => (
+  const ChooseItem = React.memo(({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignment}>
-        <Pressable onPress={() => RemoveIngredient(value.id)}>
-          <FoodElementText title={value.name} />
-        </Pressable>
+        <FoodElementText title={value.name} />
         <Pressable onPress={() => RemoveIngredient(value.id)}>
           <Image source={moins} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
       </View>
       <View style={{ height: 20 }}></View>
     </>
-  );
+   ));
 
   const handleGetAvailableIngredient = async () => {
     try {
