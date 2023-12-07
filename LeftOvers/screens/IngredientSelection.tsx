@@ -84,7 +84,7 @@ const loadIngredients = async () => {
     <>
       <View style={styles.horizontalAlignment}>
         <Pressable onPress={() => RemoveIngredient(value.id)}>
-          <FoodElementText title={value.name} />
+          <FoodElementText title={value.name}/>
         </Pressable>
         <Pressable onPress={() => RemoveIngredient(value.id)}>
           <Image source={moins} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />

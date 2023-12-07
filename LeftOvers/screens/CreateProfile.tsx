@@ -32,9 +32,6 @@ export default function CreateProfile(props) {
             aspect: [4, 3],
             quality: 1,
         });
-      
-        console.log(result);
-      
         if (!result.canceled) {
             setAvatar(result.assets[0].uri);
         }
@@ -42,7 +39,7 @@ export default function CreateProfile(props) {
 
 
     let imageSource
-    if (props.avatar == ""){
+    if (avatar == ""){
         imageSource = require("../assets/images/logo.png")
     }
     else{
@@ -58,6 +55,7 @@ export default function CreateProfile(props) {
             diets: selectedDiets,
             allergies: all,
             isActive: "flex",
+            isWaiting: "none",
           };
       
           // Mettre à jour AsyncStorage avec le nouveau profil

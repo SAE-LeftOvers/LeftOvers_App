@@ -18,7 +18,7 @@ export default function HomePage({ navigation, props }) {
     const colors = useContext(ColorContext).colors
 
     const profilesHand = [
-        {name: "None", avatar: "logo.png", isActive: "none"}
+        {name: "None", avatar: "logo.png", isActive: "none", isWaiting: "none"}
     ]
     const ingredientListHand = [{name: "None"}]
 
@@ -91,11 +91,15 @@ export default function HomePage({ navigation, props }) {
         }
     });
 
+    const subscriptionUpdateSelectedProfile  = EventEmitter.addListener('selectedProfilesUpdated', async () => {
+        fetchProfiles();
+    });
+
     useEffect(() => {
         //AsyncStorage.clear()
         fetchProfiles();
         if(profiles.length == 0){
-            setProfiles([{name: "None", avatar: "plus_small.png", isActive: "none"}])
+            setProfiles(profilesHand)
         }
         fetchAvailableIngredient();
     }, []);
@@ -229,7 +233,7 @@ export default function HomePage({ navigation, props }) {
                             <Text style={styles.nbSelected}>{nbActiveProfiles()} selected</Text>
                         </View>
                         <View style={{marginTop: "3%"}}/>
-                        <ProfileSelection listProfile={profiles} disableSelection={true}/>
+                        <ProfileSelection listProfile={profiles} disableSelection={true} changeStatusWaiting={() => console.log("Je n'affiche RIEN")} separator="none" changeStatusWaiting={() => console.log("Ignorer")}/>
                         <View style={{marginTop: "4%"}}/>
                         <ValidateButton title="Change Active Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('FiltersSelection')}/>
                         <View style={{marginTop: "3%"}}/>
@@ -256,7 +260,7 @@ export default function HomePage({ navigation, props }) {
                         <View style={{marginTop: "4%"}}/>
                         <ValidateButton title="Change Selected Ingredients" image="cook.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => navigation.navigate("IngredientSelection")}/>
                         <View style={{marginTop: "3%"}}/>
-                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => navigation.navigate("RecipeSuggestion")}/>
+                        <ValidateButton title="Search Recipes" image="search.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('RecipeSuggestion', {ingredients: ingredientList})}/>
                     </View>
                     <View style={{marginBottom: "20%"}}/>
                 </LinearGradient>

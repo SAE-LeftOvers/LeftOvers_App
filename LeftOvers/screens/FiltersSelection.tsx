@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, View, Text, ScrollView, useWindowDimensions} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -8,22 +8,103 @@ import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ProfileSelection from '../components/ProfileSelection';
 import ColorContext from '../theme/ColorContext';
+import EventEmitter from './EventEmitter';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function FiltersSelection(props) {
   const {colors} = useContext(ColorContext);
-  const profiles = [
-        {name: "Johnny Silverhand", avatar: "plus_small.png", isActive: "flex"},
-        {name: "Panam Palmer", avatar: "plus_small.png", isActive: "none"},
-        {name: "Goro Takemura", avatar: "plus_small.png", isActive: "none"},
-        {name: "David Martinez", avatar: "plus_small.png", isActive: "flex"},
+  const profilesHand = [
+        {name: "None", avatar: "logo.png", isActive: "none", isWaiting: "none"},
   ]
 
+  const [profiles, setProfiles] = useState(profilesHand);
+
+  const handleGetProfiles = async () => {
+    try {
+        const existingProfiles = await AsyncStorage.getItem('profiles');
+        return JSON.parse(existingProfiles) || [];
+    } catch (error) {
+        console.log("Error occured during GetProfiles", error);
+        return [];
+    }
+  }
+
+  const fetchProfiles = async () => {
+      const existingProfiles = await handleGetProfiles();
+      setProfiles(existingProfiles);
+  };
+
+  const subscription = EventEmitter.addListener('profileAdded', async () => {
+      fetchProfiles();
+  });
+
+  useEffect(() => {
+      fetchProfiles();
+  }, []);
+
+  const handleSaveSelectedProfiles = async () => {
+    try {
+        profiles.forEach((val) => {
+          if(val.isWaiting == "flex"){
+            if(val.isActive == "none"){
+              val.isActive = "flex"
+            }
+            else{
+              val.isActive = "none"
+            }
+          }
+          val.isWaiting = "none"
+        })
+        await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
+        EventEmitter.emit('selectedProfilesUpdated');
+        fetchProfiles();
+    } catch (error) {
+        console.error('Error occured when updating active profiles:', error);
+    }
+  };
+
+  const subscriptionUpdateSelectedProfiles = EventEmitter.addListener('selectedProfilesUpdated', async () => {
+      fetchProfiles();
+  });
+
+  const changeStatusWaiting = (cpt) => {
+    if(profiles[cpt].isWaiting == "none"){
+      profiles[cpt].isWaiting = "flex"
+    }
+    else{
+      profiles[cpt].isWaiting = "none"
+    }
+    handleSaveWaiting()
+    EventEmitter.emit("changeSeparatorStatus")
+  }
+
+  const handleSaveWaiting = async () => {
+    try {
+        await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
+        fetchProfiles();
+    } catch (error) {
+        console.error('Error occured when updating waiting profiles:', error);
+    }
+  };
+
   let cptActive = 0
-  profiles.forEach(function (value) {
+  const updateCptActive = () => {
+    cptActive = 0
+    profiles.forEach(function (value) {
     if(value.isActive=="flex"){
         cptActive=cptActive+1
     }
-  })
+  })}
+  let cptWaiting = 0
+  const updateCptWaiting = () => {
+    cptWaiting = 0
+    profiles.forEach(function (value) {
+    if(value.isWaiting=="flex"){
+        cptWaiting=cptWaiting+1
+    }
+  })}
+  updateCptActive()
+  updateCptWaiting()
 
   const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
 
@@ -41,6 +122,12 @@ export default function FiltersSelection(props) {
     }
   const dieAdd = die.filter(isInProfileDiets);
   const allAdd = []
+
+    const [selectedDiets, setSelectedDiets] = useState([]);
+
+    const handleSelectedDiets = (selectedValues) => {
+        setSelectedDiets(selectedValues);
+    };
 
   const styles = StyleSheet.create({
     container: {
@@ -112,12 +199,12 @@ export default function FiltersSelection(props) {
                 <View style={styles.profilesSelection}>
                     <View style={styles.filterBar}>
                         <Text style={styles.filters}>Profiles</Text>
-                        <Text style={styles.nbSelected}>{cptActive} selected, 1 waiting</Text>
+                        <Text style={styles.nbSelected}>{cptActive} selected, {cptWaiting} waiting</Text>
                     </View>
                     <View style={{marginTop: "3%"}}/>
-                    <ProfileSelection listProfile={profiles} disableSelection={false}/>
+                    <ProfileSelection listProfile={profiles} disableSelection={false} changeStatusWaiting={changeStatusWaiting}/>
                     <View style={{marginTop: "4%"}}/>
-                    <ValidateButton title="Validate Selected Profiles" image="validate.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={ () => console.log("change selected profile")}></ValidateButton>
+                    <ValidateButton title="Validate Selected Profiles" image="validate.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={handleSaveSelectedProfiles}></ValidateButton>
                 </View>
                 <View style={{marginTop: "6%"}}/>
                 <View style={styles.background}>
@@ -134,7 +221,7 @@ export default function FiltersSelection(props) {
                         <Text style={styles.filters}>Additional Filters</Text>
                         <Text style={styles.nbSelected}>{dieAdd.length} available</Text>
                     </View>
-                    <ListSelect title="Diets" content={dieAdd}></ListSelect>
+                    <ListSelect title="Diets" content={dieAdd} setSelected={handleSelectedDiets}/>
                     <View style={{marginTop: "3%"}}/>
                     <ListWithoutSelect title="Allergies" content={allAdd}></ListWithoutSelect>
                     <View style={{marginTop: "3%"}}/>

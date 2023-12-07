@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {StyleSheet,Pressable, Text, View, Image} from 'react-native';
 import ColorContext from '../theme/ColorContext';
 
@@ -6,33 +6,17 @@ type Profile = {
     name: string
     avatar: string
     isActive: string
+    isWaiting: string
     disableSelection: boolean
+    changeStatusWaiting: () => void
+    separatorDisplay: string
 }
 
 export default function ProfileElement(props : Profile) {
     const colors = useContext(ColorContext).colors
 
-    const [waiting, setWaiting] = useState("none")
-    const [separator, setSeparator] = useState("none")
     const changeStatus = () => {
-        if (props.disableSelection){
-            setWaiting("none")
-        }
-        else if (waiting == "flex"){
-            setWaiting("none")
-        }
-        else{
-            setWaiting("flex")
-        }
-        if (props.disableSelection){
-            setSeparator("none")
-        }
-        else if (props.isActive == "flex" && waiting == "none"){
-            setSeparator("flex")
-        }
-        else{
-            setSeparator("none")
-        }
+        props.changeStatusWaiting()
     }
 
     let imageSource
@@ -112,8 +96,8 @@ export default function ProfileElement(props : Profile) {
                     <View style={[styles.active, {display: props.isActive}]}>
                         <Text style={styles.textActive}>Activated</Text>
                     </View>
-                    <View style={{flex: 0.3, display: separator}}/>
-                    <View style={[styles.waiting, {display: waiting}]}>
+                    <View style={{flex: 0.3, display: props.separatorDisplay}}/>
+                    <View style={[styles.waiting, {display: props.isWaiting}]}>
                         <Text style={styles.textWaiting}>Waiting...</Text>
                     </View>
                 </View>
