@@ -50,7 +50,6 @@ export default function FiltersSelection(props) {
       updateDiets()
       setDieAdd(die.filter(isInProfileDiets))
       console.log("Passage Subsciption:", cptSubscription)
-      //EventEmitter.emit('updateDiets')
   });
 
   let cptSubscriptionDiets = 1
@@ -78,11 +77,11 @@ export default function FiltersSelection(props) {
           val.isWaiting = "none"
         })
         await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
-        //EventEmitter.emit('selectedProfilesUpdated')
-        //EventEmitter.emit("updateDietsAllergies")
         fetchProfiles()
         updateDiets()
         setDieAdd(die.filter(isInProfileDiets))
+        updateAllergies()
+        setAllAdd([])
     } catch (error) {
         console.error('Error occured when updating active profiles:', error);
     }
@@ -114,6 +113,28 @@ export default function FiltersSelection(props) {
       }
     })
     setDieProfiles(dieTemp)
+  }
+
+  const updateAllergies = () => {
+    let allTemp = []
+    let retType = true
+    profiles.forEach((profile) => {
+      if(profile.isActive == "flex"){
+        profile.allergies.forEach((allergy) => {
+          retType = true
+          allTemp.forEach((val) => {
+            if(val.value == allergy){
+              retType = false
+            }
+          })
+          if(retType){
+            allTemp.push({value: allergy})
+          }
+        })
+      }
+    })
+    setAllProfiles(allTemp)
+    console.log("Technique de Shinobi Anti-CodeSmell", selectedDiets)
   }
 
   const changeStatusWaiting = (cpt) => {

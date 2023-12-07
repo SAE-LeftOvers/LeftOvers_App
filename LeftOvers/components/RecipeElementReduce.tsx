@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import brochette from '../assets/images/brochette.png'; 
 import background from '../assets/images/Background.png';
 import ColorContext from '../theme/ColorContext';
 
