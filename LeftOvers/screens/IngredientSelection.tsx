@@ -14,6 +14,7 @@ import EventEmitter from './EventEmitter';
 
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
+import { ScrollView } from 'react-native-virtualized-view';
 
 export default function IngredientSelection(props) {
   const colors = useContext(ColorContext).colors
