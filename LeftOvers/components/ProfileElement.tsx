@@ -15,10 +15,6 @@ type Profile = {
 export default function ProfileElement(props : Profile) {
     const colors = useContext(ColorContext).colors
 
-    const changeStatus = () => {
-        props.changeStatusWaiting()
-    }
-
     let imageSource
     if(props.avatar == ""){
         imageSource=require("../assets/images/logo.png")
@@ -86,7 +82,7 @@ export default function ProfileElement(props : Profile) {
     });
 
     return (
-        <Pressable onPress={changeStatus} style={styles.button}>
+        <Pressable onPress={props.changeStatusWaiting} style={styles.button}>
             <View>
                 <View style={styles.pseudoBar}>
                     <Image source={imageSource} style={styles.avatar}></Image>

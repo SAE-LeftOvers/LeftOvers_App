@@ -227,7 +227,7 @@ export default function RecipeSuggestion({ route, navigation })  {
                             </ScrollView>
                           </View>
                         ) : (
-                          selectedRecipes.map((recipe, index) => (
+                          selectedRecipes.map((recipe) => (
                             <View style={{ marginRight: 10, marginLeft: 20}} key={recipe.id}> 
                               <RecipeElement
                                 key={recipe.id}

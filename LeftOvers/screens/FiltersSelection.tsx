@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function FiltersSelection(props) {
   const {colors} = useContext(ColorContext);
   const profilesHand = [
-        {name: "None", avatar: "logo.png", diets: [], allergies: [], isActive: "none", isWaiting: "none"},
+    {name: "None", avatar: "logo.png", diets: [], allergies: [], isActive: "none", isWaiting: "none"},
   ]
   const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
 
@@ -23,7 +23,7 @@ export default function FiltersSelection(props) {
   const [allProfiles, setAllProfiles] = useState([])
   const [dieAdd, setDieAdd] = useState([])
   const [allAdd, setAllAdd] = useState([])
-  const [selectedDiets, setSelectedDiets] = useState([]);
+  const [selectedDiets, setSelectedDiets] = useState([])
 
   const handleGetProfiles = async () => {
     try {
@@ -38,20 +38,30 @@ export default function FiltersSelection(props) {
   const fetchProfiles = async () => {
       const existingProfiles = await handleGetProfiles()
       setProfiles(existingProfiles)
-      console.log("FetchProfiles:",profiles)
-      console.log("FetchProfiles const:",existingProfiles)
   };
 
   const subscription = EventEmitter.addListener('profileAdded', async () => {
       fetchProfiles()
   });
 
-  useEffect(() => {
-      fetchProfiles()
-      console.log("UseEffect:",profiles)
+  let cptSubscription = 1
+
+  const subscriptionUpdateDietsAllergies = EventEmitter.addListener('updateDietsAllergies', async () => {
       updateDiets()
       setDieAdd(die.filter(isInProfileDiets))
-      updateAllergies()
+      console.log("Passage Subsciption:", cptSubscription)
+      //EventEmitter.emit('updateDiets')
+  });
+
+  let cptSubscriptionDiets = 1
+
+  const subscriptionUpdateDiets = EventEmitter.addListener('updateDiets', async () => {
+      setDieAdd(die.filter(isInProfileDiets))
+      console.log("Passage SubsciptionDiets:", cptSubscriptionDiets)
+  });
+
+  useEffect(() => {
+    fetchProfiles()
   }, []);
 
   const handleSaveSelectedProfiles = async () => {
@@ -68,10 +78,11 @@ export default function FiltersSelection(props) {
           val.isWaiting = "none"
         })
         await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
-        EventEmitter.emit('selectedProfilesUpdated');
+        //EventEmitter.emit('selectedProfilesUpdated')
+        //EventEmitter.emit("updateDietsAllergies")
+        fetchProfiles()
         updateDiets()
         setDieAdd(die.filter(isInProfileDiets))
-        updateAllergies()
     } catch (error) {
         console.error('Error occured when updating active profiles:', error);
     }
@@ -79,6 +90,8 @@ export default function FiltersSelection(props) {
 
   const subscriptionUpdateSelectedProfiles = EventEmitter.addListener('selectedProfilesUpdated', async () => {
       fetchProfiles()
+      updateDiets()
+      setDieAdd(die.filter(isInProfileDiets))
   });
 
   const updateDiets = () => {
@@ -87,10 +100,10 @@ export default function FiltersSelection(props) {
     profiles.forEach((profile) => {
       if(profile.isActive == "flex"){
         profile.diets.forEach((diet) => {
-          console.log("Diet:",diet)
           retType = true
           dieTemp.forEach((val) => {
-            if(val.value == diet.value){
+            console.log("Value DieTemp:",val)
+            if(val.value == diet){
               retType = false
             }
           })
@@ -100,15 +113,7 @@ export default function FiltersSelection(props) {
         })
       }
     })
-    console.log("========================================")
-    console.log("DieTemp:",dieTemp)
     setDieProfiles(dieTemp)
-    console.log("DieProfiles:",dieProfiles)
-    console.log("========================================")
-  }
-
-  const updateAllergies = () => {
-    setAllAdd([])
   }
 
   const changeStatusWaiting = (cpt) => {
@@ -119,7 +124,6 @@ export default function FiltersSelection(props) {
       profiles[cpt].isWaiting = "none"
     }
     handleSaveWaiting()
-    EventEmitter.emit("changeSeparatorStatus")
   }
 
   const handleSaveWaiting = async () => {
