@@ -216,7 +216,11 @@ export default function RecipeSuggestion({ route, navigation })  {
             <SelectedIngredient
               ingredientList={ingredients}
               onEvent={handleChildEvent}/>
-                  <ScrollView style={{ marginTop: "6%" }} horizontal={true} contentContainerStyle={{ flexDirection: 'row' }}>
+            <View style={{width: "100%", paddingHorizontal: "10%", marginTop: "6%", flexDirection: "row", alignItems: "center"}}>
+              <Text style={{color: colors.cardDetail, fontSize: 12, flex: 0.63}}>Scroll/Swipe to see more Recipes</Text>
+              <Image source={require("../assets/images/angle_bracket_right.png")} style={{tintColor: colors.cardDetail, flex: 0.1, resizeMode: "contain", height: 20}}/>
+            </View>
+                  <ScrollView style={{ marginTop: "1%" }} horizontal={true} contentContainerStyle={{ flexDirection: 'row' }}>
                         {Array.isArray(selectedRecipes) && selectedRecipes.length === 0 ? (
                           <View style={styles.noRecipeView}>
                             <Text style={styles.textNoRecipe}>No recipes found with those ingredients:</Text>
