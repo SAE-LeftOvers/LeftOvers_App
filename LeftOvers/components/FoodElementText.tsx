@@ -14,7 +14,8 @@ const componentHeight = 60;
 const componentWidth = 280;
 
 
-export default function FoodElementText(props : FoodElementTextProps) {
+export default function FoodElementText(props : any) {
+
     const colors = useContext(ColorContext).colors
 
     const styles = StyleSheet.create({
