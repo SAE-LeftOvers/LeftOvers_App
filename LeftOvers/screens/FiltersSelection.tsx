@@ -14,10 +14,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function FiltersSelection(props) {
   const {colors} = useContext(ColorContext);
   const profilesHand = [
-        {name: "None", avatar: "logo.png", isActive: "none", isWaiting: "none"},
+        {name: "None", avatar: "logo.png", diets: [], allergies: [], isActive: "none", isWaiting: "none"},
   ]
+  const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
 
   const [profiles, setProfiles] = useState(profilesHand);
+  const [dieProfiles, setDieProfiles] = useState([])
+  const [allProfiles, setAllProfiles] = useState([])
+  const [dieAdd, setDieAdd] = useState([])
+  const [allAdd, setAllAdd] = useState([])
+  const [selectedDiets, setSelectedDiets] = useState([]);
 
   const handleGetProfiles = async () => {
     try {
@@ -30,16 +36,22 @@ export default function FiltersSelection(props) {
   }
 
   const fetchProfiles = async () => {
-      const existingProfiles = await handleGetProfiles();
-      setProfiles(existingProfiles);
+      const existingProfiles = await handleGetProfiles()
+      setProfiles(existingProfiles)
+      console.log("FetchProfiles:",profiles)
+      console.log("FetchProfiles const:",existingProfiles)
   };
 
   const subscription = EventEmitter.addListener('profileAdded', async () => {
-      fetchProfiles();
+      fetchProfiles()
   });
 
   useEffect(() => {
-      fetchProfiles();
+      fetchProfiles()
+      console.log("UseEffect:",profiles)
+      updateDiets()
+      setDieAdd(die.filter(isInProfileDiets))
+      updateAllergies()
   }, []);
 
   const handleSaveSelectedProfiles = async () => {
@@ -57,15 +69,47 @@ export default function FiltersSelection(props) {
         })
         await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
         EventEmitter.emit('selectedProfilesUpdated');
-        fetchProfiles();
+        updateDiets()
+        setDieAdd(die.filter(isInProfileDiets))
+        updateAllergies()
     } catch (error) {
         console.error('Error occured when updating active profiles:', error);
     }
   };
 
   const subscriptionUpdateSelectedProfiles = EventEmitter.addListener('selectedProfilesUpdated', async () => {
-      fetchProfiles();
+      fetchProfiles()
   });
+
+  const updateDiets = () => {
+    let dieTemp = []
+    let retType = true
+    profiles.forEach((profile) => {
+      if(profile.isActive == "flex"){
+        profile.diets.forEach((diet) => {
+          console.log("Diet:",diet)
+          retType = true
+          dieTemp.forEach((val) => {
+            if(val.value == diet.value){
+              retType = false
+            }
+          })
+          if(retType){
+            dieTemp.push({value: diet})
+          }
+        })
+      }
+    })
+    console.log("========================================")
+    console.log("DieTemp:",dieTemp)
+    setDieProfiles(dieTemp)
+    console.log("DieProfiles:",dieProfiles)
+    console.log("========================================")
+  }
+
+  const updateAllergies = () => {
+    setAllAdd([])
+  }
 
   const changeStatusWaiting = (cpt) => {
     if(profiles[cpt].isWaiting == "none"){
@@ -106,28 +150,19 @@ export default function FiltersSelection(props) {
   updateCptActive()
   updateCptWaiting()
 
-  const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
+  function isInProfileDiets(element) {
+    let retType = true
+    dieProfiles.forEach(function (diet) {
+      if(diet.value==element.value){
+        retType = false
+      }
+    })
+    return retType
+  }
 
-  const allProfiles = [{value: "Skimmed Milk"}, {value: "Nuts"}]
-  const dieProfiles = [{value: "Porkless"}, {value: "Pescatarian"}]
-
-  function isInProfileDiets(element, index, array) {
-       let retType = true
-       dieProfiles.forEach(function (diets) {
-            if(diets.value==element.value){
-                retType = false
-            }
-       })
-       return retType
-    }
-  const dieAdd = die.filter(isInProfileDiets);
-  const allAdd = []
-
-    const [selectedDiets, setSelectedDiets] = useState([]);
-
-    const handleSelectedDiets = (selectedValues) => {
-        setSelectedDiets(selectedValues);
-    };
+  const handleSelectedDiets = (selectedValues) => {
+      setSelectedDiets(selectedValues);
+  };
 
   const styles = StyleSheet.create({
     container: {
