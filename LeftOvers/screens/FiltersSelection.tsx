@@ -37,7 +37,12 @@ export default function FiltersSelection(props) {
 
   const fetchProfiles = async () => {
       const existingProfiles = await handleGetProfiles()
-      setProfiles(existingProfiles)
+      if(existingProfiles.length != 0){
+        setProfiles(existingProfiles)
+      }
+      else{
+        setProfiles(profilesHand)
+      }
   };
 
   const subscription = EventEmitter.addListener('profileAdded', async () => {
@@ -101,7 +106,6 @@ export default function FiltersSelection(props) {
         profile.diets.forEach((diet) => {
           retType = true
           dieTemp.forEach((val) => {
-            console.log("Value DieTemp:",val)
             if(val.value == diet){
               retType = false
             }
