@@ -233,7 +233,7 @@ export default function HomePage({ navigation, props }) {
                             <Text style={styles.nbSelected}>{nbActiveProfiles()} selected</Text>
                         </View>
                         <View style={{marginTop: "3%"}}/>
-                        <ProfileSelection listProfile={profiles} disableSelection={true} changeStatusWaiting={() => console.log("Je n'affiche RIEN")} separator="none" changeStatusWaiting={() => console.log("Ignorer")}/>
+                        <ProfileSelection listProfile={profiles} disableSelection={true} changeStatusWaiting={(val) => console.log("Ignorer", val)}/>
                         <View style={{marginTop: "4%"}}/>
                         <ValidateButton title="Change Active Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('FiltersSelection')}/>
                         <View style={{marginTop: "3%"}}/>
