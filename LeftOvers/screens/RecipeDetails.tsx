@@ -25,6 +25,7 @@ import riceMeat from '../assets/images/Meat_and_Rice.png';
 import riceFish from '../assets/images/rice_fish.png'; 
 import riceEgg from '../assets/images/riceEgg.png';
 import brochette from '../assets/images/brochette.png'; 
+import pasta from '../assets/images/pasta.png';
 
 
 
@@ -48,7 +49,25 @@ export default function RecipeDetails({ route }) {
   const eggDictionary: string[] = ["egg", "omelette"];
   const soupDictionary: string[] = ["soup"];
   const pizzaDictionary: string[] = ["pizza"];
-  const dessertDictionary: string[] = ['cake', 'cupcake', 'muffin', 'cookie', 'brownie', 'pie', 'tart', 'macaron', 'doughnut', 'eclair', 'pancake', 'waffle', 'crepe', 'pudding', 'gelato', 'sorbet', 'ice cream', 'cheesecake'];
+  const dessertDictionary: string[] = ['cake', 'cupcake', 'muffin', 'cookie', 'brownie', 'pie', 'tart', 'macaron', 'doughnut', 'eclair', 'pancake', 'waffle', 'crepe', 'pudding', 'gelato', 'sorbet', 'ice cream', 'cheesecake', 'sugar'];
+  const pastaDictionary: string[] = [
+    'pasta',
+    'spaghetti',
+    'penne',
+    'fettuccine',
+    'macaroni',
+    'rigatoni',
+    'farfalle',
+    'linguine',
+    'lasagne',
+    'ravioli',
+    'tortellini',
+    'gnocchi',
+    'spaetzle',
+    'noodles',
+    'spatzle',
+    'spatzen',
+  ];
 
   const imagesDictionary = {
     meat: meatDictionary,
@@ -60,6 +79,7 @@ export default function RecipeDetails({ route }) {
     pizza : pizzaDictionary,
     soup : soupDictionary,
     dessert : dessertDictionary,
+    pasta : pastaDictionary,
     unknown: [],
   };
 
@@ -123,6 +143,8 @@ export default function RecipeDetails({ route }) {
         return fish;
       case 'vegetables':
         return vegan;
+      case 'pasta':
+        return pasta;
       case 'MeatAndVegetables':
         return meat_with_vegetable;
       case 'FishAndMeat':
