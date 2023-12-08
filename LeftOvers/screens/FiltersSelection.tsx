@@ -84,7 +84,6 @@ export default function FiltersSelection(props) {
         })
         await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
         fetchProfiles()
-        console.log("handleSaveSelectedProfiles: __________________________________________________")
         EventEmitter.emit("selectedProfilesUpdated")
     } catch (error) {
         console.error('Error occured when updating active profiles:', error);
@@ -95,8 +94,8 @@ export default function FiltersSelection(props) {
       updateDiets()
       updateAllergies()
       EventEmitter.emit("updateDietsAllergies")
-      console.log("Filters Selection: -------------------------------------------------")
       isSelectedProfilesUpdated = true
+      console.log("Filters Selection: ---------------------------------------------------")
       subscriptionUpdateProfiles.remove();
       EventEmitter.removeAllListeners('profileAdded')
       EventEmitter.removeAllListeners('updateDietsAllergies')
@@ -111,12 +110,12 @@ export default function FiltersSelection(props) {
         profile.diets.forEach((diet) => {
           retType = true
           dieTemp.forEach((val) => {
-            if(val.value == diet){
+            if(val == diet){
               retType = false
             }
           })
           if(retType){
-            dieTemp.push({value: diet})
+            dieTemp.push(diet)
           }
         })
       }
@@ -132,12 +131,12 @@ export default function FiltersSelection(props) {
         profile.allergies.forEach((allergy) => {
           retType = true
           allTemp.forEach((val) => {
-            if(val.value == allergy){
+            if(val == allergy){
               retType = false
             }
           })
           if(retType){
-            allTemp.push({value: allergy})
+            allTemp.push(allergy)
           }
         })
       }
@@ -185,8 +184,8 @@ export default function FiltersSelection(props) {
 
   function isInProfileDiets(element) {
     let retType = true
-    dieProfiles.forEach(function (diet) {
-      if(diet.value==element.value){
+    dieProfiles.forEach((diet) => {
+      if(diet==element.value){
         retType = false
       }
     })
@@ -305,9 +304,9 @@ export default function FiltersSelection(props) {
                         <Text style={styles.filters}>Additional Filters</Text>
                         <Text style={styles.nbSelected}>{dieAdd.length} available</Text>
                     </View>
-                    <ListSelect title="Diets" content={dieAdd} setSelected={handleSelectedDiets}/>
+                    <ListSelect title="Additional Diets" content={dieAdd} setSelected={handleSelectedDiets}/>
                     <View style={{marginTop: "3%"}}/>
-                    <ListWithoutSelect title="Allergies" content={allAdd}></ListWithoutSelect>
+                    <ListWithoutSelect title="Additional Allergies" content={allAdd}></ListWithoutSelect>
                     <View style={{marginTop: "3%"}}/>
                     <ValidateButton title="Add Allergy" image="plus.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("IngredientSelection")}></ValidateButton>
                 </View>

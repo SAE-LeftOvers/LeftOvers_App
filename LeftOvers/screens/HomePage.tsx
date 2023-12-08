@@ -121,7 +121,6 @@ export default function HomePage({ navigation, props }) {
 
     const subscriptionUpdateSelectedProfile  = EventEmitter.addListener('selectedProfilesUpdated', async () => {
         fetchProfiles();
-        console.log("Home Page: ===================================================================")
         subscriptionUpdateSelectedProfile.remove();
         EventEmitter.removeAllListeners('profileAdded')
         EventEmitter.removeAllListeners('profileDeleted')
