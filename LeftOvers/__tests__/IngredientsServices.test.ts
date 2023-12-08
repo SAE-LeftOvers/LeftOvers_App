@@ -29,7 +29,7 @@ describe('IngredientService', () => {
         const result = await ingredient_service.getfilteredIngredient('car')
         let test = true
         for (let ingredient of result) {
-            if (ingredient.name.includes('car')) {
+            if (!ingredient.name.includes('car')) {
                 test = false
             }
         }
