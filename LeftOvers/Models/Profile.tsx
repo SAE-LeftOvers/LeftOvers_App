@@ -27,4 +27,4 @@ export default class Profile {
     get diets(): string[]{
         return this._diets;
     }
-  }
+}
