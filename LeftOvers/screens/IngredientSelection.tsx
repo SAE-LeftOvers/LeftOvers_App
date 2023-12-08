@@ -9,7 +9,7 @@ import IngredientService from '../Services/Ingredients/IngredientsServices';
 import ColorContext from '../theme/ColorContext';
 import ValidateButton from '../components/ValidateButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import EventEmitter from './EventEmitter';
+import eventEmitter from './EventEmitter';
 
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
@@ -50,8 +50,7 @@ export default function IngredientSelection(props) {
 
 const loadIngredients = async () => {
     try {
-      const ingredients = await ingredientService.getAllIngredient();
-      setResponse(ingredients);
+      setResponse(await ingredientService.getAllIngredient());
     } catch (error) {
       console.log(error);
     } finally {
@@ -107,7 +106,7 @@ const fetchAvailableIngredient = async () => {
         setSelectedIngredients(existingAvailableIngredient);
     }
     else{
-        setSelectedIngredients([{value: "None"}])
+        setSelectedIngredients([new Ingredient(-1, "None")])
     }
 };
 
@@ -119,7 +118,7 @@ const fetchAvailableIngredient = async () => {
         existingAvailableIngredient = existingAvailableIngredient ? JSON.parse(existingAvailableIngredient) : [];
         const updatedAvailableIngredient = [...existingAvailableIngredient, newIngredient];
         await AsyncStorage.setItem('ingredient', JSON.stringify(updatedAvailableIngredient));
-        EventEmitter.emit('ingredientAdded');
+        eventEmitter.emit('ingredientAdded');
         fetchAvailableIngredient();
         console.log('Ingredient Added:', newIngredient);
         ChangeAvailableSize(false)
@@ -134,6 +133,7 @@ const fetchAvailableIngredient = async () => {
     try{
       const updatedIngredients = selectedIngredients.filter((ingredient) => ingredient.id !== idIngredient);
       await AsyncStorage.setItem('ingredient', JSON.stringify(updatedIngredients));
+      eventEmitter.emit('ingredientDeleted');
       fetchAvailableIngredient();
       setSelectedIngredients(updatedIngredients);
       ChangeAvailableSize(true)
@@ -166,7 +166,7 @@ const fetchAvailableIngredient = async () => {
           setAvailableSize(90)
         }
         else if (selectedIngredients.length == 1){
-          if(selectedIngredients[0].value == "None"){
+          if(selectedIngredients[0].name == "None"){
             setAvailableSize(90)
           }
           else{
