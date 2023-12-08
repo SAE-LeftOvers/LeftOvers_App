@@ -29,10 +29,11 @@ export default function Profiles({navigation, props}) {
 
     const handleDeleteProfile = async (index) => {
         try {
-            const updatedProfiles = profiles.filter((profile, i) => i !== index);
-            await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
-            eventEmitter.emit('profileDeleted');
-            fetchProfiles();
+            // const updatedProfiles = profiles.filter((profile, i) => i !== index);
+            // await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+            // eventEmitter.emit('profileDeleted');
+
+            profileService.delProfile(index)
             setSelectedProfileIndex(index);
             erasePopUp();
         } catch (error) {
@@ -46,9 +47,16 @@ export default function Profiles({navigation, props}) {
 
     const subscription = eventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
-        console.log("Profiles sub Added: ------------------------------------")
         subscription.remove();
         eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
+    });
+
+    const subscriptionDeletedProfile = eventEmitter.addListener('profileDeleted', async () => {
+        fetchProfiles();
+        subscriptionDeletedProfile.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
     });
 
     useEffect(() => {
