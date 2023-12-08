@@ -1,19 +1,18 @@
-import Profil from "../../Models/Profil";
+import Profile from "../../Models/Profile";
 import IProfileService from "./IProfileService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class ProfileService implements IProfileService {
-    async getProfiles(): Promise<Profil[]> {
+    async getProfiles(): Promise<Profile[]> {
         const results = await AsyncStorage.getItem('profiles');
-        const tmp = JSON.parse(results)
-        let existingProfiles: Profil[] = []
-        for (let item of tmp) {
-            existingProfiles.push(new Profil(item._name, item._avatar, item._allergy, item._diets))
+        const existingProfiles = JSON.parse(results)
+        if(existingProfiles.length == 0){
+            existingProfiles.push(new Profile("None", "logo.png", [], [], "none", "none"))
         }
         return existingProfiles;
     }
 
-    async addProfile(new_profile : Profil): Promise<boolean> {
+    async addProfile(new_profile : Profile): Promise<boolean> {
         const existingProfiles = await this.getProfiles()
         for (let current_profile of existingProfiles) { 
             if (current_profile.name == new_profile.name) {

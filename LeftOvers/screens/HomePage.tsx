@@ -2,17 +2,15 @@ import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, ScrollView } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
 import ValidateButton from '../components/ValidateButton';
 import ProfileSelection from '../components/ProfileSelection';
 import FoodElementText from '../components/FoodElementText';
 import ColorContext from '../theme/ColorContext';
-
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EventEmitter  from './EventEmitter';
+import ProfileService from '../Services/Profiles/ProfileService';
 
 export default function HomePage({ navigation, props }) {
     const colors = useContext(ColorContext).colors
@@ -24,6 +22,8 @@ export default function HomePage({ navigation, props }) {
 
     const [profiles, setProfiles] = useState(profilesHand);
     const [ingredientList, setIngredientList] = useState(ingredientListHand)
+
+    const profileService = new ProfileService()
 
     const handleGetProfiles = async () => {
         try {
@@ -45,7 +45,7 @@ export default function HomePage({ navigation, props }) {
         }
     }
 
-    const fetchProfiles = async () => {
+    const fetchProfiles2 = async () => {
         const existingProfiles = await handleGetProfiles();
         if (existingProfiles.length != 0){
             setProfiles(existingProfiles);
@@ -54,6 +54,10 @@ export default function HomePage({ navigation, props }) {
             setProfiles(profilesHand)
         }
     };
+
+    const fetchProfiles = async () => {
+        setProfiles(await profileService.getProfiles())
+    }
 
     const fetchAvailableIngredient = async () => {
         const existingAvailableIngredient = await handleGetAvailableIngredient();
@@ -67,6 +71,12 @@ export default function HomePage({ navigation, props }) {
 
     const subscriptionAddProfile = EventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
+        subscriptionAddProfile.remove();
+        EventEmitter.removeAllListeners('profileAdded')
+        EventEmitter.removeAllListeners('profileDeleted')
+        EventEmitter.removeAllListeners('ingredientAdded')
+        EventEmitter.removeAllListeners('ingredientDeleted')
+        EventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
     const subscriptionDeleteProfile = EventEmitter.addListener('profileDeleted', async () => {
@@ -76,10 +86,22 @@ export default function HomePage({ navigation, props }) {
         else{
             fetchProfiles();
         }
+        subscriptionDeleteProfile.remove();
+        EventEmitter.removeAllListeners('profileAdded')
+        EventEmitter.removeAllListeners('profileDeleted')
+        EventEmitter.removeAllListeners('ingredientAdded')
+        EventEmitter.removeAllListeners('ingredientDeleted')
+        EventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
     const subscriptionAddIngredient = EventEmitter.addListener('ingredientAdded', async () => {
         fetchAvailableIngredient();
+        subscriptionAddIngredient.remove();
+        EventEmitter.removeAllListeners('profileAdded')
+        EventEmitter.removeAllListeners('profileDeleted')
+        EventEmitter.removeAllListeners('ingredientAdded')
+        EventEmitter.removeAllListeners('ingredientDeleted')
+        EventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
     const subscriptionDeleteIngredient = EventEmitter.addListener('ingredientDeleted', async () => {
@@ -89,14 +111,27 @@ export default function HomePage({ navigation, props }) {
         else{
             fetchAvailableIngredient();
         }
+        subscriptionDeleteIngredient.remove();
+        EventEmitter.removeAllListeners('profileAdded')
+        EventEmitter.removeAllListeners('profileDeleted')
+        EventEmitter.removeAllListeners('ingredientAdded')
+        EventEmitter.removeAllListeners('ingredientDeleted')
+        EventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
     const subscriptionUpdateSelectedProfile  = EventEmitter.addListener('selectedProfilesUpdated', async () => {
         fetchProfiles();
+        console.log("Home Page: ===================================================================")
+        subscriptionUpdateSelectedProfile.remove();
+        EventEmitter.removeAllListeners('profileAdded')
+        EventEmitter.removeAllListeners('profileDeleted')
+        EventEmitter.removeAllListeners('ingredientAdded')
+        EventEmitter.removeAllListeners('ingredientDeleted')
+        EventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
     useEffect(() => {
-        AsyncStorage.clear()
+        //AsyncStorage.clear()
         fetchProfiles();
         if(profiles.length == 0){
             setProfiles(profilesHand)

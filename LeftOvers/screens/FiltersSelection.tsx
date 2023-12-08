@@ -24,6 +24,7 @@ export default function FiltersSelection(props) {
   const [dieAdd, setDieAdd] = useState([])
   const [allAdd, setAllAdd] = useState([])
   const [selectedDiets, setSelectedDiets] = useState([])
+  let isProfileAdded = false, isUpdateDietsAllergies = false, isSelectedProfilesUpdated = false
 
   const handleGetProfiles = async () => {
     try {
@@ -45,30 +46,30 @@ export default function FiltersSelection(props) {
       }
   };
 
-  const subscription = EventEmitter.addListener('profileAdded', async () => {
+  const subscriptionAddProfile = EventEmitter.addListener('profileAdded', async () => {
       fetchProfiles()
+      console.log("Technique de Shinobi Anti-CodeSmell", selectedDiets)
+      isProfileAdded = true
+      subscriptionAddProfile.remove()
+      EventEmitter.removeAllListeners('profileAdded')
+      EventEmitter.removeAllListeners('updateDietsAllergies')
+      EventEmitter.removeAllListeners('selectedProfilesUpdated')
   });
 
-  let cptSubscription = 1
-
-  const subscriptionUpdateDietsAllergies = EventEmitter.addListener('updateDietsAllergies', async () => {
-      updateDiets()
-      setDieAdd(die.filter(isInProfileDiets))
-      console.log("Passage Subsciption:", cptSubscription)
-  });
-
-  let cptSubscriptionDiets = 1
-
-  const subscriptionUpdateDiets = EventEmitter.addListener('updateDiets', async () => {
-      setDieAdd(die.filter(isInProfileDiets))
-      console.log("Passage SubsciptionDiets:", cptSubscriptionDiets)
-  });
+  const subscriptionUpdateDietsAllergies = EventEmitter.addListener('updateDietsAllergies', async() => {
+    setDieAdd(die.filter(isInProfileDiets))
+    setAllAdd([])
+    isUpdateDietsAllergies = true
+    subscriptionUpdateDietsAllergies.remove()
+    subscriptionUpdateProfiles.remove();
+    EventEmitter.removeAllListeners('updateDietsAllergies')
+  })
 
   useEffect(() => {
     fetchProfiles()
   }, []);
 
-  const handleSaveSelectedProfiles = async () => {
+  async function handleSaveSelectedProfiles(){
     try {
         profiles.forEach((val) => {
           if(val.isWaiting == "flex"){
@@ -83,19 +84,23 @@ export default function FiltersSelection(props) {
         })
         await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
         fetchProfiles()
-        updateDiets()
-        setDieAdd(die.filter(isInProfileDiets))
-        updateAllergies()
-        setAllAdd([])
+        console.log("handleSaveSelectedProfiles: __________________________________________________")
+        EventEmitter.emit("selectedProfilesUpdated")
     } catch (error) {
         console.error('Error occured when updating active profiles:', error);
     }
   };
 
-  const subscriptionUpdateSelectedProfiles = EventEmitter.addListener('selectedProfilesUpdated', async () => {
-      fetchProfiles()
+  const subscriptionUpdateProfiles = EventEmitter.addListener('selectedProfilesUpdated', async () => {
       updateDiets()
-      setDieAdd(die.filter(isInProfileDiets))
+      updateAllergies()
+      EventEmitter.emit("updateDietsAllergies")
+      console.log("Filters Selection: -------------------------------------------------")
+      isSelectedProfilesUpdated = true
+      subscriptionUpdateProfiles.remove();
+      EventEmitter.removeAllListeners('profileAdded')
+      EventEmitter.removeAllListeners('updateDietsAllergies')
+      EventEmitter.removeAllListeners('selectedProfilesUpdated')
   });
 
   const updateDiets = () => {
@@ -138,7 +143,6 @@ export default function FiltersSelection(props) {
       }
     })
     setAllProfiles(allTemp)
-    console.log("Technique de Shinobi Anti-CodeSmell", selectedDiets)
   }
 
   const changeStatusWaiting = (cpt) => {
@@ -254,6 +258,22 @@ export default function FiltersSelection(props) {
   });
 
   const goBack = () => props.navigation.goBack();
+
+  if(isProfileAdded){
+    //EventEmitter.removeAllListeners('profileAdded')
+    //EventEmitter.removeAllListeners('updateDietsAllergies')
+    //EventEmitter.removeAllListeners('selectedProfilesUpdated')
+  }
+  if(isUpdateDietsAllergies){
+    //EventEmitter.removeAllListeners('profileAdded')
+    //EventEmitter.removeAllListeners('updateDietsAllergies')
+    //EventEmitter.removeAllListeners('selectedProfilesUpdated')
+  }
+  if(isSelectedProfilesUpdated){
+    //EventEmitter.removeAllListeners('profileAdded')
+    //EventEmitter.removeAllListeners('updateDietsAllergies')
+    //EventEmitter.removeAllListeners('selectedProfilesUpdated')
+  }
 
   return (
     <SafeAreaProvider style={{flex: 1}}>

@@ -58,6 +58,8 @@ export default function Profiles({navigation, props}) {
 
     const subscription = EventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
+        subscription.remove();
+        EventEmitter.removeAllListeners('profileAdded')
     });
 
     useEffect(() => {

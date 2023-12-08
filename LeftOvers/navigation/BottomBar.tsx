@@ -40,7 +40,7 @@ export default function BottomBar({ state, descriptors, navigation }) {
             bottom: 0,
             right: 0,
             left: 0,
-            height: "8%",
+            height: 60,
             backgroundColor: theme === 'dark' ? "#3F3C42" : "transparent"
         },
         BottomBarBlurContainer: {
