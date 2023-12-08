@@ -15,9 +15,6 @@ export default function ModifyProfile(props) {
   const [profile, setProfile] = useState(null);
   const route = useRoute();
 
-
-
-
   const handleGetProfileByName = async (profileName) => {
     try {
       const existingProfiles = await AsyncStorage.getItem('profiles');
@@ -33,9 +30,9 @@ export default function ModifyProfile(props) {
   };
 
   const fetchProfiles = async () => {
-    const selectedProfil = await handleGetProfileByName(route.params);
-    setProfile(selectedProfil);
-};
+      const selectedProfil = await handleGetProfileByName(route.params);
+      setProfile(selectedProfil);
+  };
 
 useEffect(() => {
   fetchProfiles();

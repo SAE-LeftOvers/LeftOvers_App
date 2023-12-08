@@ -1,10 +1,11 @@
 import Profile from "../../Models/Profile";
 import IProfileService from "./IProfileService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import eventEmitter from "../../screens/EventEmitter";
 
 export default class ProfileService implements IProfileService {
     async getProfiles(): Promise<Profile[]> {
-        const results = await AsyncStorage.getItem('profiles');
+        const results = await AsyncStorage.getItem('profiles')
         const existingProfiles = JSON.parse(results)
         if(existingProfiles.length == 0){
             existingProfiles.push(new Profile("None", "logo.png", [], [], "none", "none"))
@@ -12,15 +13,12 @@ export default class ProfileService implements IProfileService {
         return existingProfiles;
     }
 
-    async addProfile(new_profile : Profile): Promise<boolean> {
-        const existingProfiles = await this.getProfiles()
-        for (let current_profile of existingProfiles) { 
-            if (current_profile.name == new_profile.name) {
-                console.log("Tried to create a profil already existing !")
-                return false
-            }
-        }
-        await AsyncStorage.setItem('profiles', JSON.stringify([...existingProfiles, new_profile]))
+    async addProfile(newProfile : Profile): Promise<boolean> {
+        let existingProfiles = await AsyncStorage.getItem('profiles');
+        existingProfiles = existingProfiles ? JSON.parse(existingProfiles) : [];
+        const updatedProfiles = [...existingProfiles, newProfile];
+        await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+        eventEmitter.emit("profileAdded")
         return true
     }
 

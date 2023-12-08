@@ -2,14 +2,14 @@ import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, View, Text, ScrollView, useWindowDimensions} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
 import ValidateButton from '../components/ValidateButton';
 import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ProfileSelection from '../components/ProfileSelection';
 import ColorContext from '../theme/ColorContext';
-import EventEmitter from './EventEmitter';
+import eventEmitter from './EventEmitter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProfileService from '../Services/Profiles/ProfileService';
 
 export default function FiltersSelection(props) {
   const {colors} = useContext(ColorContext);
@@ -17,52 +17,33 @@ export default function FiltersSelection(props) {
     {name: "None", avatar: "logo.png", diets: [], allergies: [], isActive: "none", isWaiting: "none"},
   ]
   const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
-
+  const profileService = new ProfileService()
   const [profiles, setProfiles] = useState(profilesHand);
   const [dieProfiles, setDieProfiles] = useState([])
   const [allProfiles, setAllProfiles] = useState([])
   const [dieAdd, setDieAdd] = useState([])
   const [allAdd, setAllAdd] = useState([])
   const [selectedDiets, setSelectedDiets] = useState([])
-  let isProfileAdded = false, isUpdateDietsAllergies = false, isSelectedProfilesUpdated = false
-
-  const handleGetProfiles = async () => {
-    try {
-        const existingProfiles = await AsyncStorage.getItem('profiles');
-        return JSON.parse(existingProfiles) || [];
-    } catch (error) {
-        console.log("Error occured during GetProfiles", error);
-        return [];
-    }
-  }
 
   const fetchProfiles = async () => {
-      const existingProfiles = await handleGetProfiles()
-      if(existingProfiles.length != 0){
-        setProfiles(existingProfiles)
-      }
-      else{
-        setProfiles(profilesHand)
-      }
-  };
+      setProfiles(await profileService.getProfiles())
+  }
 
-  const subscriptionAddProfile = EventEmitter.addListener('profileAdded', async () => {
+  const subscriptionAddProfile = eventEmitter.addListener('profileAdded', async () => {
       fetchProfiles()
       console.log("Technique de Shinobi Anti-CodeSmell", selectedDiets)
-      isProfileAdded = true
       subscriptionAddProfile.remove()
-      EventEmitter.removeAllListeners('profileAdded')
-      EventEmitter.removeAllListeners('updateDietsAllergies')
-      EventEmitter.removeAllListeners('selectedProfilesUpdated')
+      eventEmitter.removeAllListeners('profileAdded')
+      eventEmitter.removeAllListeners('updateDietsAllergies')
+      eventEmitter.removeAllListeners('selectedProfilesUpdated')
   });
 
-  const subscriptionUpdateDietsAllergies = EventEmitter.addListener('updateDietsAllergies', async() => {
+  const subscriptionUpdateDietsAllergies = eventEmitter.addListener('updateDietsAllergies', async() => {
     setDieAdd(die.filter(isInProfileDiets))
     setAllAdd([])
-    isUpdateDietsAllergies = true
     subscriptionUpdateDietsAllergies.remove()
     subscriptionUpdateProfiles.remove();
-    EventEmitter.removeAllListeners('updateDietsAllergies')
+    eventEmitter.removeAllListeners('updateDietsAllergies')
   })
 
   useEffect(() => {
@@ -84,22 +65,21 @@ export default function FiltersSelection(props) {
         })
         await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
         fetchProfiles()
-        EventEmitter.emit("selectedProfilesUpdated")
+        eventEmitter.emit("selectedProfilesUpdated")
     } catch (error) {
         console.error('Error occured when updating active profiles:', error);
     }
   };
 
-  const subscriptionUpdateProfiles = EventEmitter.addListener('selectedProfilesUpdated', async () => {
+  const subscriptionUpdateProfiles = eventEmitter.addListener('selectedProfilesUpdated', async () => {
       updateDiets()
       updateAllergies()
-      EventEmitter.emit("updateDietsAllergies")
-      isSelectedProfilesUpdated = true
+      eventEmitter.emit("updateDietsAllergies")
       console.log("Filters Selection: ---------------------------------------------------")
       subscriptionUpdateProfiles.remove();
-      EventEmitter.removeAllListeners('profileAdded')
-      EventEmitter.removeAllListeners('updateDietsAllergies')
-      EventEmitter.removeAllListeners('selectedProfilesUpdated')
+      eventEmitter.removeAllListeners('profileAdded')
+      eventEmitter.removeAllListeners('updateDietsAllergies')
+      eventEmitter.removeAllListeners('selectedProfilesUpdated')
   });
 
   const updateDiets = () => {
@@ -257,22 +237,6 @@ export default function FiltersSelection(props) {
   });
 
   const goBack = () => props.navigation.goBack();
-
-  if(isProfileAdded){
-    //EventEmitter.removeAllListeners('profileAdded')
-    //EventEmitter.removeAllListeners('updateDietsAllergies')
-    //EventEmitter.removeAllListeners('selectedProfilesUpdated')
-  }
-  if(isUpdateDietsAllergies){
-    //EventEmitter.removeAllListeners('profileAdded')
-    //EventEmitter.removeAllListeners('updateDietsAllergies')
-    //EventEmitter.removeAllListeners('selectedProfilesUpdated')
-  }
-  if(isSelectedProfilesUpdated){
-    //EventEmitter.removeAllListeners('profileAdded')
-    //EventEmitter.removeAllListeners('updateDietsAllergies')
-    //EventEmitter.removeAllListeners('selectedProfilesUpdated')
-  }
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
