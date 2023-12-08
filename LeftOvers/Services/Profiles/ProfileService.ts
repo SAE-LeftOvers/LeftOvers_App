@@ -5,6 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class ProfileService implements IProfileService {
     async getProfiles(): Promise<Profile[]> {
         const results = await AsyncStorage.getItem('profiles');
+        if (results == null) {
+            return []
+        }
         const tmp = JSON.parse(results)
         let existingProfiles: Profile[] = []
         for (let item of tmp) {
