@@ -33,35 +33,23 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
     ## Version Light
 
 <div align = center>
-  <img src="Images/Screens/White/home.jpg" alt="Home" height="300" /><br />
-  Home Page
-  <img src="Images/Screens/White/profil.jpg" alt="Profil" height="300" /><br />
-  Profiles
-  <img src="Images/Screens/White/modifyProfil.jpg" alt="Create" height="300" /><br />
-  Profile Creation
-  <img src="Images/Screens/White/ingredientSelection.jpg" alt="Selection" height="300" /><br />
-  Ingredients Selection
-  <img src="Images/Screens/White/recipeSuggestion.jpg" alt="Suggestion" height="300" /><br />
-  Recipes Suggestion
-  <img src="Images/Screens/White/recipeDetail.jpg" alt="Details" height="300" /><br />
-  Recipe Details 
+  <img src="Images/Screens/White/home.jpg" alt="Home" height="300" />
+  <img src="Images/Screens/White/profil.jpg" alt="Profil" height="300" />
+  <img src="Images/Screens/White/modifyProfil.jpg" alt="Create" height="300" /><br/>
+  <img src="Images/Screens/White/ingredientSelection.jpg" alt="Selection" height="300" />
+  <img src="Images/Screens/White/recipeSuggestion.jpg" alt="Suggestion" height="300" />
+  <img src="Images/Screens/White/recipeDetail.jpg" alt="Details" height="300" /> 
 </div>
 
     ## Version Sombre 
 
 <div align = center>
-  <img src="Images/Screens/Black/home.jpg" alt="Home" height="300" /><br />
-  Home Page
-  <img src="Images/Screens/Black/profil.jpg" alt="Profil" height="300" /><br />
-  Profiles
-  <img src="Images/Screens/Black/modifyProfil.jpg" alt="Create" height="300" /><br />
-  Profile Creation
-  <img src="Images/Screens/Black/ingredientSelection.jpg" alt="Selection" height="300" /><br />
-  Ingredients Selection
-  <img src="Images/Screens/Black/recipeSuggestion.jpg" alt="Suggestion" height="300" /><br />
-  Recipes Suggestion
-  <img src="Images/Screens/Black/recipeDetail.jpg" alt="Details" height="300" /><br />
-  Recipe Details 
+  <img src="Images/Screens/Black/home.jpg" alt="Home" height="300" />
+  <img src="Images/Screens/Black/profil.jpg" alt="Profil" height="300" />
+  <img src="Images/Screens/Black/createProfil.jpg" alt="Create" height="300" /><br/>
+  <img src="Images/Screens/Black/ingredientSelection.jpg" alt="Selection" height="300" />
+  <img src="Images/Screens/Black/recipeSuggestion.jpg" alt="Suggestion" height="300" />
+  <img src="Images/Screens/Black/recipeDetail.jpg" alt="Details" height="300" />
 </div>
 
 # Environnement de Travail
