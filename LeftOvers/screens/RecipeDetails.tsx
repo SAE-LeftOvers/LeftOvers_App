@@ -102,7 +102,6 @@ export default function RecipeDetails({ route }) {
       return categories[0];
     }
   
-    console.log("LA LISTE DES CATEGORY : " + categories)
     let bestMatch = { category: '', similarity: 0 };
 
       for (const [name, categoriesList] of Object.entries(categoryMappings)) {
@@ -176,7 +175,7 @@ export default function RecipeDetails({ route }) {
         const recipe = await recipesService.getRecipeById(recipeId);
         setResponse(recipe);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally{
         setIsLoading(false)
       }

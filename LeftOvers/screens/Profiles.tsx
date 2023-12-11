@@ -3,22 +3,20 @@ import { StyleSheet, View, Modal, Pressable, Text, Image, ScrollView, useWindowD
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+import ProfileService from '../Services/Profiles/ProfileService';
 import ProfileDetails from '../components/ProfileDetails';
 import ColorContext from '../theme/ColorContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import  EventEmitter  from './EventEmitter';
+import eventEmitter  from './EventEmitter';
 import { PaperProvider, Portal } from 'react-native-paper';
 
 export default function Profiles({navigation, props}) {
     const colors = useContext(ColorContext).colors
-    
+    const profileService = new ProfileService()
     const [visible, setVisible] = useState(false);
     const [profiles, setProfiles] = useState([]);
     const [selectedProfileIndex, setSelectedProfileIndex] = useState(null);
 
     const goDetails = (name: string) => navigation.navigate('ProfileCreation', name);
-
 
     const raisePopUp = (index) => {
         setSelectedProfileIndex(index)
@@ -30,10 +28,7 @@ export default function Profiles({navigation, props}) {
 
     const handleDeleteProfile = async (index) => {
         try {
-            const updatedProfiles = profiles.filter((profile, i) => i !== index);
-            await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
-            EventEmitter.emit('profileDeleted');
-            fetchProfiles();
+            profileService.delProfile(index)
             setSelectedProfileIndex(index);
             erasePopUp();
         } catch (error) {
@@ -41,23 +36,22 @@ export default function Profiles({navigation, props}) {
         }
     };
 
-    const handleGetProfiles = async () => {
-        try {
-            const existingProfiles = await AsyncStorage.getItem('profiles');
-            return JSON.parse(existingProfiles) || [];
-        } catch (error) {
-            console.log("Error occured during GetProfiles", error);
-            return [];
-        }
+    const fetchProfiles = async () => {
+        setProfiles(await profileService.getProfiles())
     }
 
-    const fetchProfiles = async () => {
-        const existingProfiles = await handleGetProfiles();
-        setProfiles(existingProfiles);
-    };
-
-    const subscription = EventEmitter.addListener('profileAdded', async () => {
+    const subscription = eventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
+        subscription.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
+    });
+
+    const subscriptionDeletedProfile = eventEmitter.addListener('profileDeleted', async () => {
+        fetchProfiles();
+        subscriptionDeletedProfile.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
     });
 
     useEffect(() => {

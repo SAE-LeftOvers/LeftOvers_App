@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, Pressable, Text, View, Image, ScrollView, ImageSourcePropType} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, Pressable, Text, View, Image, ScrollView} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import Union_left from '../assets/images/Union_left.png';
 import Union_right from '../assets/images/Union_right.png';
@@ -255,7 +255,7 @@ export default function RecipeElement(props: RecipeElementProps) {
                 <Text style={styles.text}>Description</Text>
                 <Image source={Union_right} style={{width: "27%", marginLeft: "3%", resizeMode: "contain"}}/>
             </View>
-            <ScrollView style={{marginTop: "3%", overflow: "hidden"}}>
+            <ScrollView style={{marginTop: "3%", overflow: "hidden", maxHeight: 70}}>
                 <Text style={styles.smallText}>{props.recipe.description}</Text>
             </ScrollView>
         </View>
@@ -263,7 +263,5 @@ export default function RecipeElement(props: RecipeElementProps) {
         <Text style={styles.duration}>{convertToHoursMinutes(props.recipe.time_to_cook)}</Text>
       </View>
     </Pressable>
-  ); 
-
-  
+  );
 }

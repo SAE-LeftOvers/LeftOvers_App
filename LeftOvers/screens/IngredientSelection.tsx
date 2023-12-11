@@ -9,7 +9,7 @@ import IngredientService from '../Services/Ingredients/IngredientsServices';
 import ColorContext from '../theme/ColorContext';
 import ValidateButton from '../components/ValidateButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import EventEmitter from './EventEmitter';
+import eventEmitter from './EventEmitter';
 
 import plus from '../assets/images/plus.png';
 import moins from '../assets/images/minus.png';
@@ -37,7 +37,7 @@ export default function IngredientSelection(props) {
         setResponse(filtered);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -50,10 +50,9 @@ export default function IngredientSelection(props) {
 
 const loadIngredients = async () => {
     try {
-      const ingredients = await ingredientService.getAllIngredient();
-      setResponse(ingredients);
+      setResponse(await ingredientService.getAllIngredient());
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -80,7 +79,9 @@ const loadIngredients = async () => {
   const ChooseItem = React.memo(({ value }: { value: Ingredient }) => (
     <>
       <View style={styles.horizontalAlignment}>
-        <FoodElementText title={value.name} />
+        <Pressable onPress={() => RemoveIngredient(value.id)}>
+          <FoodElementText title={value.name}/>
+        </Pressable>
         <Pressable onPress={() => RemoveIngredient(value.id)}>
           <Image source={moins} style={{ width: 20, height: 20, tintColor: colors.cardDetail }} />
         </Pressable>
@@ -94,7 +95,7 @@ const loadIngredients = async () => {
         const existingAvailableIngredient = await AsyncStorage.getItem('ingredient');
         return JSON.parse(existingAvailableIngredient) || [];
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return [];
     }
 }
@@ -105,7 +106,7 @@ const fetchAvailableIngredient = async () => {
         setSelectedIngredients(existingAvailableIngredient);
     }
     else{
-        setSelectedIngredients([{value: "None"}])
+        setSelectedIngredients([new Ingredient(-1, "None")])
     }
 };
 
@@ -117,13 +118,14 @@ const fetchAvailableIngredient = async () => {
         existingAvailableIngredient = existingAvailableIngredient ? JSON.parse(existingAvailableIngredient) : [];
         const updatedAvailableIngredient = [...existingAvailableIngredient, newIngredient];
         await AsyncStorage.setItem('ingredient', JSON.stringify(updatedAvailableIngredient));
-        EventEmitter.emit('ingredientAdded');
+        eventEmitter.emit('ingredientAdded');
+        fetchAvailableIngredient();
         console.log('Ingredient Added:', newIngredient);
         ChangeAvailableSize(false)
       }
     }
     catch(error){
-      console.log("Error occured during the addition of Ingredient:", error)
+      console.error("Error occured during the addition of Ingredient:", error)
     }
   };
 
@@ -131,27 +133,15 @@ const fetchAvailableIngredient = async () => {
     try{
       const updatedIngredients = selectedIngredients.filter((ingredient) => ingredient.id !== idIngredient);
       await AsyncStorage.setItem('ingredient', JSON.stringify(updatedIngredients));
-      EventEmitter.emit('ingredientDeleted');
+      eventEmitter.emit('ingredientDeleted');
       fetchAvailableIngredient();
       setSelectedIngredients(updatedIngredients);
       ChangeAvailableSize(true)
     }
     catch (error){
-      console.log("Error occured during the suppression of Ingredient:", error)
+      console.error("Error occured during the suppression of Ingredient:", error)
     }
   };
-
-  const subscriptionAddIngredient = EventEmitter.addListener('ingredientAdded', async () => {
-    fetchAvailableIngredient();
-  });
-  const subscriptionDeleteIngredient = EventEmitter.addListener('ingredientDeleted', async () => {
-    if (selectedIngredients.length == 1){
-        setSelectedIngredients([{title: "None"}])
-    }
-    else{
-        fetchAvailableIngredient();
-    }
-  });
 
   const ChangeAvailableSize = (remove: boolean) => {
     if(remove){
@@ -176,7 +166,7 @@ const fetchAvailableIngredient = async () => {
           setAvailableSize(90)
         }
         else if (selectedIngredients.length == 1){
-          if(selectedIngredients[0].value == "None"){
+          if(selectedIngredients[0].name == "None"){
             setAvailableSize(90)
           }
           else{
@@ -197,7 +187,7 @@ const fetchAvailableIngredient = async () => {
       const ingredientsByLetter = await ingredientService.getIngredientByLetter(letter);
       setResponse(ingredientsByLetter);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

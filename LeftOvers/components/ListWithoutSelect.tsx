@@ -12,6 +12,11 @@ export default function ListWithoutSelect(props: ListProps) {
     const [selected, setSelected] = React.useState([]);
     const colors = useContext(ColorContext).colors;
 
+    let listContent = []
+    props.content.forEach((val) => {
+        listContent.push({value: val, disabled: true})
+    })
+
     const styles = StyleSheet.create({
         titleBar: {
             flexDirection: "row",
@@ -80,7 +85,7 @@ export default function ListWithoutSelect(props: ListProps) {
     return (
         <MultipleSelectList
             setSelected={(val) => setSelected(val)}
-            data={props.content}
+            data={listContent}
             save="value"
             search={false}
             arrowicon={<Image source={require("../assets/images/arrow.png")} style={styles.arrow}></Image>}
@@ -98,4 +103,3 @@ export default function ListWithoutSelect(props: ListProps) {
             label={props.title}/>
     );
 }
-

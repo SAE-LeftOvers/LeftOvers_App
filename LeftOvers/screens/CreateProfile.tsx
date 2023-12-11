@@ -6,9 +6,8 @@ import ValidateButton from '../components/ValidateButton';
 import ColorContext from '../theme/ColorContext';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ListSelect from '../components/ListSelect';
-import EventEmitter from './EventEmitter';
 import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProfileService from '../Services/Profiles/ProfileService';
 
 
 export default function CreateProfile(props) {
@@ -19,6 +18,7 @@ export default function CreateProfile(props) {
     const [avatar, setAvatar] = useState<string>('');
     const [selectedDiets, setSelectedDiets] = useState([]);
     const [selectedAllergies] = useState([])
+    const profileService = new ProfileService()
 
     const handleSelectedDiets = (selectedValues) => {
         setSelectedDiets(selectedValues);
@@ -32,9 +32,6 @@ export default function CreateProfile(props) {
             aspect: [4, 3],
             quality: 1,
         });
-      
-        console.log(result);
-      
         if (!result.canceled) {
             setAvatar(result.assets[0].uri);
         }
@@ -42,7 +39,7 @@ export default function CreateProfile(props) {
 
 
     let imageSource
-    if (props.avatar == ""){
+    if (avatar == ""){
         imageSource = require("../assets/images/logo.png")
     }
     else{
@@ -51,22 +48,15 @@ export default function CreateProfile(props) {
 
     const handleCreateProfile = async () => {
         try {
-          // Ton code pour récupérer les profils existants et ajouter un nouveau profil
           const newProfile = {
             name: name,
             avatar: avatar,
             diets: selectedDiets,
             allergies: all,
             isActive: "flex",
+            isWaiting: "none",
           };
-      
-          // Mettre à jour AsyncStorage avec le nouveau profil
-          let existingProfiles = await AsyncStorage.getItem('profiles');
-          existingProfiles = existingProfiles ? JSON.parse(existingProfiles) : [];
-          const updatedProfiles = [...existingProfiles, newProfile];
-          await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
-          EventEmitter.emit('profileAdded');
-          console.log('Profil créé :', newProfile);
+          profileService.addProfile(newProfile)
           props.navigation.goBack();
         } catch (error) {
             console.error('Erreur lors de la création du profil :', error);

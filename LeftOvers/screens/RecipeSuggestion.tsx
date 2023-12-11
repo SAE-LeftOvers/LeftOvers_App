@@ -30,7 +30,7 @@ export default function RecipeSuggestion({ route, navigation })  {
   const [colorFilters, setColorFilters] = useState(colors.cardDetail);
   const [selectedRecipes, setSelectedRecipes] = useState<Recipes[]>([]);
   const recipeService = new RecipesServices();
-  const { ingredients } = route.params; 
+  const {ingredients} = route.params; 
   const limitedList = ingredients.slice(minCpt, maxCpt);
 
   let selectedIngredients: string[]; 
@@ -99,7 +99,7 @@ export default function RecipeSuggestion({ route, navigation })  {
       }
     
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   };
 
@@ -114,7 +114,7 @@ export default function RecipeSuggestion({ route, navigation })  {
         //padding: "2%",
         paddingTop: 0,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
 
     background: {
@@ -153,7 +153,7 @@ export default function RecipeSuggestion({ route, navigation })  {
       height: "10%",
       width: "100%",
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-around',
       alignItems: 'center',
     },
 
@@ -162,6 +162,37 @@ export default function RecipeSuggestion({ route, navigation })  {
           overflow: "scroll",
           alignItems: "flex-start",
           justifyContent: "center",
+    },
+
+    noRecipeView: {
+      width: "90%",
+      padding: "5%",
+      borderRadius: 15,
+      borderWidth: 1,
+      borderColor: colors.blocBorder,
+      backgroundColor: colors.buttonBackground,
+      alignItems: "center",
+      justifyContent: "center",
+      height: "40%",
+      marginLeft: 12,
+    },
+    textNoRecipe: {
+      color: colors.cardElementBorder,
+      fontSize: 20,
+      textAlign: "center",
+    },
+    smallText: {
+      color: colors.cardDetail,
+      fontSize: 15,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    horizontalAlignmentNoRecipe: {
+      width: "100%",
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      flex: 0.9,
     },
   });
 
@@ -185,11 +216,22 @@ export default function RecipeSuggestion({ route, navigation })  {
             <SelectedIngredient
               ingredientList={ingredients}
               onEvent={handleChildEvent}/>
-                  <ScrollView style={{ marginTop: "6%" }} horizontal={true} contentContainerStyle={{ flexDirection: 'row' }}>
+            <View style={{width: "100%", paddingHorizontal: "10%", marginTop: "6%", flexDirection: "row", alignItems: "center"}}>
+              <Text style={{color: colors.cardDetail, fontSize: 12, flex: 0.63}}>Scroll/Swipe to see more Recipes</Text>
+              <Image source={require("../assets/images/angle_bracket_right.png")} style={{tintColor: colors.cardDetail, flex: 0.1, resizeMode: "contain", height: 20}}/>
+            </View>
+                  <ScrollView style={{ marginTop: "1%" }} horizontal={true} contentContainerStyle={{ flexDirection: 'row' }}>
                         {Array.isArray(selectedRecipes) && selectedRecipes.length === 0 ? (
-                          <Text>No recipes</Text>
+                          <View style={styles.noRecipeView}>
+                            <Text style={styles.textNoRecipe}>No recipes found with those ingredients:</Text>
+                            <ScrollView contentContainerStyle={styles.horizontalAlignmentNoRecipe}>
+                                {ingredients.length > 0 && ingredients.map((source, index) => (
+                                    <Text key={index} style={styles.smallText}>- {source.name} -</Text>
+                                ))}
+                            </ScrollView>
+                          </View>
                         ) : (
-                          selectedRecipes.map((recipe, index) => (
+                          selectedRecipes.map((recipe) => (
                             <View style={{ marginRight: 10, marginLeft: 20}} key={recipe.id}> 
                               <RecipeElement
                                 key={recipe.id}

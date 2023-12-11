@@ -1,30 +1,41 @@
 export default class Profile {
-    private _name: string;
-    private _avatar: string;
-    private _allergy: string[];
-    private _diets: string[];
+    public name: string;
+    public avatar: string;
+    public allergies: string[];
+    public diets: string[];
+    public isActive: string;
+    public isWaiting: string
 
-    constructor( name: string, avatar: string, allergy: string[], diets: string[]) {
-      this._name = name;
-      this._avatar = avatar;
-      this._allergy = allergy;
-      this._diets = diets;
+    constructor( name: string, avatar: string, allergies: string[], diets: string[], isActive: string, isWaiting: string) {
+      this.name = name;
+      this.avatar = avatar;
+      this.diets = diets;
+      this.allergies = allergies;
+      this.isActive = isActive;
+      this.isWaiting = isWaiting
     }
 
-    get name(): string {
-        return this._name;
-    }
+    // get name(): string {
+    //     return this._name;
+    // }
 
+    // get avatar(): string{
+    //     return this._avatar;
+    // }
 
-    get avatar(): string{
-        return this._avatar;
-    }
+    // get allergies(): string[]{
+    //     return this._allergies;
+    // }
 
-    get allergy(): string[]{
-        return this._allergy;
-    }
+    // get diets(): string[]{
+    //     return this._diets;
+    // }
 
-    get diets(): string[]{
-        return this._diets;
-    }
+    // get isActive(): string{
+    //     return this._isActive;
+    // }
+
+    // get isWaiting(): string{
+    //     return this._isWaiting;
+    // }
   }
