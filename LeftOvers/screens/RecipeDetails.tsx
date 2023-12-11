@@ -119,20 +119,15 @@ export default function RecipeDetails({ route }) {
 
   function getImageForRecipe(recipeName: string) {
     const categories = [];
-    console.log("NAAAAAME : " + recipeName)
   
     for (const [category, words] of Object.entries(imagesDictionary)) {
       const matchedWords = words.filter((word) => recipeName.toLowerCase().includes(word));
-      console.log("Matched Word : " + matchedWords)
       if (matchedWords.length > 0) {
         categories.push(category);
-        console.log(category)
       }
     }
   
-    console.log("ON ENTRE DANS LA 2EME FONCTION"); 
     const categoryName = getCategoryFromList(categories);
-    console.log("CategoryName à la fin : " + categoryName);
   
     switch (categoryName) {
       case 'meat':
@@ -179,7 +174,6 @@ export default function RecipeDetails({ route }) {
     const loadRecipe = async () => {
       try {
         const recipe = await recipesService.getRecipeById(recipeId);
-        console.log("Recipe.name: "+recipe.name)
         setResponse(recipe);
       } catch (error) {
         console.log(error);
