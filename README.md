@@ -1,60 +1,60 @@
 <div align = center>
 
-<img src="Images/LeftOvers_Logo.jpg" alt="Image de l'application" height="300" />
+<img src="Images/LeftOvers_Logo.jpg" alt="Application image" height="300" />
 
 </div>
 
-**Nom de l’application** : LeftOvers :pizza:
+**Name of the application** : LeftOvers :pizza:
 </br>
 
-**Thème de l’application** : Trouver des recettes faisables avec les ingredients à disposition.
+**Thème de l’application** : Suggest recipes with available ingredients.
 </br>
 
-**Récapitulation de notre application** : 👇
+**What is the application doing?** : 👇
 
 </br>
 
-:information_source: Une application mobile (Ios/Android), dans lequel les utilisateurs pourront choisir des aliments et l'application leur fournira une liste de recette adaptée.
+:information_source: A mobile application (IOS/Android) that enables users to choose ingredients in order to cook. The app will return a list of adapted recipes.
 
-# Répartition du Repository Git
+# Git Repository Repartition
 
-La racine de notre repo est composée de deux dossiers essentiels au projet:
+The Git root is made of two majors repositories for the project:
 
-[**LeftOvers**](LeftOvers) : **Toute la partie codage de l'application mobile**
+[**LeftOvers**](LeftOvers) : **The code part of the application**
 
-[**Images**](Images) : **Images de l'application**
+[**Images**](Images) : **Application's Images**
 
-👉 [**Solution de l'application**](LeftOvers/App.tsx)
+👉 [**Application's solution**](LeftOvers/App.tsx)
 
-# Fonctionnement
+# How it works?
 
-# Visuel de l'application
+# Application's Visual Chart
 
-    ## Version Light
+    ## Light Theme
 
 <div align = center>
   <img src="Images/Screens/White/home.jpg" alt="Home" height="300" />
-  <img src="Images/Screens/White/profil.jpg" alt="Profil" height="300" />
-  <img src="Images/Screens/White/modifyProfil.jpg" alt="Create" height="300" /><br/>
-  <img src="Images/Screens/White/ingredientSelection.jpg" alt="Selection" height="300" />
-  <img src="Images/Screens/White/recipeSuggestion.jpg" alt="Suggestion" height="300" />
-  <img src="Images/Screens/White/recipeDetail.jpg" alt="Details" height="300" /> 
+  <img src="Images/Screens/White/profil.jpg" alt="Profiles" height="300" />
+  <img src="Images/Screens/White/modifyProfil.jpg" alt="CreateProfile" height="300" /><br/>
+  <img src="Images/Screens/White/ingredientSelection.jpg" alt="IngredientSelection" height="300" />
+  <img src="Images/Screens/White/recipeSuggestion.jpg" alt="RecipeSuggestion" height="300" />
+  <img src="Images/Screens/White/recipeDetail.jpg" alt="RecipeDetails" height="300" /> 
 </div>
 
-    ## Version Sombre 
+    ## Dark Theme 
 
 <div align = center>
   <img src="Images/Screens/Black/home.jpg" alt="Home" height="300" />
-  <img src="Images/Screens/Black/profil.jpg" alt="Profil" height="300" />
-  <img src="Images/Screens/Black/createProfil.jpg" alt="Create" height="300" /><br/>
-  <img src="Images/Screens/Black/ingredientSelection.jpg" alt="Selection" height="300" />
-  <img src="Images/Screens/Black/recipeSuggestion.jpg" alt="Suggestion" height="300" />
-  <img src="Images/Screens/Black/recipeDetail.jpg" alt="Details" height="300" />
+  <img src="Images/Screens/Black/profil.jpg" alt="Profiles" height="300" />
+  <img src="Images/Screens/Black/createProfil.jpg" alt="CreateProfile" height="300" /><br/>
+  <img src="Images/Screens/Black/ingredientSelection.jpg" alt="IngredientSelection" height="300" />
+  <img src="Images/Screens/Black/recipeSuggestion.jpg" alt="RecipeSuggestion" height="300" />
+  <img src="Images/Screens/Black/recipeDetail.jpg" alt="RecipeDetails" height="300" />
 </div>
 
-# Environnement de Travail
+# Working Environment
 
-Support de l'application :
+Application's Support :
 
 <div align = center>
 
@@ -66,7 +66,7 @@ Support de l'application :
 </div>
 
 
-Technologies utilisées :
+Technologies Used :
 
 <div align = center>
 
@@ -90,7 +90,7 @@ IDE :
 
 </div>
 
-Moyen de communication :
+How do we communicate? :
 
 <div align = center>
 
@@ -116,16 +116,16 @@ Design :
 
 
 
-# Technicien en charge de l'application
+# Application Developers and Admins
 
-La composition pour le projet se voit réaliser par trois élèves de l'IUT d'Aubière:
+The team of the project is composed by three students from the Aubière's IUT in Computer Science:
 <br>
 ⚙️ Louison PARANT
 <br>
-⚙️ Rayhan HASSOU 
+⚙️ Rayhân HASSOU 
 <br>
 ⚙️ Remi REGNAULT 
 
 <div align = center>
-© FI Groupe 2
+© FI Group 2
 </div>
