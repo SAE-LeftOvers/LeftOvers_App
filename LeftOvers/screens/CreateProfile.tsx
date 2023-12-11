@@ -6,7 +6,6 @@ import ValidateButton from '../components/ValidateButton';
 import ColorContext from '../theme/ColorContext';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ListSelect from '../components/ListSelect';
-import EventEmitter from './EventEmitter';
 import * as ImagePicker from 'expo-image-picker';
 import ProfileService from '../Services/Profiles/ProfileService';
 
