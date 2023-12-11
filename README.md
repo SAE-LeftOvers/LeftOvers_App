@@ -30,7 +30,7 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
 
 # Visuel de l'application
 
-    ## Version Blanche
+    ## Version Light
 
 <div align = center>
 
