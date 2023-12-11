@@ -30,6 +30,12 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
 
 # Visuel de l'application
 
+    ## Version Blanche
+
+![Home](Images/Screens/White/home.jpg)
+
+    ## Version Sombre 
+
 # Environnement de Travail
 
 Support de l'application :
