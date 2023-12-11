@@ -25,16 +25,6 @@ export default function HomePage({ navigation, props }) {
 
     const profileService = new ProfileService()
 
-    const handleGetProfiles = async () => {
-        try {
-            const existingProfiles = await AsyncStorage.getItem('profiles');
-            return JSON.parse(existingProfiles) || [];
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
-    }
-
     const handleGetAvailableIngredient = async () => {
         try {
             const existingAvailableIngredient = await AsyncStorage.getItem('ingredient');

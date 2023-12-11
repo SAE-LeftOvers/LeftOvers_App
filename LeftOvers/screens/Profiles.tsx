@@ -6,7 +6,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ProfileService from '../Services/Profiles/ProfileService';
 import ProfileDetails from '../components/ProfileDetails';
 import ColorContext from '../theme/ColorContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import eventEmitter  from './EventEmitter';
 import { PaperProvider, Portal } from 'react-native-paper';
 
@@ -29,10 +28,6 @@ export default function Profiles({navigation, props}) {
 
     const handleDeleteProfile = async (index) => {
         try {
-            // const updatedProfiles = profiles.filter((profile, i) => i !== index);
-            // await AsyncStorage.setItem('profiles', JSON.stringify(updatedProfiles));
-            // eventEmitter.emit('profileDeleted');
-
             profileService.delProfile(index)
             setSelectedProfileIndex(index);
             erasePopUp();
