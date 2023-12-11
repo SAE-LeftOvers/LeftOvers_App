@@ -34,7 +34,34 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
 
 <div align = center>
 
-<img src="Images/Screens/White/home.jpg" alt="Home" height="300" />
+<p>
+  <img src="Images/Screens/White/home.jpg" alt="Home" height="300" /><br />
+  Home
+</p>
+<p>
+  <img src="Images/Screens/White/profil.jpg" alt="Profil" height="300" /><br />
+  Profil
+</p>
+<p>
+  <img src="Images/Screens/White/modifyProfil.jpg" alt="Create" height="300" /><br />
+  Création de profil
+</p>
+<p>
+  <img src="Images/Screens/White/ingredientSelection.jpg" alt="Selection" height="300" /><br />
+  Selection d'ingredients
+</p>
+<p>
+  <img src="Images/Screens/White/recipeSuggestion.jpg" alt="Suggestion" height="300" /><br />
+  Suggestion de recettes
+</p>
+<p>
+  <img src="Images/Screens/White/recipeDetail.jpg" alt="Details" height="300" /><br />
+  Détail d'une recette 
+</p>
+
+
+
+</div>
 
 </div>
 
