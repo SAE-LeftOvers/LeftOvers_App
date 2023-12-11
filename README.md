@@ -28,6 +28,8 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
 
 # Fonctionnement
 
+# Visuel de l'application
+
 # Environnement de Travail
 
 Support de l'application :
