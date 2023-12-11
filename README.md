@@ -1,6 +1,6 @@
 <div align = center>
 
-![Image de l'application](Images/LeftOvers_Logo.jpg)
+<img src="Images/LeftOvers_Logo.jpg" alt="Image de l'application" height="300" />
 
 </div>
 
@@ -32,7 +32,12 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
 
     ## Version Blanche
 
-![Home](Images/Screens/White/home.jpg)
+<div align = center>
+
+<img src="Images/Screens/White/home.jpg" alt="Home" height="300" />
+
+</div>
+
 
     ## Version Sombre 
 
