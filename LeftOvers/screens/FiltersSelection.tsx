@@ -2,14 +2,14 @@ import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, View, Text, ScrollView, useWindowDimensions} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
 import ValidateButton from '../components/ValidateButton';
 import ListSelect from '../components/ListSelect';
 import ListWithoutSelect from '../components/ListWithoutSelect';
 import ProfileSelection from '../components/ProfileSelection';
 import ColorContext from '../theme/ColorContext';
-import EventEmitter from './EventEmitter';
+import eventEmitter from './EventEmitter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProfileService from '../Services/Profiles/ProfileService';
 
 export default function FiltersSelection(props) {
   const {colors} = useContext(ColorContext);
@@ -17,7 +17,7 @@ export default function FiltersSelection(props) {
     {name: "None", avatar: "logo.png", diets: [], allergies: [], isActive: "none", isWaiting: "none"},
   ]
   const die = [{value: "Dairy free"}, {value: "Gluten free"}, {value: "Porkless"}, {value: "Vegan"}, {value: "Vegetarian"}, {value: "Pescatarian"}]
-
+  const profileService = new ProfileService()
   const [profiles, setProfiles] = useState(profilesHand);
   const [dieProfiles, setDieProfiles] = useState([])
   const [allProfiles, setAllProfiles] = useState([])
@@ -25,45 +25,31 @@ export default function FiltersSelection(props) {
   const [allAdd, setAllAdd] = useState([])
   const [selectedDiets, setSelectedDiets] = useState([])
 
-  const handleGetProfiles = async () => {
-    try {
-        const existingProfiles = await AsyncStorage.getItem('profiles');
-        return JSON.parse(existingProfiles) || [];
-    } catch (error) {
-        console.log("Error occured during GetProfiles", error);
-        return [];
-    }
+  const fetchProfiles = async () => {
+      setProfiles(await profileService.getProfiles())
   }
 
-  const fetchProfiles = async () => {
-      const existingProfiles = await handleGetProfiles()
-      setProfiles(existingProfiles)
-  };
-
-  const subscription = EventEmitter.addListener('profileAdded', async () => {
+  const subscriptionAddProfile = eventEmitter.addListener('profileAdded', async () => {
       fetchProfiles()
+      subscriptionAddProfile.remove()
+      eventEmitter.removeAllListeners('profileAdded')
+      eventEmitter.removeAllListeners('updateDietsAllergies')
+      eventEmitter.removeAllListeners('selectedProfilesUpdated')
   });
 
-  let cptSubscription = 1
-
-  const subscriptionUpdateDietsAllergies = EventEmitter.addListener('updateDietsAllergies', async () => {
-      updateDiets()
-      setDieAdd(die.filter(isInProfileDiets))
-      console.log("Passage Subsciption:", cptSubscription)
-  });
-
-  let cptSubscriptionDiets = 1
-
-  const subscriptionUpdateDiets = EventEmitter.addListener('updateDiets', async () => {
-      setDieAdd(die.filter(isInProfileDiets))
-      console.log("Passage SubsciptionDiets:", cptSubscriptionDiets)
-  });
+  const subscriptionUpdateDietsAllergies = eventEmitter.addListener('updateDietsAllergies', async() => {
+    setDieAdd(die.filter(isInProfileDiets))
+    setAllAdd([])
+    subscriptionUpdateDietsAllergies.remove()
+    subscriptionUpdateProfiles.remove();
+    eventEmitter.removeAllListeners('updateDietsAllergies')
+  })
 
   useEffect(() => {
     fetchProfiles()
   }, []);
 
-  const handleSaveSelectedProfiles = async () => {
+  async function handleSaveSelectedProfiles(){
     try {
         profiles.forEach((val) => {
           if(val.isWaiting == "flex"){
@@ -78,19 +64,20 @@ export default function FiltersSelection(props) {
         })
         await AsyncStorage.setItem('profiles', JSON.stringify(profiles));
         fetchProfiles()
-        updateDiets()
-        setDieAdd(die.filter(isInProfileDiets))
-        updateAllergies()
-        setAllAdd([])
+        eventEmitter.emit("selectedProfilesUpdated")
     } catch (error) {
-        console.error('Error occured when updating active profiles:', error);
+        console.error('Error occured when updating active profiles:', error, selectedDiets);
     }
   };
 
-  const subscriptionUpdateSelectedProfiles = EventEmitter.addListener('selectedProfilesUpdated', async () => {
-      fetchProfiles()
+  const subscriptionUpdateProfiles = eventEmitter.addListener('selectedProfilesUpdated', async () => {
       updateDiets()
-      setDieAdd(die.filter(isInProfileDiets))
+      updateAllergies()
+      eventEmitter.emit("updateDietsAllergies")
+      subscriptionUpdateProfiles.remove();
+      eventEmitter.removeAllListeners('profileAdded')
+      eventEmitter.removeAllListeners('updateDietsAllergies')
+      eventEmitter.removeAllListeners('selectedProfilesUpdated')
   });
 
   const updateDiets = () => {
@@ -101,13 +88,12 @@ export default function FiltersSelection(props) {
         profile.diets.forEach((diet) => {
           retType = true
           dieTemp.forEach((val) => {
-            console.log("Value DieTemp:",val)
-            if(val.value == diet){
+            if(val == diet){
               retType = false
             }
           })
           if(retType){
-            dieTemp.push({value: diet})
+            dieTemp.push(diet)
           }
         })
       }
@@ -123,18 +109,17 @@ export default function FiltersSelection(props) {
         profile.allergies.forEach((allergy) => {
           retType = true
           allTemp.forEach((val) => {
-            if(val.value == allergy){
+            if(val == allergy){
               retType = false
             }
           })
           if(retType){
-            allTemp.push({value: allergy})
+            allTemp.push(allergy)
           }
         })
       }
     })
     setAllProfiles(allTemp)
-    console.log("Technique de Shinobi Anti-CodeSmell", selectedDiets)
   }
 
   const changeStatusWaiting = (cpt) => {
@@ -177,8 +162,8 @@ export default function FiltersSelection(props) {
 
   function isInProfileDiets(element) {
     let retType = true
-    dieProfiles.forEach(function (diet) {
-      if(diet.value==element.value){
+    dieProfiles.forEach((diet) => {
+      if(diet==element.value){
         retType = false
       }
     })
@@ -281,9 +266,9 @@ export default function FiltersSelection(props) {
                         <Text style={styles.filters}>Additional Filters</Text>
                         <Text style={styles.nbSelected}>{dieAdd.length} available</Text>
                     </View>
-                    <ListSelect title="Diets" content={dieAdd} setSelected={handleSelectedDiets}/>
+                    <ListSelect title="Additional Diets" content={dieAdd} setSelected={handleSelectedDiets}/>
                     <View style={{marginTop: "3%"}}/>
-                    <ListWithoutSelect title="Allergies" content={allAdd}></ListWithoutSelect>
+                    <ListWithoutSelect title="Additional Allergies" content={allAdd}></ListWithoutSelect>
                     <View style={{marginTop: "3%"}}/>
                     <ValidateButton title="Add Allergy" image="plus.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("IngredientSelection")}></ValidateButton>
                 </View>

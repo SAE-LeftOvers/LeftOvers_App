@@ -37,7 +37,7 @@ export default function ProfilesStackScreen({ navigation }) {
     const _handleSearch = () => {
         console.log('Searching');
     }
-    const _handleHeaderAdd = () => navigation.navigate('ProfileCreation', { name: String });
+    const _handleHeaderAdd = () => navigation.navigate('ProfileCreation');
     
     return (
         <ProfilesStack.Navigator>

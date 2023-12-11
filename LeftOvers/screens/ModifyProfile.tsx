@@ -15,27 +15,23 @@ export default function ModifyProfile(props) {
   const [profile, setProfile] = useState(null);
   const route = useRoute();
 
-
-
-
   const handleGetProfileByName = async (profileName) => {
     try {
       const existingProfiles = await AsyncStorage.getItem('profiles');
       const profiles = JSON.parse(existingProfiles) || [];
   
       const matchedProfile = profiles.find(profile => profile.name === profileName);
-      console.log("Le profil choisit : " + matchedProfile);
       return matchedProfile || null; 
     } catch (error) {
-      console.log("Erreur lors de la récupération du profil :", error);
+      console.error("Erreur lors de la récupération du profil :", error);
       return null;
     }
   };
 
   const fetchProfiles = async () => {
-    const selectedProfil = await handleGetProfileByName(route.params);
-    setProfile(selectedProfil);
-};
+      const selectedProfil = await handleGetProfileByName(route.params);
+      setProfile(selectedProfil);
+  };
 
 useEffect(() => {
   fetchProfiles();
@@ -48,7 +44,7 @@ useEffect(() => {
                 <View style={{marginTop: "6%"}}/>
                 <ProfileModification name={profile.name} avatar={profile.avatar} diets={profile.diets} allergies={profile.allergies}></ProfileModification>
                 <View style={{marginTop: "3%"}}/>
-                <ValidateButton title="Update Profile" image="update.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={() => (console.log("Profile Modified"))}></ValidateButton>
+                <ValidateButton title="Update Profile" image="update.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={() => console.log("")}></ValidateButton>
                 <View style={{marginTop: "20%"}}/>
             </LinearGradient>
         </ScrollView>

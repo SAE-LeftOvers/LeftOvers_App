@@ -5,4 +5,7 @@ export default interface IIngredientService {
     getIngredientById(id: number): Promise<Ingredient | null>;
     getIngredientByLetter(id: string): Promise<Ingredient[]>;
     getfilteredIngredient(prompt: string): Promise<Ingredient[]>;
+    getAvailableIngredient(): Promise<Ingredient[]>,
+    addIngredient(newIngredient: Ingredient): Promise<boolean>,
+    delIngredient(idIngredient: number): Promise<boolean>
 }

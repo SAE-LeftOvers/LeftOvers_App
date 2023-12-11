@@ -2,17 +2,15 @@ import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, ScrollView } from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
 import ValidateButton from '../components/ValidateButton';
 import ProfileSelection from '../components/ProfileSelection';
 import FoodElementText from '../components/FoodElementText';
 import ColorContext from '../theme/ColorContext';
-
 import bracketLeft from '../assets/images/angle_bracket_left.png';
 import bracketRight from '../assets/images/angle_bracket_right.png';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import EventEmitter  from './EventEmitter';
+import eventEmitter  from './EventEmitter';
+import ProfileService from '../Services/Profiles/ProfileService';
 
 export default function HomePage({ navigation, props }) {
     const colors = useContext(ColorContext).colors
@@ -25,35 +23,21 @@ export default function HomePage({ navigation, props }) {
     const [profiles, setProfiles] = useState(profilesHand);
     const [ingredientList, setIngredientList] = useState(ingredientListHand)
 
-    const handleGetProfiles = async () => {
-        try {
-            const existingProfiles = await AsyncStorage.getItem('profiles');
-            return JSON.parse(existingProfiles) || [];
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
-    }
+    const profileService = new ProfileService()
 
     const handleGetAvailableIngredient = async () => {
         try {
             const existingAvailableIngredient = await AsyncStorage.getItem('ingredient');
             return JSON.parse(existingAvailableIngredient) || [];
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return [];
         }
     }
 
     const fetchProfiles = async () => {
-        const existingProfiles = await handleGetProfiles();
-        if (existingProfiles.length != 0){
-            setProfiles(existingProfiles);
-        }
-        else{
-            setProfiles(profilesHand)
-        }
-    };
+        setProfiles(await profileService.getProfiles())
+    }
 
     const fetchAvailableIngredient = async () => {
         const existingAvailableIngredient = await handleGetAvailableIngredient();
@@ -65,34 +49,64 @@ export default function HomePage({ navigation, props }) {
         }
     };
 
-    const subscriptionAddProfile = EventEmitter.addListener('profileAdded', async () => {
+    const subscriptionAddProfile = eventEmitter.addListener('profileAdded', async () => {
         fetchProfiles();
+        subscriptionAddProfile.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
+        eventEmitter.removeAllListeners('ingredientAdded')
+        eventEmitter.removeAllListeners('ingredientDeleted')
+        eventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
-    const subscriptionDeleteProfile = EventEmitter.addListener('profileDeleted', async () => {
+    const subscriptionDeleteProfile = eventEmitter.addListener('profileDeleted', async () => {
         if (profiles.length == 1){
             setProfiles(profilesHand)
         }
         else{
             fetchProfiles();
         }
+        subscriptionDeleteProfile.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
+        eventEmitter.removeAllListeners('ingredientAdded')
+        eventEmitter.removeAllListeners('ingredientDeleted')
+        eventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
-    const subscriptionAddIngredient = EventEmitter.addListener('ingredientAdded', async () => {
+    const subscriptionAddIngredient = eventEmitter.addListener('ingredientAdded', async () => {
         fetchAvailableIngredient();
+        subscriptionAddIngredient.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
+        eventEmitter.removeAllListeners('ingredientAdded')
+        eventEmitter.removeAllListeners('ingredientDeleted')
+        eventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
-    const subscriptionDeleteIngredient = EventEmitter.addListener('ingredientDeleted', async () => {
+    const subscriptionDeleteIngredient = eventEmitter.addListener('ingredientDeleted', async () => {
         if (ingredientList.length == 1){
             setIngredientList(ingredientListHand)
         }
         else{
             fetchAvailableIngredient();
         }
+        subscriptionDeleteIngredient.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
+        eventEmitter.removeAllListeners('ingredientAdded')
+        eventEmitter.removeAllListeners('ingredientDeleted')
+        eventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
-    const subscriptionUpdateSelectedProfile  = EventEmitter.addListener('selectedProfilesUpdated', async () => {
+    const subscriptionUpdateSelectedProfile  = eventEmitter.addListener('selectedProfilesUpdated', async () => {
         fetchProfiles();
+        subscriptionUpdateSelectedProfile.remove();
+        eventEmitter.removeAllListeners('profileAdded')
+        eventEmitter.removeAllListeners('profileDeleted')
+        eventEmitter.removeAllListeners('ingredientAdded')
+        eventEmitter.removeAllListeners('ingredientDeleted')
+        eventEmitter.removeAllListeners('selectedProfilesUpdated')
     });
 
     useEffect(() => {
@@ -233,7 +247,7 @@ export default function HomePage({ navigation, props }) {
                             <Text style={styles.nbSelected}>{nbActiveProfiles()} selected</Text>
                         </View>
                         <View style={{marginTop: "3%"}}/>
-                        <ProfileSelection listProfile={profiles} disableSelection={true} changeStatusWaiting={(val) => console.log("Ignorer", val)}/>
+                        <ProfileSelection listProfile={profiles} disableSelection={true} changeStatusWaiting={(val) => val += 1}/>
                         <View style={{marginTop: "4%"}}/>
                         <ValidateButton title="Change Active Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('FiltersSelection')}/>
                         <View style={{marginTop: "3%"}}/>

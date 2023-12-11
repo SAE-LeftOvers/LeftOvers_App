@@ -1,7 +1,7 @@
-import Profil from "../../Models/Profil";
+import Profile from "../../Models/Profile";
 
 export default interface IProfileService {
-    getProfiles(): Promise<Profil[]>,
-    addProfile(new_profile: Profil): Promise<boolean>,
-    delProfile(profile_name_to_del: string): Promise<boolean>
+    getProfiles(): Promise<Profile[]>,
+    addProfile(newProfile: Profile): Promise<boolean>,
+    delProfile(index: number): Promise<boolean>
 }
