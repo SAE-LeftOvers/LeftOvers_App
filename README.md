@@ -33,72 +33,35 @@ La racine de notre repo est composée de deux dossiers essentiels au projet:
     ## Version Light
 
 <div align = center>
-
-<p>
   <img src="Images/Screens/White/home.jpg" alt="Home" height="300" /><br />
-  Home
-</p>
-<p>
+  Home Page
   <img src="Images/Screens/White/profil.jpg" alt="Profil" height="300" /><br />
-  Profil
-</p>
-<p>
+  Profiles
   <img src="Images/Screens/White/modifyProfil.jpg" alt="Create" height="300" /><br />
-  Création de profil
-</p>
-<p>
+  Profile Creation
   <img src="Images/Screens/White/ingredientSelection.jpg" alt="Selection" height="300" /><br />
-  Selection d'ingredients
-</p>
-<p>
+  Ingredients Selection
   <img src="Images/Screens/White/recipeSuggestion.jpg" alt="Suggestion" height="300" /><br />
-  Suggestion de recettes
-</p>
-<p>
+  Recipes Suggestion
   <img src="Images/Screens/White/recipeDetail.jpg" alt="Details" height="300" /><br />
-  Détail d'une recette 
-</p>
-
-
-
+  Recipe Details 
 </div>
-
-</div>
-
 
     ## Version Sombre 
 
 <div align = center>
-
-<p>
   <img src="Images/Screens/Black/home.jpg" alt="Home" height="300" /><br />
-  Home
-</p>
-<p>
+  Home Page
   <img src="Images/Screens/Black/profil.jpg" alt="Profil" height="300" /><br />
-  Profil
-</p>
-<p>
+  Profiles
   <img src="Images/Screens/Black/modifyProfil.jpg" alt="Create" height="300" /><br />
-  Création de profil
-</p>
-<p>
+  Profile Creation
   <img src="Images/Screens/Black/ingredientSelection.jpg" alt="Selection" height="300" /><br />
-  Selection d'ingredients
-</p>
-<p>
+  Ingredients Selection
   <img src="Images/Screens/Black/recipeSuggestion.jpg" alt="Suggestion" height="300" /><br />
-  Suggestion de recettes
-</p>
-<p>
+  Recipes Suggestion
   <img src="Images/Screens/Black/recipeDetail.jpg" alt="Details" height="300" /><br />
-  Détail d'une recette 
-</p>
-
-
-
-</div>
-
+  Recipe Details 
 </div>
 
 # Environnement de Travail
