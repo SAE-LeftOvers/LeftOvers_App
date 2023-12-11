@@ -31,7 +31,6 @@ export default function FiltersSelection(props) {
 
   const subscriptionAddProfile = eventEmitter.addListener('profileAdded', async () => {
       fetchProfiles()
-      console.log("Technique de Shinobi Anti-CodeSmell", selectedDiets)
       subscriptionAddProfile.remove()
       eventEmitter.removeAllListeners('profileAdded')
       eventEmitter.removeAllListeners('updateDietsAllergies')
@@ -67,7 +66,7 @@ export default function FiltersSelection(props) {
         fetchProfiles()
         eventEmitter.emit("selectedProfilesUpdated")
     } catch (error) {
-        console.error('Error occured when updating active profiles:', error);
+        console.error('Error occured when updating active profiles:', error, selectedDiets);
     }
   };
 
@@ -75,7 +74,6 @@ export default function FiltersSelection(props) {
       updateDiets()
       updateAllergies()
       eventEmitter.emit("updateDietsAllergies")
-      console.log("Filters Selection: ---------------------------------------------------")
       subscriptionUpdateProfiles.remove();
       eventEmitter.removeAllListeners('profileAdded')
       eventEmitter.removeAllListeners('updateDietsAllergies')

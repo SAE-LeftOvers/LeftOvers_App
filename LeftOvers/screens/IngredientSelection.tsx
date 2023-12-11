@@ -37,7 +37,7 @@ export default function IngredientSelection(props) {
         setResponse(filtered);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -52,7 +52,7 @@ const loadIngredients = async () => {
     try {
       setResponse(await ingredientService.getAllIngredient());
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -95,7 +95,7 @@ const loadIngredients = async () => {
         const existingAvailableIngredient = await AsyncStorage.getItem('ingredient');
         return JSON.parse(existingAvailableIngredient) || [];
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return [];
     }
 }
@@ -125,7 +125,7 @@ const fetchAvailableIngredient = async () => {
       }
     }
     catch(error){
-      console.log("Error occured during the addition of Ingredient:", error)
+      console.error("Error occured during the addition of Ingredient:", error)
     }
   };
 
@@ -139,7 +139,7 @@ const fetchAvailableIngredient = async () => {
       ChangeAvailableSize(true)
     }
     catch (error){
-      console.log("Error occured during the suppression of Ingredient:", error)
+      console.error("Error occured during the suppression of Ingredient:", error)
     }
   };
 
@@ -187,7 +187,7 @@ const fetchAvailableIngredient = async () => {
       const ingredientsByLetter = await ingredientService.getIngredientByLetter(letter);
       setResponse(ingredientsByLetter);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

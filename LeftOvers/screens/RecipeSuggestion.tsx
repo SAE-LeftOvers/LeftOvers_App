@@ -99,7 +99,7 @@ export default function RecipeSuggestion({ route, navigation })  {
       }
     
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   };
 

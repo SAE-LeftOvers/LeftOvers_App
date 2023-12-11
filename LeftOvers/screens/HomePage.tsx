@@ -30,7 +30,7 @@ export default function HomePage({ navigation, props }) {
             const existingAvailableIngredient = await AsyncStorage.getItem('ingredient');
             return JSON.parse(existingAvailableIngredient) || [];
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return [];
         }
     }
@@ -247,7 +247,7 @@ export default function HomePage({ navigation, props }) {
                             <Text style={styles.nbSelected}>{nbActiveProfiles()} selected</Text>
                         </View>
                         <View style={{marginTop: "3%"}}/>
-                        <ProfileSelection listProfile={profiles} disableSelection={true} changeStatusWaiting={(val) => console.log("Ignorer", val)}/>
+                        <ProfileSelection listProfile={profiles} disableSelection={true} changeStatusWaiting={(val) => val += 1}/>
                         <View style={{marginTop: "4%"}}/>
                         <ValidateButton title="Change Active Filters" image="update.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => navigation.navigate('FiltersSelection')}/>
                         <View style={{marginTop: "3%"}}/>
