@@ -34,7 +34,7 @@ export default class RecipesService implements IRecipesService {
         }
     }
 
-    async getRecipeWithIngredientsAndFilters(ids: string[], filters: string[]): Promise<Recipes[]> {
+    async getRecipeWithIngredientsAndFilters(ids: string[], filters: string): Promise<Recipes[]> {
         try {
             const response = await axios.get(`${this.IA_URL}/getrecipeswithfilters/${ids}/${filters}`);
             return response.data as Recipes[];
