@@ -10,6 +10,7 @@ import ColorContext from '../theme/ColorContext';
 import eventEmitter from './EventEmitter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProfileService from '../Services/Profiles/ProfileService';
+import { IngredientClass } from '../Models/IngredientClass';
 
 export default function FiltersSelection(props) {
   const {colors} = useContext(ColorContext);
@@ -24,6 +25,7 @@ export default function FiltersSelection(props) {
   const [dieAdd, setDieAdd] = useState([])
   const [allAdd, setAllAdd] = useState([])
   const [selectedDiets, setSelectedDiets] = useState([])
+  const [activeDiets, setActiveDiets] = useState([])
 
   const fetchProfiles = async () => {
       setProfiles(await profileService.getProfiles())
@@ -234,7 +236,65 @@ export default function FiltersSelection(props) {
     },
   });
 
-  const goBack = () => props.navigation.goBack();
+  const handleSaveFilters = async () => {
+    let dieTemp = []
+    let retType = true
+    profiles.forEach((profile) => {
+      if(profile.isActive == "flex"){
+        profile.diets.forEach((diet) => {
+          retType = true
+          dieTemp.forEach((val) => {
+            if(val == diet){
+              retType = false
+            }
+          })
+          if(retType){
+            dieTemp.push(diet)
+          }
+        })
+      }
+    })
+    selectedDiets.forEach((diet) => {
+      retType = true
+      dieTemp.forEach((val) => {
+        if(val == diet){
+          retType = false
+        }
+      })
+      if(retType){
+        dieTemp.push(diet)
+      }
+    })
+    setActiveDiets(await handleCastFilters(dieTemp))
+    eventEmitter.emit("updateActiveDiets")
+    props.navigation.goBack()
+  }
+
+  const handleCastFilters = async (values) => {
+    let diets = []
+    values.forEach((val) => {
+      if (val == "Dairy free"){
+        diets.push(IngredientClass.DairyFree)
+      }
+      else if (val == "Gluten free"){
+        diets.push(IngredientClass.GlutenFree)
+      }
+      else if (val == "Porkless"){
+        diets.push(IngredientClass.Porcless)
+      }
+      else if (val == "Vegan"){
+        diets.push(IngredientClass.Vegan)
+      }
+      else if (val == "Vegetarian"){
+        diets.push(IngredientClass.Vegetarian)
+      }
+      else{
+        diets.push(IngredientClass.Pescatarian)
+      }
+    })
+    await AsyncStorage.setItem('activeDiets', JSON.stringify(diets));
+    return diets
+  }
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
@@ -273,7 +333,7 @@ export default function FiltersSelection(props) {
                     <ValidateButton title="Add Allergy" image="plus.png" colour={colors.buttonDetail} backColour={colors.buttonBackground} todo={() => props.navigation.navigate("IngredientSelection")}></ValidateButton>
                 </View>
                 <View style={{marginTop: "6%"}}/>
-                <ValidateButton title="Save Filters" image="save.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={goBack}></ValidateButton>
+                <ValidateButton title="Save Filters" image="save.png" colour={colors.buttonMain} backColour={colors.cardBackground} todo={handleSaveFilters}></ValidateButton>
                 <View style={{marginTop: "20%"}}/>
             </LinearGradient>
         </ScrollView>

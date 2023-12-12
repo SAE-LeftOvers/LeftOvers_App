@@ -17,7 +17,8 @@ import plus from '../assets/images/plus_small.png';
 import minus from '../assets/images/minus.png';
 import RecipesServices from '../Services/Recipes/RecipesServices';
 import Recipes from '../Models/Recipes';
-
+import eventEmitter from './EventEmitter';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RecipeSuggestion({ route, navigation })  {
   const {colors} = useContext(ColorContext)
@@ -32,6 +33,7 @@ export default function RecipeSuggestion({ route, navigation })  {
   const recipeService = new RecipesServices();
   const {ingredients} = route.params; 
   const limitedList = ingredients.slice(minCpt, maxCpt);
+  const [activeDiets, setActiveDiets] = useState([])
 
   let selectedIngredients: string[]; 
 
@@ -104,7 +106,8 @@ export default function RecipeSuggestion({ route, navigation })  {
   };
 
   useEffect(() => {
-    loadRecipes();
+    loadRecipes()
+    fetchActiveDiets()
   }, []);
 
   const styles = StyleSheet.create({
@@ -196,6 +199,19 @@ export default function RecipeSuggestion({ route, navigation })  {
     },
   });
 
+  const subscriptionUpdateActiveDiets = eventEmitter.addListener('updateActiveDiets', async () => {
+      fetchActiveDiets()
+      subscriptionUpdateActiveDiets.remove();
+  });
+
+  const fetchActiveDiets = async () => {
+      const results = await AsyncStorage.getItem('activeDiets')
+      let existingActiveDiets = JSON.parse(results)
+      if(existingActiveDiets.length == 0){
+        existingActiveDiets = []
+      }
+      setActiveDiets(existingActiveDiets)
+  }
 
   const ingredientElements = limitedList.map((source, index) => (
     <View style={[styles.horizontalAlignment, {marginVertical: "3%"}]} key={index}>
