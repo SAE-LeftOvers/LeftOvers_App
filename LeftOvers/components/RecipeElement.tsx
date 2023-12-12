@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Pressable, Text, View, Image, ScrollView} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, Pressable, Text, View, Image, ScrollView, ImageSourcePropType} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import Union_left from '../assets/images/Union_left.png';
 import Union_right from '../assets/images/Union_right.png';
@@ -22,6 +22,8 @@ import riceFish from '../assets/images/rice_fish.png';
 import riceEgg from '../assets/images/riceEgg.png';
 import pasta from '../assets/images/pasta.png';
 import ColorContext from '../theme/ColorContext';
+import fruit from '../assets/images/fruit.png';
+import fruitCake from '../assets/images/fruitcake.png';
 import Recipes from '../Models/Recipes';
 
 
@@ -44,13 +46,25 @@ function convertToHoursMinutes(totalMinutes: number): string {
 
 export default function RecipeElement(props: RecipeElementProps) {
   const {colors} = useContext(ColorContext)
-  const meatDictionary: string[] =  ["beef", "chicken", "turkey", "steak", "rabbit", "duck"]
-  const porkDictionary: string[] = ["pork", "lardon", "bacon", "ham"]
+  const meatDictionary: string[] =  ["beef", "chicken", "turkey", "steak", "rabbit", "duck", "horse"]
+  const porkDictionary: string[] = ["pork", "lardon", "bacon", "ham", "pig"]
   const fishDictionary: string[] = ["tuna", "whiting", "mullet", "sardine", "mackerel", "salmon", "monkfish", "conger", "bass", "cod", "hake"]
   const vegetablesDictionary: string[] = ["vegan", "vegetarian", "lentil", "artichoke", "aubergine", "beet", "chard", "broccoli", "carrot", "celery", "cabbage", "cauliflower", "zucchini", "spinach", "fennel", "curly", "bean", "lettuce", "apple", "corn", "onion", "parsnips", "leek", "pepper", "potato", "pumpkin", "radish", "scarole", "tomato"]
-  const riceDictionary: string[] =  ["ric", "quinoa"]
+  const fruitDictionnary: string[] = [
+    "fruit",
+    "berries",
+    "apple",
+    "banana",
+    "orange",
+    "grapes",
+    "strawberry",
+    "pineapple",
+    "watermelon",
+    "kiwi"
+  ];
+  const riceDictionary: string[] =  ["rice", "quinoa"]
   const eggDictionary: string[] = ["egg", "omelette"];
-  const soupDictionary: string[] = ["soup"];
+  const soupDictionary: string[] = ["soup", "ragout"];
   const pizzaDictionary: string[] = ["pizza"];
   const dessertDictionary: string[] = ['cake', 'cupcake', 'muffin', 'cookie', 'brownie', 'pie', 'tart', 'macaron', 'doughnut', 'eclair', 'pancake', 'waffle', 'crepe', 'pudding', 'gelato', 'sorbet', 'ice cream', 'cheesecake', 'sugar'];
   const pastaDictionary: string[] = [
@@ -83,6 +97,7 @@ export default function RecipeElement(props: RecipeElementProps) {
     soup : soupDictionary,
     dessert : dessertDictionary,
     pasta : pastaDictionary,
+    fruit : fruitDictionnary, 
     unknown: [],
   };
 
@@ -99,6 +114,7 @@ export default function RecipeElement(props: RecipeElementProps) {
       soupMeat: ['soup', 'meat'],
       soupVeggie: ['soup', 'vegetables'],
       soupFish: ['soup', 'fish'],
+      fruitDessert: ['fruit', 'dessert']
     };
 
     if(categories.length == 1){
@@ -168,6 +184,10 @@ export default function RecipeElement(props: RecipeElementProps) {
         return soupMeat;
       case 'soupFish':
         return soupFish;
+      case 'fruitDessert':
+        return fruitCake;
+      case 'fruit':
+        return fruit;
       default:
         return inconnu;
     }
@@ -255,7 +275,7 @@ export default function RecipeElement(props: RecipeElementProps) {
                 <Text style={styles.text}>Description</Text>
                 <Image source={Union_right} style={{width: "27%", marginLeft: "3%", resizeMode: "contain"}}/>
             </View>
-            <ScrollView style={{marginTop: "3%", overflow: "hidden", maxHeight: 70}}>
+            <ScrollView style={{marginTop: "3%", overflow: "hidden"}}>
                 <Text style={styles.smallText}>{props.recipe.description}</Text>
             </ScrollView>
         </View>
@@ -263,5 +283,7 @@ export default function RecipeElement(props: RecipeElementProps) {
         <Text style={styles.duration}>{convertToHoursMinutes(props.recipe.time_to_cook)}</Text>
       </View>
     </Pressable>
-  );
+  ); 
+
+  
 }
