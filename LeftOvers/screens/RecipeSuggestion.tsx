@@ -19,7 +19,6 @@ import RecipesServices from '../Services/Recipes/RecipesServices';
 import Recipes from '../Models/Recipes';
 import eventEmitter from './EventEmitter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IngredientClass } from '../Models/IngredientClass';
 
 export default function RecipeSuggestion({ route, navigation })  {
   const {colors} = useContext(ColorContext)
