@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, Pressable, Text, View, Image, ScrollView, ImageSourcePropType} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, Pressable, Text, View, Image, ScrollView} from 'react-native';
 import brochette from '../assets/images/brochette.png'; 
 import Union_left from '../assets/images/Union_left.png';
 import Union_right from '../assets/images/Union_right.png';
