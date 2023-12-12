@@ -26,6 +26,8 @@ import riceFish from '../assets/images/rice_fish.png';
 import riceEgg from '../assets/images/riceEgg.png';
 import brochette from '../assets/images/brochette.png'; 
 import pasta from '../assets/images/pasta.png';
+import fruit from '../assets/images/fruit.png';
+import fruitCake from '../assets/images/fruitcake.png';
 
 
 
@@ -41,13 +43,25 @@ export default function RecipeDetails({ route }) {
 
     const { recipeId } = route.params; 
 
-    const meatDictionary: string[] =  ["beef", "chicken", "turkey", "steak", "rabbit", "duck"]
-  const porkDictionary: string[] = ["pork", "lardon", "bacon", "ham"]
+    const meatDictionary: string[] =  ["beef", "chicken", "turkey", "steak", "rabbit", "duck", "horse"]
+  const porkDictionary: string[] = ["pork", "lardon", "bacon", "ham", "pig"]
   const fishDictionary: string[] = ["tuna", "whiting", "mullet", "sardine", "mackerel", "salmon", "monkfish", "conger", "bass", "cod", "hake"]
   const vegetablesDictionary: string[] = ["vegan", "vegetarian", "lentil", "artichoke", "aubergine", "beet", "chard", "broccoli", "carrot", "celery", "cabbage", "cauliflower", "zucchini", "spinach", "fennel", "curly", "bean", "lettuce", "apple", "corn", "onion", "parsnips", "leek", "pepper", "potato", "pumpkin", "radish", "scarole", "tomato"]
-  const riceDictionary: string[] =  ["ric", "quinoa"]
+  const fruitDictionnary: string[] = [
+    "fruit",
+    "berries",
+    "apple",
+    "banana",
+    "orange",
+    "grapes",
+    "strawberry",
+    "pineapple",
+    "watermelon",
+    "kiwi"
+  ];
+  const riceDictionary: string[] =  ["rice", "quinoa"]
   const eggDictionary: string[] = ["egg", "omelette"];
-  const soupDictionary: string[] = ["soup"];
+  const soupDictionary: string[] = ["soup", "ragout"];
   const pizzaDictionary: string[] = ["pizza"];
   const dessertDictionary: string[] = ['cake', 'cupcake', 'muffin', 'cookie', 'brownie', 'pie', 'tart', 'macaron', 'doughnut', 'eclair', 'pancake', 'waffle', 'crepe', 'pudding', 'gelato', 'sorbet', 'ice cream', 'cheesecake', 'sugar'];
   const pastaDictionary: string[] = [
@@ -80,6 +94,7 @@ export default function RecipeDetails({ route }) {
     soup : soupDictionary,
     dessert : dessertDictionary,
     pasta : pastaDictionary,
+    fruit : fruitDictionnary, 
     unknown: [],
   };
 
@@ -96,6 +111,7 @@ export default function RecipeDetails({ route }) {
       soupMeat: ['soup', 'meat'],
       soupVeggie: ['soup', 'vegetables'],
       soupFish: ['soup', 'fish'],
+      fruitDessert: ['fruit', 'dessert']
     };
 
     if(categories.length == 1){
@@ -165,6 +181,10 @@ export default function RecipeDetails({ route }) {
         return soupMeat;
       case 'soupFish':
         return soupFish;
+      case 'fruitDessert':
+        return fruitCake;
+      case 'fruit':
+        return fruit;
       default:
         return inconnu;
     }
