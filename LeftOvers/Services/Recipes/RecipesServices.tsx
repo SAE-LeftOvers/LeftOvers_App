@@ -4,7 +4,7 @@ import Recipes from "../../Models/Recipes";
 
 export default class RecipesService implements IRecipesService {
     private readonly API_URL = "http://leftovers.alwaysdata.net/recipes";
-    private readonly IA_URL = "https://codefirst.iut.uca.fr/containers/Sae_LeftOvers-leftovers_ia/getrecipes"
+    private readonly IA_URL = "https://codefirst.iut.uca.fr/containers/Sae_LeftOvers-leftovers_ia"
 
     async getAllRecipes(): Promise<Recipes[]> {
         try {
@@ -26,9 +26,17 @@ export default class RecipesService implements IRecipesService {
     }
     
     async getRecipeWithIngredients(ids: string[]): Promise<Recipes[]>{
-        const recipe: Recipes[] = []; 
         try {
-            const response = await axios.get(`${this.IA_URL}/${ids}`);
+            const response = await axios.get(`${this.IA_URL}/getrecipes/${ids}`);
+            return response.data as Recipes[];
+        } catch (error) {
+            throw new Error('Erreur lors de la récupération des recettes dans getRecipeWithIngredients : ' + error.message);
+        }
+    }
+
+    async getRecipeWithIngredientsAndFilters(ids: string[], filters: string): Promise<Recipes[]> {
+        try {
+            const response = await axios.get(`${this.IA_URL}/getrecipeswithfilters/${ids}/${filters}`);
             return response.data as Recipes[];
         } catch (error) {
             throw new Error('Erreur lors de la récupération des recettes dans getRecipeWithIngredients : ' + error.message);

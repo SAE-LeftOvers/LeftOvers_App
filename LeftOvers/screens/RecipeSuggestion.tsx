@@ -38,7 +38,6 @@ export default function RecipeSuggestion({ route, navigation })  {
 
   let selectedIngredients: string[]; 
 
-  const die = [{value: "Gluten free"}, {value: "Porkless"}, {value: "Gluten free"}, {value: "Porkless"}]
   const all = []
 
   
@@ -95,21 +94,33 @@ export default function RecipeSuggestion({ route, navigation })  {
 
   const loadRecipes = async () => {
     const ids: string[] = getIngredientsIds(ingredients);
+    console.log('load recipes - active diets tab :', activeDiets)
+    const filters: string = activeDiets.map(diet => diet).join(':')
     try {
-      const recipes: Recipes[] = await recipeService.getRecipeWithIngredients(ids);
-      if(recipes[0].id != -1 ){
-        setSelectedRecipes(recipes);
+      if (filters) {
+        const recipes: Recipes[] = await recipeService.getRecipeWithIngredientsAndFilters(ids, filters)
+        if(recipes[0].id != -1 ){
+          setSelectedRecipes(recipes);
+        } 
       }
-    
+      else {
+        const recipes: Recipes[] = await recipeService.getRecipeWithIngredients(ids);
+        if(recipes[0].id != -1 ){
+          setSelectedRecipes(recipes);
+        } 
+      }
     } catch (error) {
       console.error(error)
     }
   };
 
   useEffect(() => {
-    loadRecipes()
     fetchActiveDiets()
   }, []);
+
+  useEffect(() => {
+    loadRecipes();
+  }, [activeDiets]);
 
   const styles = StyleSheet.create({
     linearGradient: {
@@ -206,12 +217,16 @@ export default function RecipeSuggestion({ route, navigation })  {
   });
 
   const fetchActiveDiets = async () => {
-      const results = await AsyncStorage.getItem('activeDiets')
-      let existingActiveDiets = JSON.parse(results)
-      if(existingActiveDiets.length == 0){
-        existingActiveDiets.push(IngredientClass.None)
+    try {
+      const results = await AsyncStorage.getItem('activeDiets');
+      let existingActiveDiets = JSON.parse(results);
+      if (existingActiveDiets.length === 0) {
+        existingActiveDiets = [];
       }
       setActiveDiets(existingActiveDiets)
+    } catch (error) {
+      console.error('Error fetching active diets:', error);
+    }
   }
 
   const ingredientElements = limitedList.map((source, index) => (
@@ -287,9 +302,9 @@ export default function RecipeSuggestion({ route, navigation })  {
                         <View style={styles.background}>
                             <View style={styles.filterBar}>
                                 <Text style={styles.filters}>Additional Filters</Text>
-                                <Text style={styles.nbSelected}>{die.length} selected</Text>
+                                <Text style={styles.nbSelected}>{activeDiets.length} selected</Text>
                             </View>
-                            <ListWithoutSelect title="Diets" content={die}></ListWithoutSelect>
+                            <ListWithoutSelect title="Diets" content={activeDiets}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
                             <ListWithoutSelect title="Allergies" content={all}></ListWithoutSelect>
                             <View style={{marginTop: "3%"}}/>
