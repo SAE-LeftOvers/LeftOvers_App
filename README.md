@@ -113,7 +113,15 @@ Design :
 </div>
 
 
+# How to test the app
+* Clone the repo
+* install **expo go** app on your phone
+* go to **BreadcrumbsLeftOvers_App/LeftOvers**
+* run ```npm i``` and ```npx expo start```
+* scan the QR code in your terminal
 
+**Caution !** You might have issues depending on the network you are using.
+For example, it does not work on our IUT network.
 
 
 # Application Developers and Admins
